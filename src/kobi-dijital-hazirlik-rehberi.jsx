@@ -52,10 +52,6 @@ const FUNCTIONS = [
   { id: "musteri", label: "Müşteri İlişkileri", icon: Headphones },
 ];
 
-/* İHTİYAÇ TANIMLARI — önce ürün adı değil, işletmenin ihtiyacı olan sistem
-   TÜRÜ söylenir. Örnek uygulamalar bu ihtiyacın altında, ücretsizden ücretliye
-   doğru sıralanır. Amaç: "şu ürünü al" değil "bu tür bir sisteme ihtiyacınız
-   var, örnekleri şunlar" algısı yaratmak. */
 const NEED_STATEMENTS = {
   ik: "İhtiyacınız: başvuru, puantaj ve performans kayıtlarını dağınık kağıt/Excel yerine tek bir dijital sistemde tutmak.",
   pazarlama: "İhtiyacınız: içerik üretimini ve müşteri iletişimini plansız paylaşımlar yerine düzenli, ölçülebilir bir sisteme bağlamak.",
@@ -63,15 +59,6 @@ const NEED_STATEMENTS = {
   musteri: "İhtiyacınız: müşteri geçmişini ve talepleri dağınık not/hafıza yerine merkezi bir kayıt sisteminde tutmak.",
 };
 
-/* ---------------------------------------------------------
-   METODOLOJİ HİZALAMASI — her fonksiyonun hangi resmi
-   dijital olgunluk çerçevesindeki boyuta karşılık geldiği.
-   Kaynaklar: DMAT (EDIH ağı / AB Komisyonu JRC),
-   DDX-D3A (TÜBİTAK TÜSSİDE + Boğaziçi Üniversitesi),
-   SIRI (MEXT / Smart Industry Readiness Index).
-   Bu eşleme özgün soru setimizi geçerli kılan referans
-   noktasıdır; resmi rapor yerine geçmez.
---------------------------------------------------------- */
 const FRAMEWORK_ALIGNMENT = {
   ik: { dmat: "İnsan-merkezli dijitalleşme", ddx: "Kurumsal Yönetim", siri: "Organizasyon" },
   pazarlama: { dmat: "Dijital iş stratejisi", ddx: "Müşteri ve Pazar Yönetimi", siri: "Süreç" },
@@ -81,9 +68,6 @@ const FRAMEWORK_ALIGNMENT = {
 
 const METHODOLOGY_LAST_UPDATED = "14 Ağustos 2026";
 
-/* KAYNAKÇA — soru/boyut yapımızın ve puanlama mantığımızın dayandığı
-   resmi çerçeveler. Her girişte kurum, açıklama ve kaynak adresi var;
-   yeni kaynak eklenirse burada listelenmeli. */
 const SOURCES = [
   {
     org: "Avrupa Komisyonu JRC / EDIH Ağı",
@@ -199,12 +183,6 @@ const QUESTIONS = {
   ],
 };
 
-/* Kaynak alanları: sourceUrl = üreticinin resmi kök alan adı (birincil kaynak).
-   "örn." ile başlayan kategori örnekleri (tekil ürün olmayanlar) için sourceUrl
-   boş bırakılır — kurul bu satırları somut bir ürüne bağlayıp doğrulamalı.
-   verified = son doğrulama ayı/yılı; her çeyreklik incelemede güncellenmeli.
-   origin = 'yerli' | 'uluslararası' | 'kategori örneği' — favoritizm algısını
-   azaltmak için her seviyede en az 2 seçenek ve mümkün olduğunda karışık köken. */
 const TOOLS = {
   ik: {
     baslangic: [
@@ -265,19 +243,15 @@ const TOOLS = {
 };
 
 const LEVELS = {
-  baslangic: { label: "Başlangıç", color: "#9C4A3C" },
-  gelisen: { label: "Gelişen", color: "#C9A227" },
-  ileri: { label: "İleri", color: "#4C7A63" },
+  baslangic: { label: "Başlangıç", color: "#6F4B3C" },
+  gelisen: { label: "Gelişen", color: "#AC8E27" },
+  ileri: { label: "İleri", color: "#3C6F58" },
 };
 
-/* Araç listesi sunumunda kullanılan sıra ve başlıklar — her zaman bu sırayla
-   gösterilir: önce ücretsiz, sonra temel/gerekli, en son ücretli/kurumsal
-   (tavsiye niteliğinde). "level" alanı hem olgunluk hem maliyet kademesini
-   temsil ediyor. */
 const TIER_PRESENTATION = {
-  baslangic: { heading: "Ücretsiz seçenekler", badge: "Ücretsiz" },
-  gelisen: { heading: "Temel / gerekli seçenekler", badge: "Temel" },
-  ileri: { heading: "Kurumsal seçenekler (tavsiye niteliğinde)", badge: "Ücretli" },
+  baslangic: { heading: "Dijitalleşmeye Başlangıç: Temel Adımlar", badge: "Ücretsiz", accent: LEVELS.baslangic.color },
+  gelisen: { heading: "İşinizi Geliştiren Çözümler", badge: "Önerilir", accent: LEVELS.gelisen.color },
+  ileri: { heading: "Kurumsal Verimlilik Odaklı Sistemler", badge: "Kapsamlı", accent: LEVELS.ileri.color },
 };
 const TIER_ORDER = ["baslangic", "gelisen", "ileri"];
 
@@ -288,11 +262,11 @@ function levelFromScore(avg) {
 }
 
 /* ---------------------------------------------------------
-   GAUGE — imzalık görsel öğe: sanayi göstergesi (dial)
+   GAUGE — sanayi göstergesi (dial)
 --------------------------------------------------------- */
-function Gauge({ score, level, size = 132 }) {
+function Gauge({ score, level, size = 100 }) {
   const angle = -90 + ((score - 1) / 3) * 180;
-  const r = size / 2 - 10;
+  const r = size / 2 - 8;
   const cx = size / 2;
   const cy = size / 2;
   const zones = [
@@ -310,15 +284,15 @@ function Gauge({ score, level, size = 132 }) {
     const large = to - from > 180 ? 1 : 0;
     return `M ${x1} ${y1} A ${radius} ${radius} 0 ${large} 1 ${x2} ${y2}`;
   };
-  const [nx, ny] = polar(angle, r - 6);
+  const [nx, ny] = polar(angle, r - 5);
   return (
-    <svg width={size} height={size * 0.62} viewBox={`0 0 ${size} ${size * 0.62}`}>
+    <svg width={size} height={size * 0.65} viewBox={`0 0 ${size} ${size * 0.65}`} className="mx-auto block">
       {zones.map((z, i) => (
-        <path key={i} d={arcPath(z.from, z.to, r)} stroke={z.color} strokeWidth="10" fill="none" strokeLinecap="butt" />
+        <path key={i} d={arcPath(z.from, z.to, r)} stroke={z.color} strokeWidth="6" fill="none" strokeLinecap="round" />
       ))}
-      <line x1={cx} y1={cy} x2={nx} y2={ny} stroke="#1B2A41" strokeWidth="3" strokeLinecap="round" />
-      <circle cx={cx} cy={cy} r="5" fill="#1B2A41" />
-      <text x={cx} y={cy + 22} textAnchor="middle" fontFamily="IBM Plex Mono, monospace" fontSize="12" fill="#1B2A41">
+      <line x1={cx} y1={cy} x2={nx} y2={ny} stroke="#1A1F2B" strokeWidth="2.5" strokeLinecap="round" />
+      <circle cx={cx} cy={cy} r="3" fill="#1A1F2B" />
+      <text x={cx} y={cy + 18} textAnchor="middle" fontWeight="500" fontSize="11" fill="#1A1F2B" style={{ fontFamily: "Sora, sans-serif" }}>
         {LEVELS[level].label.toUpperCase()}
       </text>
     </svg>
@@ -326,7 +300,7 @@ function Gauge({ score, level, size = 132 }) {
 }
 
 /* ---------------------------------------------------------
-   ANA UYGULAMA
+   MAIN APP
 --------------------------------------------------------- */
 const STEPS = ["intro", "sector", "size", "ik", "pazarlama", "stok", "musteri", "results"];
 
@@ -386,78 +360,84 @@ export default function App() {
   }, [sectorGroup, sectorQuery]);
 
   return (
-    <div style={{ background: "var(--paper)", minHeight: "100%", fontFamily: "Inter, sans-serif", color: "var(--ink)" }} className="w-full min-h-screen">
+    <div style={{ background: "#F5F6F8", minHeight: "100%", color: "#1A1F2B" }}>
       <style dangerouslySetInnerHTML={{ __html: `
-        @import url('https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap');
-        :root {
-          --ink: #1B2A41; --paper: #EAE6DC; --paper-dark: #DDD7C8;
-          --brass: #C9A227; --brass-dark: #967616; --moss: #5C6F68; --white: #FAF8F3;
-        }
-        .disp { font-family: 'Oswald', sans-serif; letter-spacing: 0.02em; }
+        @import url('https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700&family=IBM+Plex+Mono&display=swap');
+        body { font-family: 'Sora', sans-serif; -webkit-font-smoothing: antialiased; }
         .mono { font-family: 'IBM Plex Mono', monospace; }
-        .card { background: var(--white); border: 1px solid var(--paper-dark); }
-        .btn-primary { background: var(--ink); color: var(--white); transition: transform .15s ease, background .15s ease; }
-        .btn-primary:hover:not(:disabled) { background: var(--brass-dark); transform: translateY(-1px); }
+        .card { background: #FFFFFF; border: 1px solid #E8EBF1; box-shadow: 0 1px 3px rgba(26,31,43,0.03); }
+        .btn-primary { background: #1A1F2B; color: #FFFFFF; transition: all .15s ease; border-radius: 6px; }
+        .btn-primary:hover:not(:disabled) { background: #3C6F58; transform: translateY(-1px); }
         .btn-primary:disabled { opacity: 0.35; cursor: not-allowed; }
-        .opt-btn { border: 1px solid var(--paper-dark); background: var(--white); transition: all .12s ease; text-align: left; }
-        .opt-btn:hover { border-color: var(--brass); }
-        .opt-btn.selected { border-color: var(--brass); background: #FBF3DC; }
+        .opt-btn { border: 1px solid #E8EBF1; background: #FFFFFF; transition: all .12s ease; border-radius: 8px; cursor: pointer; text-align: left; }
+        .opt-btn:hover { border-color: #3C6F58; background: #F8FAF9; }
+        .opt-btn.selected { border-color: #3C6F58; background: #EDF3F1; box-shadow: 0 0 0 1px #3C6F58; }
         @media print {
           .no-print { display: none !important; }
-          body, #root { background: white !important; }
-          .card { border: 1px solid #ccc !important; break-inside: avoid; }
+          body { background: white !important; font-size: 11pt; }
+          .card { border: 1px solid #DDD !important; box-shadow: none !important; break-inside: avoid; margin-bottom: 20px; }
         }
       ` }} />
 
-      <header className="px-6 md:px-12 pt-10 pb-6 border-b" style={{ borderColor: "var(--paper-dark)" }}>
-        <div className="mono text-xs tracking-widest" style={{ color: "var(--moss)" }}>ÇORLU TSO · DİJİTAL HAZIRLIK ATÖLYESİ</div>
-        <h1 className="disp text-2xl md:text-3xl mt-1" style={{ fontWeight: 600 }}>KOBİ Yapay Zeka Hazırlık &amp; Otomasyon Rehberi</h1>
+      <header className="px-6 md:px-10 py-6 card rounded-none border-t-0 border-x-0">
+        <div className="flex items-center justify-between gap-4">
+          <div>
+            <div className="mono text-xs tracking-tight uppercase" style={{ color: "#727B8A" }}>Çorlu TSO · Dijitalleşme Destek Araçları</div>
+            <h1 className="text-2xl md:text-3xl mt-1.5 font-bold tracking-tight">KOBİ Dijital Olgunluk Ön Tarama Rehberi</h1>
+          </div>
+          <img src="https://via.placeholder.com/60/FFFFFF/727B8A?text=TSO" alt="TSO Logo" className="shrink-0" />
+        </div>
       </header>
 
-      <main className="px-6 md:px-12 py-10 max-w-3xl mx-auto">
+      <main className="px-6 md:px-10 py-10 max-w-5xl mx-auto">
         {step === "intro" && (
           <div>
-            <p className="text-base leading-relaxed mb-3">
-              10–16 soruluk kısa bir keşifle işletmenizin İnsan Kaynakları, Pazarlama, Stok/Üretim
-              ve Müşteri İlişkileri süreçlerindeki dijital olgunluğunu ölçüyor; her alan için
-              somut, düşük maliyetli araç önerisi ve yol haritası çıkarıyoruz.
+            <p className="text-lg leading-relaxed text-gray-800 max-w-3xl">
+              10 dakika süren kısa bir öz değerlendirme ile işletmenizin 4 temel fonksiyondaki dijitalleşme seviyesini ölçün,
+              size özel hazırlanmış düşük maliyetli araç yol haritasını hemen edinin.
             </p>
-            <p className="mono text-xs mb-6 p-3 rounded-sm" style={{ background: "var(--paper-dark)", color: "var(--moss)" }}>
-              Soru ve boyut yapımız; AB EDIH ağının kullandığı DMAT çerçevesi, TÜBİTAK TÜSSİDE'nin
-              DDX/D3A modeli ve MEXT'in uyguladığı SIRI modeliyle hizalanmıştır. Bu bir ön tarama
-              aracıdır — KOSGEB Dijital Dönüşüm Destek Programı başvurusu için yetkilendirilmiş bir
-              danışmandan resmi DDX/SIRI raporu alınması gerekir.
-            </p>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-8">
+            <div className="card p-6 rounded-lg my-8 flex items-start gap-4" style={{ background: "#F1F3F6" }}>
+              <Sparkles size={24} className="text-gray-500 mt-1 shrink-0" />
+              <div>
+                <p className="font-medium text-sm text-gray-900">Kurumsal Altyapı Desteği</p>
+                <p className="text-sm text-gray-700 mt-0.5">
+                  Bu aracın metodolojisi; AB EDIH ağının kullandığı <strong>DMAT</strong> çerçevesi, TÜBİTAK TÜSSİDE'nin <strong>DDX/D3A</strong> modeli ve MEXT'in uyguladığı <strong>SIRI</strong> modeliyle hizalanmıştır.
+                  Bu bir ön tarama aracıdır; KOSGEB Dijital Dönüşüm Destek Programı başvurusu için yetkilendirilmiş bir danışmandan resmi DDX/SIRI raporu alınması gerekir.
+                </p>
+              </div>
+            </div>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-10">
               {FUNCTIONS.map((f) => (
-                <div key={f.id} className="card p-4 flex flex-col items-center gap-2 text-center">
-                  <f.icon size={22} color="var(--moss)" />
-                  <span className="text-xs mono">{f.label}</span>
+                <div key={f.id} className="card p-5 rounded-lg text-center flex flex-col items-center gap-3">
+                  <div className="p-2.5 rounded-md" style={{ background: "#E8EBF1" }}>
+                    <f.icon size={22} color="#1A1F2B" />
+                  </div>
+                  <span className="font-semibold text-sm">{f.label}</span>
                 </div>
               ))}
             </div>
-            <button className="btn-primary disp px-6 py-3 flex items-center gap-2" onClick={goNext}>
-              Keşfe Başla <ArrowRight size={18} />
+            <button className="btn-primary text-base px-10 py-3.5 flex items-center gap-2.5 font-semibold" onClick={goNext}>
+              Keşfe Başla <ArrowRight size={20} />
             </button>
           </div>
         )}
 
         {step === "sector" && (
-          <StepShell title="1 · Sektörünüz" onBack={goBack} onNext={goNext} canProceed={canProceed}>
-            <div className="flex items-center gap-2 mb-4 px-3 py-2 rounded-sm card">
-              <Search size={16} color="var(--moss)" />
+          <StepShell title="Adım 1: Sektörünüz" onBack={goBack} onNext={goNext} canProceed={canProceed}>
+            <div className="flex items-center gap-2 mb-4 px-4 py-3 rounded-md card">
+              <Search size={18} color="#727B8A" />
               <input
                 value={sectorQuery}
                 onChange={(e) => setSectorQuery(e.target.value)}
-                placeholder="Sektör ara..."
+                placeholder="Sektörünüzü arayın (ör: metal, tekstil)..."
                 className="text-sm w-full outline-none"
                 style={{ background: "transparent" }}
               />
             </div>
-            <div className="flex flex-wrap gap-2 mb-5">
+            <div className="flex flex-wrap gap-2 mb-6">
               <button
-                className="mono text-xs px-3 py-1.5 rounded-sm"
-                style={{ background: sectorGroup === "all" ? "var(--ink)" : "var(--paper-dark)", color: sectorGroup === "all" ? "var(--white)" : "var(--ink)" }}
+                className="mono text-xs px-3 py-1.5 rounded-full"
+                style={{ background: sectorGroup === "all" ? "#1A1F2B" : "#E8EBF1", color: sectorGroup === "all" ? "#FFFFFF" : "#1A1F2B" }}
                 onClick={() => setSectorGroup("all")}
               >
                 Tümü
@@ -465,38 +445,40 @@ export default function App() {
               {SECTOR_GROUPS.map((g) => (
                 <button
                   key={g.id}
-                  className="mono text-xs px-3 py-1.5 rounded-sm"
-                  style={{ background: sectorGroup === g.id ? "var(--ink)" : "var(--paper-dark)", color: sectorGroup === g.id ? "var(--white)" : "var(--ink)" }}
+                  className="mono text-xs px-3 py-1.5 rounded-full"
+                  style={{ background: sectorGroup === g.id ? "#1A1F2B" : "#E8EBF1", color: sectorGroup === g.id ? "#FFFFFF" : "#1A1F2B" }}
                   onClick={() => setSectorGroup(g.id)}
                 >
                   {g.label}
                 </button>
               ))}
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-3 max-h-[420px] overflow-y-auto pr-1">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3.5 max-h-[460px] overflow-y-auto pr-1">
               {filteredSectors.map((s) => (
-                <button key={s.id} className={`opt-btn p-4 rounded-sm flex items-start gap-3 ${sector === s.id ? "selected" : ""}`} onClick={() => setSector(s.id)}>
-                  <s.icon size={20} color="var(--ink)" className="mt-0.5 shrink-0" />
-                  <span>
-                    <span className="block">{s.label}</span>
-                    <span className="block mono text-xs mt-0.5" style={{ color: "var(--moss)" }}>{s.note}</span>
-                  </span>
+                <button key={s.id} className={`opt-btn p-4 rounded-md flex items-start gap-4 ${sector === s.id ? "selected" : ""}`} onClick={() => setSector(s.id)}>
+                  <div className="p-2.5 rounded-full shrink-0" style={{ background: sector === s.id ? "#3C6F58" : "#E8EBF1" }}>
+                    <s.icon size={20} color={sector === s.id ? "#FFFFFF" : "#1A1F2B"} className="mt-0.5" />
+                  </div>
+                  <div>
+                    <span className="block font-semibold text-base">{s.label}</span>
+                    <span className="block text-sm mt-0.5" style={{ color: sector === s.id ? "#3C6F58" : "#727B8A" }}>Kritik odak: {s.note}</span>
+                  </div>
                 </button>
               ))}
               {filteredSectors.length === 0 && (
-                <div className="text-sm mono col-span-2" style={{ color: "var(--moss)" }}>Eşleşen sektör bulunamadı.</div>
+                <div className="text-sm font-medium col-span-2 text-center p-10 bg-white rounded-lg border border-gray-200" style={{ color: "#727B8A" }}>Eşleşen sektör bulunamadı.</div>
               )}
             </div>
           </StepShell>
         )}
 
         {step === "size" && (
-          <StepShell title="2 · İşletme Ölçeği" onBack={goBack} onNext={goNext} canProceed={canProceed}>
-            <div className="flex flex-col gap-3">
+          <StepShell title="Adım 2: İşletme Ölçeği" onBack={goBack} onNext={goNext} canProceed={canProceed}>
+            <div className="flex flex-col gap-4">
               {SIZES.map((s) => (
-                <button key={s.id} className={`opt-btn p-4 rounded-sm ${size === s.id ? "selected" : ""}`} onClick={() => setSize(s.id)}>
-                  <div className="disp text-sm">{s.label}</div>
-                  <div className="mono text-xs" style={{ color: "var(--moss)" }}>{s.sub}</div>
+                <button key={s.id} className={`opt-btn p-5 rounded-md ${size === s.id ? "selected" : ""}`} onClick={() => setSize(s.id)}>
+                  <div className="font-semibold text-lg">{s.label}</div>
+                  <div className="text-sm" style={{ color: size === s.id ? "#3C6F58" : "#727B8A" }}>{s.sub}</div>
                 </button>
               ))}
             </div>
@@ -505,24 +487,24 @@ export default function App() {
 
         {fnStepIdx >= 0 && (
           <StepShell
-            title={`${3 + fnStepIdx} · ${FUNCTIONS[fnStepIdx].label}`}
+            title={`Adım ${3 + fnStepIdx}: ${FUNCTIONS[fnStepIdx].label}`}
             onBack={goBack}
             onNext={goNext}
             canProceed={canProceed}
             last={fnStepIdx === FUNCTIONS.length - 1}
           >
-            <div className="mono text-xs mb-5 px-3 py-2 rounded-sm inline-block" style={{ background: "var(--paper-dark)", color: "var(--moss)" }}>
-              Resmi boyut karşılığı — DMAT: {FRAMEWORK_ALIGNMENT[step].dmat} · DDX: {FRAMEWORK_ALIGNMENT[step].ddx} · SIRI: {FRAMEWORK_ALIGNMENT[step].siri}
+            <div className="mono text-xs mb-6 px-4 py-2.5 rounded-md inline-flex items-center gap-2" style={{ background: "#E8EBF1", color: "#1A1F2B" }}>
+              <CheckCircle2 size={15} /> Resmi Model Karşılıkları — DMAT: {FRAMEWORK_ALIGNMENT[step].dmat} · DDX: {FRAMEWORK_ALIGNMENT[step].ddx} · SIRI: {FRAMEWORK_ALIGNMENT[step].siri}
             </div>
             <div className="flex flex-col gap-8">
               {QUESTIONS[step].map((q, qIdx) => (
                 <div key={qIdx}>
-                  <div className="mb-3 font-medium">{q.text}</div>
-                  <div className="flex flex-col gap-2">
+                  <div className="mb-4 font-semibold text-base text-gray-950">{q.text}</div>
+                  <div className="flex flex-col gap-3">
                     {q.options.map((opt, oIdx) => (
                       <button
                         key={oIdx}
-                        className={`opt-btn p-3 rounded-sm text-sm ${answers[step][qIdx] === oIdx + 1 ? "selected" : ""}`}
+                        className={`opt-btn p-4 rounded-md text-sm font-medium ${answers[step][qIdx] === oIdx + 1 ? "selected" : ""}`}
                         onClick={() => setAnswer(step, qIdx, oIdx + 1)}
                       >
                         {opt}
@@ -537,73 +519,73 @@ export default function App() {
 
         {step === "results" && (
           <div>
-            <div className="flex items-center gap-2 mb-1">
-              <Sparkles size={18} color="var(--brass)" />
-              <h2 className="disp text-xl">Dijital Hazırlık Karneniz</h2>
-            </div>
-            <p className="text-sm mb-2" style={{ color: "var(--moss)" }}>
-              {SECTORS.find((s) => s.id === sector)?.label} · {SIZES.find((s) => s.id === size)?.label}
+            <header className="card p-8 mb-10 rounded-lg" style={{ background: "#EDF3F1", border: "1px solid #3C6F58", position: "relative" }}>
+              <div className="flex items-center gap-4">
+                <Sparkles size={32} style={{ color: "#3C6F58" }} className="shrink-0" />
+                <div>
+                  <h2 className="text-2xl font-bold tracking-tight">Dijitalleşme Hazırlık Karneniz Tamamlandı</h2>
+                  <p className="text-gray-800 mt-1 max-w-3xl">
+                    Aşağıda işletmenizin mevcut dijitalleşme seviyesini, sektörünüz için kritik odak noktalarını ve size özel hazırladığımız yol haritasını görebilirsiniz.
+                  </p>
+                </div>
+              </div>
+              <div className="absolute top-4 right-4 text-xs mono px-3 py-1 rounded-full text-white" style={{ background: "#3C6F58" }}>ÖN TARAMA</div>
+            </header>
+            <p className="text-sm mb-8 font-semibold flex items-center gap-2" style={{ color: "#727B8A" }}>
+               {SIZES.find((s) => s.id === size)?.label}  <span style={{ color: "#B1B8C1" }}>/</span> {SECTORS.find((s) => s.id === sector)?.label} <span style={{ color: "#B1B8C1" }}>/</span> <span style={{ color: "#3C6F58" }}>{SECTORS.find((s) => s.id === sector)?.note}</span>
             </p>
-            <p className="text-xs mono mb-4" style={{ color: "var(--moss)" }}>
-              Odak noktası: {SECTORS.find((s) => s.id === sector)?.note}
-            </p>
-            {size === "mikro" && (
-              <p className="text-xs mono mb-6 p-2" style={{ background: "var(--paper-dark)" }}>
-                Not: mikro ölçekli işletmeler için önce ücretsiz/düşük maliyetli araçlar önceliklendirildi.
-              </p>
-            )}
 
             <div className="flex flex-col gap-8 mt-4">
               {results.map((r) => (
-                <div key={r.id} className="card p-5 rounded-sm">
-                  <div className="flex items-center gap-4">
-                    <Gauge score={r.avg} level={r.level} />
-                    <div>
-                      <div className="disp text-lg flex items-center gap-2">
-                        <r.icon size={18} color="var(--moss)" /> {r.label}
+                <div key={r.id} className="card p-7 rounded-xl border-gray-100 shadow-sm">
+                  <header className="flex items-start gap-5 justify-between flex-wrap">
+                    <div className="flex items-start gap-4">
+                      <div className="p-3 rounded-full shrink-0 mt-1" style={{ background: "#F1F3F6" }}>
+                        <r.icon size={22} color="#1A1F2B" />
                       </div>
-                      <div className="mono text-xs" style={{ color: LEVELS[r.level].color }}>
-                        Seviye: {LEVELS[r.level].label}
+                      <div>
+                        <h3 className="font-bold text-xl tracking-tight text-gray-950">{r.label} Seviyesi</h3>
+                        <p className="text-sm font-medium mt-0.5" style={{ color: LEVELS[r.level].color }}>Dijital Olgunluk: {LEVELS[r.level].label}</p>
                       </div>
                     </div>
-                  </div>
-                  <div className="mono text-xs mt-3 pt-3" style={{ color: "var(--moss)", borderTop: "1px solid var(--paper-dark)" }}>
-                    Resmi boyut karşılığı — DMAT: {FRAMEWORK_ALIGNMENT[r.id].dmat} · DDX: {FRAMEWORK_ALIGNMENT[r.id].ddx} · SIRI: {FRAMEWORK_ALIGNMENT[r.id].siri}
+                    <Gauge score={r.avg} level={r.level} />
+                  </header>
+
+                  <div className="mt-6 p-4 rounded-md text-sm font-medium bg-gray-50 border border-gray-100 max-w-3xl">
+                    <span className="text-gray-600">Öncelikli Hedefiniz:</span> <span className="text-gray-950">{NEED_STATEMENTS[r.id]}</span>
                   </div>
 
-                  <div className="mt-4 p-3 rounded-sm text-sm font-medium" style={{ background: "var(--paper)" }}>
-                    {NEED_STATEMENTS[r.id]}
+                  <div className="mono text-[11px] mt-6 pt-3" style={{ color: "#727B8A", borderTop: "1px solid #E8EBF1" }}>
+                    Resmi Model Karşılıkları — DMAT: {FRAMEWORK_ALIGNMENT[r.id].dmat} · DDX: {FRAMEWORK_ALIGNMENT[r.id].ddx} · SIRI: {FRAMEWORK_ALIGNMENT[r.id].siri}
                   </div>
 
                   {TIER_ORDER.map((tierKey) => (
-                    <div key={tierKey} className="mt-5">
-                      <div className="flex items-center gap-2 mb-2">
-                        <span className="disp text-sm">{TIER_PRESENTATION[tierKey].heading}</span>
+                    <div key={tierKey} className="mt-8 border border-gray-100 rounded-lg p-5" style={{ opacity: r.level === tierKey ? 1 : 0.6 }}>
+                      <header className="flex items-center justify-between gap-3 mb-5 pb-2.5 border-b border-gray-100">
+                        <div className="flex items-center gap-3">
+                          <h4 className="font-semibold text-base text-gray-900">{TIER_PRESENTATION[tierKey].heading}</h4>
+                          <span className="mono text-[11px] font-medium px-2.5 py-1 rounded-full text-white" style={{ background: TIER_PRESENTATION[tierKey].accent }}>{TIER_PRESENTATION[tierKey].badge}</span>
+                        </div>
                         {r.level === tierKey && (
-                          <span className="mono text-xs px-2 py-0.5 rounded-sm" style={{ background: "var(--ink)", color: "var(--white)" }}>
-                            Sizin seviyeniz
+                          <span className="mono text-xs font-semibold px-3 py-1 rounded-md" style={{ background: "#EDF3F1", color: "#3C6F58" }}>
+                            Sizin Seviyeniz
                           </span>
                         )}
-                      </div>
-                      <p className="mono text-xs mb-2" style={{ color: "var(--moss)" }}>
-                        {tierKey === "ileri" ? "Örnek uygulamalar (tavsiye niteliğinde):" : "Örnek uygulamalar:"}
-                      </p>
-                      <div className="flex flex-col gap-3">
+                      </header>
+
+                      <div className="flex flex-col gap-4">
                         {TOOLS[r.id][tierKey].map((t, i) => (
-                          <div key={i} className="p-3 rounded-sm" style={{ background: "var(--paper)", opacity: r.level === tierKey ? 1 : 0.75 }}>
-                            <div className="flex items-center justify-between flex-wrap gap-1">
-                              <span className="font-medium text-sm">{t.name}</span>
-                              <div className="flex items-center gap-1">
-                                <span className="mono text-xs px-2 py-0.5 rounded-sm" style={{ background: "var(--paper)", border: "1px solid var(--paper-dark)", color: "var(--moss)" }}>
-                                  {t.origin === "yerli" ? "Yerli" : t.origin === "uluslararası" ? "Uluslararası" : "Kategori örneği"}
-                                </span>
-                                <span className="mono text-xs px-2 py-0.5 rounded-sm" style={{ background: "var(--brass)", color: "var(--ink)" }}>{TIER_PRESENTATION[tierKey].badge}</span>
-                              </div>
+                          <div key={i} className="p-4 rounded-lg bg-gray-50 border border-gray-100 relative">
+                            <div className="flex items-center justify-between flex-wrap gap-2">
+                              <span className="font-semibold text-base text-gray-950">{t.name}</span>
+                              <span className="mono text-[11px] font-medium px-2.5 py-1 rounded-full text-white" style={{ background: t.origin === "yerli" ? "#B1B8C1" : "#1A1F2B" }}>
+                                {t.origin === "yerli" ? "Yerli" : t.origin === "uluslararası" ? "Global" : "Kategori Örneği"}
+                              </span>
                             </div>
-                            <p className="text-sm mt-1">{t.why}</p>
-                            <p className="text-xs mt-1" style={{ color: "var(--moss)" }}>Alternatif: {t.alt}</p>
-                            <p className="text-xs mt-1 mono" style={{ color: t.sourceUrl ? "var(--moss)" : "#9C4A3C" }}>
-                              Kaynak: {t.sourceUrl || "belirlenmedi"} · Son doğrulama: {t.verified}
+                            <p className="text-sm mt-1.5 text-gray-800 leading-relaxed">{t.why}</p>
+                            <p className="text-xs mt-2 text-gray-600 font-medium">Alternatif: {t.alt}</p>
+                            <p className="text-xs mt-1 mono" style={{ color: t.sourceUrl ? "#727B8A" : "#B05C4F" }}>
+                              {t.sourceUrl ? `Üretici: ${t.sourceUrl} ` : "Somut bir ürüne bağlanmadı "} · Doğrulama: {t.verified}
                             </p>
                           </div>
                         ))}
@@ -614,89 +596,88 @@ export default function App() {
               ))}
             </div>
 
-            <div className="mt-10 card p-6 rounded-sm">
-              <h3 className="disp text-lg mb-4">Metodoloji ve Kaynakça</h3>
+            <div className="mt-12 card p-8 rounded-xl no-print">
+              <h3 className="font-bold text-xl tracking-tight mb-5">Metodoloji ve Resmi Kaynaklar</h3>
 
-              <div className="mb-5">
-                <div className="disp text-sm mb-1" style={{ color: "var(--moss)" }}>Nasıl puanladık</div>
-                <p className="text-sm leading-relaxed">{SCORING_METHOD_TEXT}</p>
-              </div>
+              <section className="mb-6">
+                <h4 className="font-semibold text-sm mb-1.5" style={{ color: "#727B8A" }}>Nasıl Puanlıyoruz?</h4>
+                <p className="text-sm leading-relaxed text-gray-800">{SCORING_METHOD_TEXT}</p>
+              </section>
 
-              <div className="mb-5">
-                <div className="disp text-sm mb-2" style={{ color: "var(--moss)" }}>Soru ve boyutlarımızı neye göre hazırladık</div>
-                <p className="text-sm leading-relaxed mb-3">
-                  Kendi sorularımızı sıfırdan uydurmak yerine, aşağıdaki üç resmi çerçevenin boyutlarını
-                  esas aldık ve 4 fonksiyonumuzu (İK, Pazarlama, Stok/Üretim, Müşteri İlişkileri) bu
-                  boyutlara haritaladık. Bu sayede sorular, TSO'nun kendi görüşü değil, AB'nin ve
-                  Türkiye'nin dijital olgunluk değerlendirmelerinde kullandığı ölçütlerle tutarlı hale geldi.
+              <section className="mb-6">
+                <h4 className="font-semibold text-sm mb-2" style={{ color: "#727B8A" }}>Kurumsal Model Hizalaması</h4>
+                <p className="text-sm leading-relaxed text-gray-800 mb-4">
+                  Değerlendirme sorularımız ve boyut yapımız, AB ve Türkiye'deki resmi dijital olgunluk ölçme çerçevelerinin boyutları esas alınarak hazırlanmıştır.
+                  Fonksiyonlarımızı (İK, Pazarlama, Stok/Üretim, Müşteri İlişkileri) bu boyutlara haritalayarak, TSO'nun kendi görüşü değil, resmi ölçütlerle tutarlı bir ön tarama yapmanızı sağlıyoruz.
                 </p>
-                <div className="overflow-x-auto">
-                  <table className="w-full text-xs mono" style={{ borderCollapse: "collapse" }}>
-                    <thead>
-                      <tr style={{ borderBottom: "1px solid var(--paper-dark)" }}>
-                        <th className="text-left py-2 pr-3">Fonksiyon</th>
-                        <th className="text-left py-2 pr-3">DMAT boyutu</th>
-                        <th className="text-left py-2 pr-3">DDX/D3A boyutu</th>
-                        <th className="text-left py-2 pr-3">SIRI yapı taşı</th>
+                <div className="overflow-x-auto card rounded-md border-gray-200 shadow-none p-1">
+                  <table className="w-full text-xs mono text-gray-800" style={{ borderCollapse: "separate", borderSpacing: 0 }}>
+                    <thead style={{ background: "#F9FAFB" }}>
+                      <tr>
+                        <th className="text-left py-3 px-4 font-semibold text-gray-900 border-b border-gray-200">Değerlendirilen Fonksiyon</th>
+                        <th className="text-left py-3 px-4 font-semibold text-gray-900 border-b border-gray-200">AB DMAT Boyutu</th>
+                        <th className="text-left py-3 px-4 font-semibold text-gray-900 border-b border-gray-200">TÜBİTAK DDX Boyutu</th>
+                        <th className="text-left py-3 px-4 font-semibold text-gray-900 border-b border-gray-200">SIRI Yapı Taşı</th>
                       </tr>
                     </thead>
                     <tbody>
-                      {FUNCTIONS.map((f) => (
-                        <tr key={f.id} style={{ borderBottom: "1px solid var(--paper-dark)" }}>
-                          <td className="py-2 pr-3">{f.label}</td>
-                          <td className="py-2 pr-3">{FRAMEWORK_ALIGNMENT[f.id].dmat}</td>
-                          <td className="py-2 pr-3">{FRAMEWORK_ALIGNMENT[f.id].ddx}</td>
-                          <td className="py-2 pr-3">{FRAMEWORK_ALIGNMENT[f.id].siri}</td>
+                      {FUNCTIONS.map((f, i) => (
+                        <tr key={f.id} style={{ borderBottom: i === FUNCTIONS.length - 1 ? "none" : "1px solid #E8EBF1" }}>
+                          <td className="py-3 px-4 font-medium text-gray-950">{f.label}</td>
+                          <td className="py-3 px-4">{FRAMEWORK_ALIGNMENT[f.id].dmat}</td>
+                          <td className="py-3 px-4">{FRAMEWORK_ALIGNMENT[f.id].ddx}</td>
+                          <td className="py-3 px-4">{FRAMEWORK_ALIGNMENT[f.id].siri}</td>
                         </tr>
                       ))}
                     </tbody>
                   </table>
                 </div>
-              </div>
+              </section>
 
-              <div className="mb-5">
-                <div className="disp text-sm mb-1" style={{ color: "var(--moss)" }}>Araç önerileri için kaynak disiplini</div>
-                <p className="text-sm leading-relaxed">
-                  Her önerilen uygulama için üreticinin resmi sitesi birincil kaynak olarak işaretlenir
-                  ve son doğrulama tarihi kart üzerinde gösterilir. Somut bir ürüne bağlanmamış kategori
-                  örnekleri ayrıca belirtilir. Her maliyet kademesinde en az iki alternatif sunulur ve
-                  kökeni (yerli/uluslararası) etiketlenir; Çorlu TSO hiçbir ürünü resmi olarak onaylamaz.
+              <section className="mb-6">
+                <h4 className="font-semibold text-sm mb-1.5" style={{ color: "#727B8A" }}>Araç Önerileri ve Şeffaflık</h4>
+                <p className="text-sm leading-relaxed text-gray-800">
+                  Her önerilen uygulama için üreticinin resmi sitesi birincil kaynak olarak işaretlenir ve son doğrulama tarihi kart üzerinde gösterilir.
+                  Maliyet kademelerinde en az iki alternatif sunulur ve kökeni (Yerli/Global) etiketlenir. Çorlu TSO hiçbir ürünü resmi olarak onaylamaz.
                   Liste 3 ayda bir kurul tarafından gözden geçirilir. Son güncelleme: {METHODOLOGY_LAST_UPDATED}.
                 </p>
-              </div>
+              </section>
 
-              <div className="mb-5">
-                <div className="disp text-sm mb-1" style={{ color: "var(--moss)" }}>Sınırlamalar</div>
-                <p className="text-sm leading-relaxed">
-                  Bu araç bir <strong>ön tarama</strong>dır. KOSGEB Dijital Dönüşüm Destek Programı
-                  başvurusu için TÜBİTAK TÜSSİDE, MEXT veya İHKİB Dijital Dönüşüm Merkezi tarafından
-                  yetkilendirilmiş bir danışmandan alınacak resmi DDX veya SIRI raporunun yerine geçmez.
-                  Yüksek potansiyel gösteren işletmelere bu resmi rapor için yönlendirme yapılması önerilir.
+              <section className="mb-6">
+                <h4 className="font-semibold text-sm mb-1.5" style={{ color: "#727B8A" }}>Sınırlamalar ve Resmi Danışmanlık</h4>
+                <p className="text-sm leading-relaxed text-gray-800 bg-amber-50 p-4 rounded-lg border border-amber-100">
+                  Bu araç bir <strong>ön tarama</strong>dır. KOSGEB Dijital Dönüşüm Destek Programı başvurusu için TÜBİTAK TÜSSİDE, MEXT veya İHKİB Dijital Dönüşüm Merkezi tarafından yetkilendirilmiş bir danışmandan alınacak resmi DDX veya SIRI raporunun yerine geçmez.
                 </p>
-              </div>
+              </section>
 
-              <div>
-                <div className="disp text-sm mb-2" style={{ color: "var(--moss)" }}>Kaynakça</div>
-                <ul className="text-xs flex flex-col gap-2">
+              <section>
+                <h4 className="font-semibold text-sm mb-2.5" style={{ color: "#727B8A" }}>Kaynakça</h4>
+                <ul className="text-xs flex flex-col gap-2.5 text-gray-700 mono">
                   {SOURCES.map((s, i) => (
-                    <li key={i}>
-                      <span className="font-medium">{s.org}</span> — {s.title}. {s.desc}{" "}
-                      <span className="mono" style={{ color: "var(--moss)" }}>({s.url})</span>
+                    <li key={i} className="flex gap-2.5 items-start">
+                      <span className="font-semibold text-gray-900 shrink-0">{s.org}:</span>
+                      <span>{s.title}. {s.desc} <span className="text-gray-600">({s.url})</span></span>
                     </li>
                   ))}
                 </ul>
-              </div>
+              </section>
             </div>
 
-            <button className="btn-primary disp px-5 py-3 mt-6 flex items-center gap-2 no-print" onClick={() => window.print()}>
-              <FileDown size={16} /> PDF olarak indir
-            </button>
-            <button className="disp px-5 py-3 mt-3 flex items-center gap-2 no-print" style={{ color: "var(--moss)" }} onClick={restart}>
-              <RotateCcw size={16} /> Yeniden Başlat
-            </button>
+            <div className="mt-10 flex items-center gap-4 no-print">
+              <button className="btn-primary text-base px-10 py-3.5 flex items-center gap-2.5 font-semibold" onClick={() => window.print()}>
+                <FileDown size={20} /> Karneyi Yazdır / Kaydet
+              </button>
+              <button className="px-6 py-3.5 flex items-center gap-2.5 font-semibold" style={{ color: "#727B8A" }} onClick={restart}>
+                <RotateCcw size={18} /> Yeniden Başlat
+              </button>
+            </div>
           </div>
         )}
       </main>
+      
+      <footer className="card mt-16 px-6 py-6 rounded-none border-b-0 border-x-0 text-center text-xs text-gray-500">
+        Çorlu TSO Dijital Hazırlık Atölyesi © 2026. Bu bir ön tarama aracıdır.
+      </footer>
     </div>
   );
 }
@@ -704,13 +685,13 @@ export default function App() {
 function StepShell({ title, children, onBack, onNext, canProceed, last }) {
   return (
     <div>
-      <div className="mono text-xs mb-4" style={{ color: "var(--moss)" }}>{title}</div>
+      <div className="text-gray-500 text-xs font-semibold mono mb-2 uppercase tracking-tight">{title}</div>
       {children}
-      <div className="flex items-center gap-3 mt-8">
-        <button className="px-4 py-2 flex items-center gap-1 text-sm" onClick={onBack} style={{ color: "var(--moss)" }}>
-          <ArrowLeft size={16} /> Geri
+      <div className="flex items-center gap-4 mt-10 no-print">
+        <button className="px-5 py-3 flex items-center gap-2 text-sm font-semibold border border-gray-200 rounded-md bg-white hover:bg-gray-50" onClick={onBack}>
+          <ArrowLeft size={18} /> Geri
         </button>
-        <button className="btn-primary disp px-6 py-3 flex items-center gap-2 ml-auto" onClick={onNext} disabled={!canProceed}>
+        <button className="btn-primary text-sm px-7 py-3 flex items-center gap-2 font-semibold ml-auto" onClick={onNext} disabled={!canProceed}>
           {last ? "Karneyi Gör" : "Devam Et"} <ArrowRight size={18} />
         </button>
       </div>
