@@ -153,55 +153,59 @@ const QUESTIONS = {
   ],
 };
 
+/* Kaynak alanları: sourceUrl = üreticinin resmi kök alan adı (birincil kaynak).
+   "örn." ile başlayan kategori örnekleri (tekil ürün olmayanlar) için sourceUrl
+   boş bırakılır — kurul bu satırları somut bir ürüne bağlayıp doğrulamalı.
+   verified = son doğrulama ayı/yılı; her çeyreklik incelemede güncellenmeli. */
 const TOOLS = {
   ik: {
     baslangic: [
-      { name: "Kariyer.net / Yenibiriş ücretsiz ilan modülü", tier: "Ücretsiz", why: "Elden/kağıt başvuru takibini tek dijital listeye taşır.", alt: "LinkedIn ücretsiz ilan" },
-      { name: "Google Forms + Sheets başvuru formu", tier: "Ücretsiz", why: "Kod yazmadan başvuru formu kurup otomatik tabloya aktarır.", alt: "Microsoft Forms" },
+      { name: "Kariyer.net / Yenibiriş ücretsiz ilan modülü", tier: "Ücretsiz", why: "Elden/kağıt başvuru takibini tek dijital listeye taşır.", alt: "LinkedIn ücretsiz ilan", sourceUrl: "kariyer.net", verified: "Ağu 2026" },
+      { name: "Google Forms + Sheets başvuru formu", tier: "Ücretsiz", why: "Kod yazmadan başvuru formu kurup otomatik tabloya aktarır.", alt: "Microsoft Forms", sourceUrl: "workspace.google.com", verified: "Ağu 2026" },
     ],
     gelisen: [
-      { name: "Manatal (no-code ATS)", tier: "Düşük maliyetli, aylık abonelik", why: "CV'leri otomatik puanlar, ekip içi ortak değerlendirmeyi hızlandırır.", alt: "Recruitee" },
-      { name: "Bulut bordro/puantaj yazılımı (Logo, Zirve vb.)", tier: "Düşük-orta maliyetli", why: "Excel'deki puantaj hatasını azaltır, izin taleplerini otomatikleştirir.", alt: "Kolay Bordro" },
+      { name: "Manatal (no-code ATS)", tier: "Düşük maliyetli, aylık abonelik", why: "CV'leri otomatik puanlar, ekip içi ortak değerlendirmeyi hızlandırır.", alt: "Recruitee", sourceUrl: "manatal.com", verified: "Ağu 2026" },
+      { name: "Bulut bordro/puantaj yazılımı (Logo, Zirve vb.)", tier: "Düşük-orta maliyetli", why: "Excel'deki puantaj hatasını azaltır, izin taleplerini otomatikleştirir.", alt: "Kolay Bordro", sourceUrl: "", verified: "Doğrulanmadı — kurul tekil ürün seçmeli" },
     ],
     ileri: [
-      { name: "Kurumsal İK bilgi sistemi (örn. Bordro.io, SAP SuccessFactors)", tier: "Kurumsal", why: "İşe alım, bordro ve performansı tek platformda birleştirip raporlar.", alt: "Workday (büyük ölçek)" },
+      { name: "Kurumsal İK bilgi sistemi (örn. Bordro.io, SAP SuccessFactors)", tier: "Kurumsal", why: "İşe alım, bordro ve performansı tek platformda birleştirip raporlar.", alt: "Workday (büyük ölçek)", sourceUrl: "", verified: "Doğrulanmadı — kurul tekil ürün seçmeli" },
     ],
   },
   pazarlama: {
     baslangic: [
-      { name: "Canva (ücretsiz plan)", tier: "Ücretsiz", why: "Tasarım bilgisi gerektirmeden sosyal medya görseli/broşür üretir.", alt: "Adobe Express" },
-      { name: "Meta Business Suite", tier: "Ücretsiz", why: "Instagram/Facebook paylaşımlarını tek panelden planlar.", alt: "Buffer ücretsiz plan" },
+      { name: "Canva (ücretsiz plan)", tier: "Ücretsiz", why: "Tasarım bilgisi gerektirmeden sosyal medya görseli/broşür üretir.", alt: "Adobe Express", sourceUrl: "canva.com", verified: "Ağu 2026" },
+      { name: "Meta Business Suite", tier: "Ücretsiz", why: "Instagram/Facebook paylaşımlarını tek panelden planlar.", alt: "Buffer ücretsiz plan", sourceUrl: "business.facebook.com", verified: "Ağu 2026" },
     ],
     gelisen: [
-      { name: "Mailchimp (başlangıç planı)", tier: "Düşük maliyetli", why: "Müşteri e-posta listesiyle otomatik bülten/kampanya gönderir.", alt: "Brevo (Sendinblue)" },
-      { name: "Meta / Google reklam yöneticisi", tier: "Kullanım bazlı bütçe", why: "Hedefli reklamla yeni müşteri kazanımını ölçülebilir hale getirir.", alt: "TikTok Ads Manager" },
+      { name: "Mailchimp (başlangıç planı)", tier: "Düşük maliyetli", why: "Müşteri e-posta listesiyle otomatik bülten/kampanya gönderir.", alt: "Brevo (Sendinblue)", sourceUrl: "mailchimp.com", verified: "Ağu 2026" },
+      { name: "Meta / Google reklam yöneticisi", tier: "Kullanım bazlı bütçe", why: "Hedefli reklamla yeni müşteri kazanımını ölçülebilir hale getirir.", alt: "TikTok Ads Manager", sourceUrl: "ads.google.com", verified: "Ağu 2026" },
     ],
     ileri: [
-      { name: "HubSpot Marketing Hub", tier: "Orta-kurumsal", why: "Pazarlama otomasyonu, aday skorlama ve raporlamayı birleştirir.", alt: "ActiveCampaign" },
+      { name: "HubSpot Marketing Hub", tier: "Orta-kurumsal", why: "Pazarlama otomasyonu, aday skorlama ve raporlamayı birleştirir.", alt: "ActiveCampaign", sourceUrl: "hubspot.com", verified: "Ağu 2026" },
     ],
   },
   stok: {
     baslangic: [
-      { name: "Excel şablon + barkod etiketleme", tier: "Ücretsiz / çok düşük", why: "Elle sayım hatasını azaltıp temel stok kaydı sağlar.", alt: "Google Sheets stok şablonu" },
-      { name: "Basit mobil stok takip uygulaması", tier: "Ücretsiz-düşük", why: "Telefonla barkod okutup anlık stok güncellemesi yapar.", alt: "inFlow ücretsiz plan" },
+      { name: "Excel şablon + barkod etiketleme", tier: "Ücretsiz / çok düşük", why: "Elle sayım hatasını azaltıp temel stok kaydı sağlar.", alt: "Google Sheets stok şablonu", sourceUrl: "", verified: "N/A — tekil ürün değil" },
+      { name: "Basit mobil stok takip uygulaması", tier: "Ücretsiz-düşük", why: "Telefonla barkod okutup anlık stok güncellemesi yapar.", alt: "inFlow ücretsiz plan", sourceUrl: "inflowinventory.com", verified: "Ağu 2026" },
     ],
     gelisen: [
-      { name: "Odoo Community (açık kaynak)", tier: "Kurulum/bakım hariç ücretsiz", why: "Stok, satın alma ve üretimi tek sistemde birbirine bağlar.", alt: "Zoho Inventory" },
+      { name: "Odoo Community (açık kaynak)", tier: "Kurulum/bakım hariç ücretsiz", why: "Stok, satın alma ve üretimi tek sistemde birbirine bağlar.", alt: "Zoho Inventory", sourceUrl: "odoo.com", verified: "Ağu 2026" },
     ],
     ileri: [
-      { name: "Kurumsal ERP/MES (örn. Logo Tiger, SAP Business One)", tier: "Kurumsal", why: "Üretim planlama, stok ve muhasebeyi gerçek zamanlı entegre eder.", alt: "Microsoft Dynamics 365" },
+      { name: "Kurumsal ERP/MES (örn. Logo Tiger, SAP Business One)", tier: "Kurumsal", why: "Üretim planlama, stok ve muhasebeyi gerçek zamanlı entegre eder.", alt: "Microsoft Dynamics 365", sourceUrl: "", verified: "Doğrulanmadı — kurul tekil ürün seçmeli" },
     ],
   },
   musteri: {
     baslangic: [
-      { name: "WhatsApp Business (ücretsiz)", tier: "Ücretsiz", why: "Otomatik karşılama mesajı ve katalogla iletişimi düzenler.", alt: "Telegram Business" },
-      { name: "Google Sheets müşteri listesi", tier: "Ücretsiz", why: "Dağınık not defterlerini tek merkezi listeye taşır.", alt: "Notion ücretsiz plan" },
+      { name: "WhatsApp Business (ücretsiz)", tier: "Ücretsiz", why: "Otomatik karşılama mesajı ve katalogla iletişimi düzenler.", alt: "Telegram Business", sourceUrl: "business.whatsapp.com", verified: "Ağu 2026" },
+      { name: "Google Sheets müşteri listesi", tier: "Ücretsiz", why: "Dağınık not defterlerini tek merkezi listeye taşır.", alt: "Notion ücretsiz plan", sourceUrl: "workspace.google.com", verified: "Ağu 2026" },
     ],
     gelisen: [
-      { name: "HubSpot Free CRM", tier: "Ücretsiz-düşük maliyetli", why: "Müşteri geçmişi, teklif ve takip görevlerini tek ekranda tutar.", alt: "Zoho CRM ücretsiz plan" },
+      { name: "HubSpot Free CRM", tier: "Ücretsiz-düşük maliyetli", why: "Müşteri geçmişi, teklif ve takip görevlerini tek ekranda tutar.", alt: "Zoho CRM ücretsiz plan", sourceUrl: "hubspot.com", verified: "Ağu 2026" },
     ],
     ileri: [
-      { name: "Kurumsal CRM (örn. Zoho One, Salesforce)", tier: "Kurumsal", why: "Satış, hizmet ve pazarlamayı tek veri tabanında birleştirir.", alt: "Microsoft Dynamics CRM" },
+      { name: "Kurumsal CRM (örn. Zoho One, Salesforce)", tier: "Kurumsal", why: "Satış, hizmet ve pazarlamayı tek veri tabanında birleştirir.", alt: "Microsoft Dynamics CRM", sourceUrl: "", verified: "Doğrulanmadı — kurul tekil ürün seçmeli" },
     ],
   },
 };
@@ -506,6 +510,9 @@ export default function App() {
                         </div>
                         <p className="text-sm mt-1">{t.why}</p>
                         <p className="text-xs mt-1" style={{ color: "var(--moss)" }}>Alternatif: {t.alt}</p>
+                        <p className="text-xs mt-1 mono" style={{ color: t.sourceUrl ? "var(--moss)" : "#9C4A3C" }}>
+                          Kaynak: {t.sourceUrl || "belirlenmedi"} · Son doğrulama: {t.verified}
+                        </p>
                       </div>
                     ))}
                   </div>
