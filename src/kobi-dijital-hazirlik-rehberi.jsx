@@ -4,13 +4,11 @@ import {
   FlaskConical, Car, Hammer, HardHat, Truck, Tractor, UtensilsCrossed,
   Laptop, Stethoscope, GraduationCap, Landmark, Recycle, Search,
   ArrowRight, ArrowLeft, CheckCircle2, Sparkles, RotateCcw, FileDown,
-  Building2, ChevronRight, Award, ShieldCheck, Zap, BarChart3, HelpCircle,
-  ExternalLink, Layers, LayoutGrid, Check, Info, TrendingUp, Target
+  Award, ShieldCheck, BarChart3, Check, Info, Target, ExternalLink
 } from "lucide-react";
 
 /* ---------------------------------------------------------
-   VERİ KATMANI — 1090 üyelik sanayi haritası ve KOSGEB / DDX
-   standartlarına uyumlu KOBİ Dijital Dönüşüm Veritabanı
+   VERİ KATMANI — KOBİ Dijital Dönüşüm Veritabanı
 --------------------------------------------------------- */
 
 const SECTOR_GROUPS = [
@@ -242,9 +240,9 @@ const TOOLS = {
 };
 
 const LEVELS = {
-  baslangic: { label: "Başlangıç Seviyesi", color: "#DC2626", bg: "#FEF2F2", border: "#FCA5A5", badgeBg: "#EF4444" },
-  gelisen: { label: "Gelişen Seviye", color: "#D97706", bg: "#FFFBEB", border: "#FCD34D", badgeBg: "#F59E0B" },
-  ileri: { label: "İleri Seviye", color: "#059669", bg: "#ECFDF5", border: "#6EE7B7", badgeBg: "#10B981" },
+  baslangic: { label: "Başlangıç Seviyesi", color: "#EF4444", bg: "#FEF2F2", border: "#FCA5A5" },
+  gelisen: { label: "Gelişen Seviye", color: "#F59E0B", bg: "#FFFBEB", border: "#FCD34D" },
+  ileri: { label: "İleri Seviye", color: "#10B981", bg: "#ECFDF5", border: "#6EE7B7" },
 };
 
 const TIER_PRESENTATION = {
@@ -261,25 +259,17 @@ function levelFromScore(avg) {
 }
 
 /* ---------------------------------------------------------
-   GAUGE COMPONENT — Modern Radial Semi-Circle Meter
+   GAUGE COMPONENT — Modern Radial Meter
 --------------------------------------------------------- */
 function ScoreGauge({ score, level }) {
   const percentage = Math.min(Math.max(((score - 1) / 3) * 100, 0), 100);
-  const strokeDasharray = 251; // PI * radius (80)
+  const strokeDasharray = 251;
   const strokeDashoffset = strokeDasharray - (strokeDasharray * percentage) / 100;
-  
+
   return (
-    <div className="flex flex-col items-center justify-center relative">
-      <svg width="180" height="100" viewBox="0 0 180 100" className="overflow-visible">
-        {/* Background Track */}
-        <path
-          d="M 10 90 A 80 80 0 0 1 170 90"
-          fill="none"
-          stroke="#E5E7EB"
-          strokeWidth="14"
-          strokeLinecap="round"
-        />
-        {/* Colored Progress Track */}
+    <div style={{ display: "flex", flexDirection: "column", alignItems: "center", position: "relative" }}>
+      <svg width="180" height="100" viewBox="0 0 180 100">
+        <path d="M 10 90 A 80 80 0 0 1 170 90" fill="none" stroke="#334155" strokeWidth="14" strokeLinecap="round" />
         <path
           d="M 10 90 A 80 80 0 0 1 170 90"
           fill="none"
@@ -291,16 +281,16 @@ function ScoreGauge({ score, level }) {
           style={{ transition: "stroke-dashoffset 0.8s ease-in-out" }}
         />
       </svg>
-      <div className="absolute bottom-1 text-center">
-        <span className="text-3xl font-extrabold text-gray-900 tracking-tight">{score.toFixed(1)}</span>
-        <span className="text-xs text-gray-400 font-medium"> / 4.0</span>
+      <div style={{ position: "absolute", bottom: "4px", textAlign: "center" }}>
+        <span style={{ fontSize: "28px", fontWeight: "800", color: "#FFFFFF" }}>{score.toFixed(1)}</span>
+        <span style={{ fontSize: "12px", color: "#94A3B8" }}> / 4.0</span>
       </div>
     </div>
   );
 }
 
 /* ---------------------------------------------------------
-   MAIN APPLICATION COMPONENT
+   MAIN APPLICATION
 --------------------------------------------------------- */
 const STEPS = ["intro", "sector", "size", "ik", "pazarlama", "stok", "musteri", "results"];
 
@@ -370,149 +360,117 @@ export default function App() {
   const selectedSizeObj = useMemo(() => SIZES.find((s) => s.id === size), [size]);
 
   return (
-    <div className="min-h-screen bg-slate-50 text-slate-800 font-sans antialiased selection:bg-blue-600 selection:text-white">
+    <div style={{ minHeight: "100vh", backgroundColor: "#0F172A", color: "#F8FAFC", fontFamily: "system-ui, -apple-system, sans-serif" }}>
+      
+      {/* GLOBAL STYLES & PRINT OVERRIDES */}
       <style dangerouslySetInnerHTML={{ __html: `
-        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap');
-        body { font-family: 'Plus Jakarta Sans', sans-serif; }
-        .mono { font-family: 'JetBrains Mono', monospace; }
         @media print {
           .no-print { display: none !important; }
           body { background: white !important; color: black !important; }
-          .print-card { border: 1px solid #e2e8f0 !important; box-shadow: none !important; break-inside: avoid; margin-bottom: 1.5rem; }
+          .print-card { background: white !important; color: black !important; border: 1px solid #CBD5E1 !important; box-shadow: none !important; }
         }
       ` }} />
 
       {/* HEADER BAR */}
-      <header className="bg-slate-900 border-b border-slate-800 text-white sticky top-0 z-50 backdrop-blur-md bg-opacity-95">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-blue-600 flex items-center justify-center font-black text-xl text-white shadow-lg shadow-blue-500/30">
+      <header style={{ backgroundColor: "#1E293B", borderBottom: "1px solid #334155", position: "sticky", top: 0, zIndex: 50 }}>
+        <div style={{ maxWidth: "1150px", margin: "0 auto", padding: "0 24px", height: "72px", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+          <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
+            <div style={{ width: "40px", height: "40px", borderRadius: "10px", backgroundColor: "#2563EB", display: "flex", alignItems: "center", justifyCenter: "center", fontWeight: "900", fontSize: "20px", color: "#FFF", lineHeight: "40px", textAlign: "center" }}>
               Ç
             </div>
             <div>
-              <div className="flex items-center gap-2">
-                <span className="font-bold text-lg tracking-tight text-white">ÇORLU TSO</span>
-                <span className="hidden sm:inline-block px-2 py-0.5 rounded text-[10px] font-semibold bg-blue-500/20 text-blue-300 border border-blue-500/30">
+              <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+                <span style={{ fontWeight: "800", fontSize: "16px", color: "#FFF", letterSpacing: "-0.3px" }}>ÇORLU TSO</span>
+                <span style={{ backgroundColor: "rgba(37, 99, 235, 0.2)", color: "#60A5FA", border: "1px solid rgba(96, 165, 250, 0.3)", padding: "2px 8px", borderRadius: "4px", fontSize: "10px", fontWeight: "700" }}>
                   DİJİTAL DÖNÜŞÜM MERKEZİ
                 </span>
               </div>
-              <p className="text-xs text-slate-400 font-medium">KOBİ Dijital Hazırlık & Yapay Zeka Rehberi</p>
+              <p style={{ fontSize: "12px", color: "#94A3B8", margin: 0 }}>KOBİ Dijital Hazırlık & Yapay Zeka Rehberi</p>
             </div>
           </div>
 
           {stepIdx > 0 && stepIdx < STEPS.length - 1 && (
-            <div className="hidden md:flex items-center gap-2 bg-slate-800/80 px-4 py-2 rounded-lg border border-slate-700/60">
-              <span className="text-xs font-semibold text-slate-400">İlerleme:</span>
-              <div className="w-32 bg-slate-700 h-2 rounded-full overflow-hidden">
-                <div 
-                  className="bg-blue-500 h-full transition-all duration-300 ease-out" 
-                  style={{ width: `${(stepIdx / (STEPS.length - 1)) * 100}%` }}
-                />
+            <div style={{ display: "flex", alignItems: "center", gap: "12px", backgroundColor: "#0F172A", padding: "8px 16px", borderRadius: "8px", border: "1px solid #334155" }}>
+              <span style={{ fontSize: "12px", fontWeight: "600", color: "#94A3B8" }}>İlerleme:</span>
+              <div style={{ width: "120px", backgroundColor: "#334155", height: "8px", borderRadius: "4px", overflow: "hidden" }}>
+                <div style={{ backgroundColor: "#2563EB", height: "100%", width: `${(stepIdx / (STEPS.length - 1)) * 100}%`, transition: "all 0.3s" }} />
               </div>
-              <span className="text-xs font-bold text-blue-400 mono">{Math.round((stepIdx / (STEPS.length - 1)) * 100)}%</span>
+              <span style={{ fontSize: "12px", fontWeight: "700", color: "#60A5FA" }}>%{Math.round((stepIdx / (STEPS.length - 1)) * 100)}</span>
             </div>
           )}
 
-          <div className="flex items-center gap-3">
-            <a 
-              href="https://ddxmodel.tubitak.gov.tr" 
-              target="_blank" 
-              rel="noreferrer" 
-              className="hidden lg:flex items-center gap-1.5 text-xs font-semibold text-slate-300 hover:text-white transition-colors"
+          {step === "results" && (
+            <button
+              onClick={() => window.print()}
+              className="no-print"
+              style={{ backgroundColor: "#2563EB", color: "#FFF", border: "none", padding: "10px 18px", borderRadius: "8px", fontWeight: "700", fontSize: "13px", cursor: "pointer", display: "flex", alignItems: "center", gap: "8px" }}
             >
-              <span>TÜBİTAK DDX Uyumlu</span>
-              <ExternalLink size={13} className="text-slate-400" />
-            </a>
-            {step === "results" && (
-              <button 
-                onClick={() => window.print()} 
-                className="no-print bg-blue-600 hover:bg-blue-500 text-white text-xs font-semibold px-4 py-2.5 rounded-lg transition-all shadow-md shadow-blue-600/20 flex items-center gap-2"
-              >
-                <FileDown size={15} />
-                <span>Raporu İndir</span>
-              </button>
-            )}
-          </div>
+              <FileDown size={16} /> Raporu İndir / Yazdır
+            </button>
+          )}
         </div>
       </header>
 
-      {/* HERO BANNER FOR INTRO */}
+      {/* HERO SECTION FOR INTRO */}
       {step === "intro" && (
-        <div className="bg-gradient-to-b from-slate-900 via-slate-800 to-slate-900 text-white border-b border-slate-800 py-16 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
-          <div className="absolute inset-0 bg-[radial-gradient(#3b82f6_1px,transparent_1px)] [background-size:16px_16px] opacity-10" />
-          <div className="max-w-4xl mx-auto text-center relative z-10">
-            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 text-xs font-bold mb-6">
-              <Sparkles size={14} />
-              <span>EU DMAT · TÜBİTAK DDX · MEXT SIRI METODOLOJİSİ</span>
+        <div style={{ background: "linear-gradient(180deg, #1E293B 0%, #0F172A 100%)", borderBottom: "1px solid #334155", padding: "64px 24px", textAlign: "center" }}>
+          <div style={{ maxWidth: "800px", margin: "0 auto" }}>
+            <div style={{ display: "inline-flex", alignItems: "center", gap: "6px", backgroundColor: "rgba(37, 99, 235, 0.15)", border: "1px solid rgba(96, 165, 250, 0.3)", padding: "6px 14px", borderRadius: "20px", color: "#60A5FA", fontSize: "12px", fontWeight: "700", marginBottom: "24px" }}>
+              <Sparkles size={14} /> EU DMAT · TÜBİTAK DDX · MEXT SIRI UYUMLU METODOLOJİ
             </div>
-            <h1 className="text-3xl sm:text-5xl font-extrabold tracking-tight text-white mb-6 leading-tight">
-              İşletmenizin Dijital Olgunluğunu Ölçün, <br className="hidden sm:inline" />
-              <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-400 via-indigo-300 to-cyan-400">
-                Size Özel Yol Haritasını Çıkarın
+            <h1 style={{ fontSize: "40px", fontWeight: "900", letterSpacing: "-1px", lineHeight: "1.2", marginBottom: "20px", color: "#FFF" }}>
+              İşletmenizin Dijital Olgunluğunu Ölçün,<br />
+              <span style={{ background: "linear-gradient(90deg, #60A5FA 0%, #93C5FD 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
+                Size Özel Dijital Yol Haritasını Edinin
               </span>
             </h1>
-            <p className="text-base sm:text-lg text-slate-300 max-w-2xl mx-auto leading-relaxed mb-10">
+            <p style={{ fontSize: "16px", color: "#94A3B8", lineHeight: "1.6", marginBottom: "32px" }}>
               10 dakikalık hızlı değerlendirme ile İK, Pazarlama, Üretim/Stok ve Müşteri İlişkileri süreçlerinizdeki 
               dijitalleşme seviyenizi öğrenin; bütçenize uygun somut araç ve yazılım önerilerini hemen inceleyin.
             </p>
-
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-              <button 
-                onClick={goNext}
-                className="w-full sm:w-auto bg-blue-600 hover:bg-blue-500 text-white font-bold text-base px-8 py-4 rounded-xl shadow-xl shadow-blue-600/25 transition-all transform hover:-translate-y-0.5 flex items-center justify-center gap-3"
-              >
-                <span>Analize Başla</span>
-                <ArrowRight size={20} />
-              </button>
-            </div>
+            <button
+              onClick={goNext}
+              style={{ backgroundColor: "#2563EB", color: "#FFF", border: "none", padding: "16px 36px", borderRadius: "12px", fontSize: "16px", fontWeight: "800", cursor: "pointer", display: "inline-flex", alignItems: "center", gap: "10px", boxShadow: "0 10px 25px -5px rgba(37, 99, 235, 0.4)" }}
+            >
+              Analize Başla <ArrowRight size={20} />
+            </button>
           </div>
         </div>
       )}
 
       {/* MAIN CONTAINER */}
-      <main className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
-        
+      <main style={{ maxWidth: "960px", margin: "0 auto", padding: "40px 24px" }}>
+
         {/* INTRO CONTENT */}
         {step === "intro" && (
-          <div className="space-y-12">
-            {/* FUNCTION CARDS */}
-            <div>
-              <h2 className="text-xs font-bold text-slate-400 uppercase tracking-widest text-center mb-6">
+          <div style={{ display: "flex", flexDirection: "column", gap: "32px" }}>
+            <div style={{ textAlign: "center" }}>
+              <h2 style={{ fontSize: "12px", fontWeight: "800", color: "#64748B", letterSpacing: "1px", textTransform: "uppercase", marginBottom: "20px" }}>
                 DEĞERLENDİRİLEN 4 TEMEL OPERASYONEL ALAN
               </h2>
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+              <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: "16px" }}>
                 {FUNCTIONS.map((f) => (
-                  <div key={f.id} className="bg-white p-6 rounded-2xl border border-slate-200/80 shadow-sm hover:shadow-md transition-all flex flex-col justify-between">
-                    <div>
-                      <div className="w-12 h-12 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center mb-4 font-bold">
-                        <f.icon size={24} />
-                      </div>
-                      <h3 className="font-bold text-base text-slate-900 mb-2">{f.label}</h3>
-                      <p className="text-xs text-slate-500 leading-relaxed">{f.desc}</p>
+                  <div key={f.id} style={{ backgroundColor: "#1E293B", padding: "24px", borderRadius: "16px", border: "1px solid #334155", textAlign: "left" }}>
+                    <div style={{ width: "44px", height: "44px", borderRadius: "10px", backgroundColor: "rgba(37, 99, 235, 0.2)", color: "#60A5FA", display: "flex", alignItems: "center", justifyContent: "center", marginBottom: "16px" }}>
+                      <f.icon size={22} />
                     </div>
+                    <h3 style={{ fontSize: "16px", fontWeight: "800", marginBottom: "6px", color: "#FFF" }}>{f.label}</h3>
+                    <p style={{ fontSize: "12px", color: "#94A3B8", margin: 0, lineHeight: "1.5" }}>{f.desc}</p>
                   </div>
                 ))}
               </div>
             </div>
 
-            {/* METHODOLOGY NOTICE */}
-            <div className="bg-white rounded-2xl p-6 sm:p-8 border border-slate-200/80 shadow-sm">
-              <div className="flex items-start gap-4">
-                <div className="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center shrink-0 font-bold">
-                  <ShieldCheck size={22} />
-                </div>
-                <div className="space-y-3">
-                  <h3 className="font-bold text-slate-900 text-lg">Resmi Çerçevelerle Hizalanmış Özgün Metodoloji</h3>
-                  <p className="text-sm text-slate-600 leading-relaxed">
-                    Soru ve puanlama yapımız; AB Dijital Avrupa Programı <strong>DMAT</strong>, TÜBİTAK TÜSSİDE <strong>DDX (D3A)</strong> ve MEXT <strong>SIRI</strong> standartlarına dayanmaktadır. 
-                    Bu araç KOBİ'lerin resmi danışmanlık öncesinde durum tespiti yapmasını sağlayan <strong>ön tarama rehberidir</strong>.
-                  </p>
-                  <div className="pt-2 flex flex-wrap gap-2 text-xs font-semibold text-slate-500">
-                    <span className="bg-slate-100 px-3 py-1 rounded-md">✓ %100 Doğrulanmış Kaynaklar</span>
-                    <span className="bg-slate-100 px-3 py-1 rounded-md">✓ Tarafsız & Bağımsız Yazılım Önerileri</span>
-                    <span className="bg-slate-100 px-3 py-1 rounded-md">✓ KOSGEB Desteğine Hazırlık</span>
-                  </div>
-                </div>
+            <div style={{ backgroundColor: "#1E293B", padding: "28px", borderRadius: "16px", border: "1px solid #334155", display: "flex", gap: "16px", alignItems: "flex-start" }}>
+              <div style={{ width: "40px", height: "40px", borderRadius: "10px", backgroundColor: "rgba(16, 185, 129, 0.2)", color: "#34D399", display: "flex", alignItems: "center", justifyContent: "center", shrink: 0 }}>
+                <ShieldCheck size={22} />
+              </div>
+              <div>
+                <h3 style={{ fontSize: "16px", fontWeight: "800", color: "#FFF", marginBottom: "6px" }}>Resmi Çerçevelerle Hizalanmış Metodoloji</h3>
+                <p style={{ fontSize: "13px", color: "#94A3B8", lineHeight: "1.6", margin: 0 }}>
+                  Soru ve puanlama yapımız; AB Dijital Avrupa Programı <strong>DMAT</strong>, TÜBİTAK TÜSSİDE <strong>DDX (D3A)</strong> ve MEXT <strong>SIRI</strong> standartlarına dayanmaktadır. 
+                  Bu araç KOBİ'lerin resmi danışmanlık öncesinde durum tespiti yapmasını sağlayan <strong>ön tarama rehberidir</strong>.
+                </p>
               </div>
             </div>
           </div>
@@ -520,35 +478,23 @@ export default function App() {
 
         {/* STEP 1: SECTOR */}
         {step === "sector" && (
-          <StepContainer 
-            title="Sektör Seçimi" 
-            subtitle="İşletmenizin ana faaliyet alanını seçin. Sektörünüze özel kritik odak noktaları analize dahil edilecektir."
-            onBack={goBack} 
-            onNext={goNext} 
-            canProceed={canProceed}
-            stepNumber={1}
-          >
-            {/* SEARCH & FILTERS */}
-            <div className="space-y-4 mb-6">
-              <div className="relative">
-                <Search size={18} className="absolute left-4 top-3.5 text-slate-400" />
+          <StepContainer title="Sektör Seçimi" subtitle="İşletmenizin ana faaliyet alanını seçin." onBack={goBack} onNext={goNext} canProceed={canProceed} stepNumber={1}>
+            <div style={{ marginBottom: "20px" }}>
+              <div style={{ position: "relative", marginBottom: "16px" }}>
+                <Search size={18} style={{ position: "absolute", left: "14px", top: "14px", color: "#64748B" }} />
                 <input
                   type="text"
                   value={sectorQuery}
                   onChange={(e) => setSectorQuery(e.target.value)}
-                  placeholder="Sektörünüzü arayın (örn: Tekstil, Metal, Otomotiv, Gıda)..."
-                  className="w-full pl-11 pr-4 py-3 bg-white border border-slate-200 rounded-xl text-sm font-medium text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all shadow-sm"
+                  placeholder="Sektörünüzü arayın (Tekstil, Metal, Otomotiv, Gıda)..."
+                  style={{ width: "100%", padding: "12px 14px 12px 42px", backgroundColor: "#0F172A", border: "1px solid #334155", borderRadius: "10px", color: "#FFF", fontSize: "14px", outline: "none" }}
                 />
               </div>
 
-              <div className="flex items-center gap-2 overflow-x-auto pb-1 scrollbar-none">
+              <div style={{ display: "flex", gap: "8px", overflowX: "auto", paddingBottom: "8px" }}>
                 <button
                   onClick={() => setSectorGroup("all")}
-                  className={`px-3.5 py-2 rounded-lg text-xs font-bold transition-all shrink-0 ${
-                    sectorGroup === "all"
-                      ? "bg-slate-900 text-white shadow-sm"
-                      : "bg-white text-slate-600 border border-slate-200 hover:bg-slate-50"
-                  }`}
+                  style={{ padding: "8px 14px", borderRadius: "8px", fontSize: "12px", fontWeight: "700", border: "none", cursor: "pointer", backgroundColor: sectorGroup === "all" ? "#2563EB" : "#334155", color: "#FFF" }}
                 >
                   Tüm Sektörler
                 </button>
@@ -556,11 +502,7 @@ export default function App() {
                   <button
                     key={g.id}
                     onClick={() => setSectorGroup(g.id)}
-                    className={`px-3.5 py-2 rounded-lg text-xs font-bold transition-all shrink-0 ${
-                      sectorGroup === g.id
-                        ? "bg-slate-900 text-white shadow-sm"
-                        : "bg-white text-slate-600 border border-slate-200 hover:bg-slate-50"
-                    }`}
+                    style={{ padding: "8px 14px", borderRadius: "8px", fontSize: "12px", fontWeight: "700", border: "none", cursor: "pointer", backgroundColor: sectorGroup === g.id ? "#2563EB" : "#334155", color: "#FFF", whiteSpace: "nowrap" }}
                   >
                     {g.label}
                   </button>
@@ -568,32 +510,33 @@ export default function App() {
               </div>
             </div>
 
-            {/* SECTOR GRID */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 max-h-[440px] overflow-y-auto pr-1">
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(280px, 1fr))", gap: "12px", maxHeight: "400px", overflowY: "auto", paddingRight: "4px" }}>
               {filteredSectors.map((s) => {
                 const isSelected = sector === s.id;
                 return (
                   <button
                     key={s.id}
                     onClick={() => setSector(s.id)}
-                    className={`p-4 rounded-xl text-left transition-all border flex items-start gap-3.5 relative ${
-                      isSelected
-                        ? "bg-blue-50/70 border-blue-600 ring-2 ring-blue-600/20 shadow-sm"
-                        : "bg-white border-slate-200/80 hover:border-slate-300 hover:bg-slate-50/50"
-                    }`}
+                    style={{
+                      padding: "16px",
+                      borderRadius: "12px",
+                      textAlign: "left",
+                      backgroundColor: isSelected ? "rgba(37, 99, 235, 0.2)" : "#0F172A",
+                      border: isSelected ? "2px solid #2563EB" : "1px solid #334155",
+                      cursor: "pointer",
+                      display: "flex",
+                      alignItems: "start",
+                      gap: "12px",
+                      transition: "all 0.2s"
+                    }}
                   >
-                    <div className={`p-2.5 rounded-lg shrink-0 ${isSelected ? "bg-blue-600 text-white" : "bg-slate-100 text-slate-600"}`}>
-                      <s.icon size={20} />
+                    <div style={{ width: "36px", height: "36px", borderRadius: "8px", backgroundColor: isSelected ? "#2563EB" : "#1E293B", color: isSelected ? "#FFF" : "#94A3B8", display: "flex", alignItems: "center", justifyContent: "center", shrink: 0 }}>
+                      <s.icon size={18} />
                     </div>
-                    <div className="flex-1 pr-4">
-                      <h4 className="font-bold text-sm text-slate-900 mb-0.5">{s.label}</h4>
-                      <p className="text-xs text-slate-500 line-clamp-2">{s.note}</p>
+                    <div style={{ flex: 1 }}>
+                      <div style={{ fontWeight: "700", fontSize: "14px", color: "#FFF", marginBottom: "2px" }}>{s.label}</div>
+                      <div style={{ fontSize: "11px", color: "#94A3B8", lineHeight: "1.4" }}>{s.note}</div>
                     </div>
-                    {isSelected && (
-                      <div className="w-5 h-5 rounded-full bg-blue-600 text-white flex items-center justify-center shrink-0 mt-1">
-                        <Check size={12} strokeWidth={3} />
-                      </div>
-                    )}
                   </button>
                 );
               })}
@@ -603,40 +546,32 @@ export default function App() {
 
         {/* STEP 2: SIZE */}
         {step === "size" && (
-          <StepContainer 
-            title="İşletme Ölçeği" 
-            subtitle="Çalışan sayınıza uygun ölçeği seçin. Yazılım bütçesi ve karmaşıklığı bu veriye göre ayarlanacaktır."
-            onBack={goBack} 
-            onNext={goNext} 
-            canProceed={canProceed}
-            stepNumber={2}
-          >
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+          <StepContainer title="İşletme Ölçeği" subtitle="Çalışan sayınıza uygun ölçeği seçin." onBack={goBack} onNext={goNext} canProceed={canProceed} stepNumber={2}>
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))", gap: "16px" }}>
               {SIZES.map((s) => {
                 const isSelected = size === s.id;
                 return (
                   <button
                     key={s.id}
                     onClick={() => setSize(s.id)}
-                    className={`p-6 rounded-2xl text-left transition-all border flex flex-col justify-between relative ${
-                      isSelected
-                        ? "bg-blue-50/70 border-blue-600 ring-2 ring-blue-600/20 shadow-md"
-                        : "bg-white border-slate-200/80 hover:border-slate-300 hover:bg-slate-50/50"
-                    }`}
+                    style={{
+                      padding: "24px",
+                      borderRadius: "16px",
+                      textAlign: "left",
+                      backgroundColor: isSelected ? "rgba(37, 99, 235, 0.2)" : "#0F172A",
+                      border: isSelected ? "2px solid #2563EB" : "1px solid #334155",
+                      cursor: "pointer",
+                      display: "flex",
+                      flexDirection: "column",
+                      justifySpace: "between"
+                    }}
                   >
                     <div>
-                      <div className="flex items-center justify-between mb-3">
-                        <span className={`text-xs font-bold px-2.5 py-1 rounded-md ${isSelected ? "bg-blue-600 text-white" : "bg-slate-100 text-slate-600"}`}>
-                          {s.sub}
-                        </span>
-                        {isSelected && (
-                          <div className="w-6 h-6 rounded-full bg-blue-600 text-white flex items-center justify-center">
-                            <Check size={14} strokeWidth={3} />
-                          </div>
-                        )}
-                      </div>
-                      <h4 className="font-bold text-lg text-slate-900 mb-2">{s.label}</h4>
-                      <p className="text-xs text-slate-500 leading-relaxed">{s.desc}</p>
+                      <span style={{ fontSize: "11px", fontWeight: "800", backgroundColor: isSelected ? "#2563EB" : "#334155", color: "#FFF", padding: "4px 8px", borderRadius: "4px", display: "inline-block", marginBottom: "12px" }}>
+                        {s.sub}
+                      </span>
+                      <h4 style={{ fontSize: "18px", fontWeight: "800", color: "#FFF", marginBottom: "8px", margin: 0 }}>{s.label}</h4>
+                      <p style={{ fontSize: "12px", color: "#94A3B8", lineHeight: "1.5", margin: 0 }}>{s.desc}</p>
                     </div>
                   </button>
                 );
@@ -647,53 +582,56 @@ export default function App() {
 
         {/* STEPS 3-6: QUESTIONS */}
         {fnStepIdx >= 0 && (
-          <StepContainer 
-            title={`${FUNCTIONS[fnStepIdx].label} Değerlendirmesi`} 
-            subtitle="Mevcut durumunuzu en doğru yansıtan seçenekleri işaretleyin."
-            onBack={goBack} 
-            onNext={goNext} 
+          <StepContainer
+            title={`${FUNCTIONS[fnStepIdx].label} Değerlendirmesi`}
+            subtitle="Mevcut durumunuzu en doğru yansıtan seçeneği işaretleyin."
+            onBack={goBack}
+            onNext={goNext}
             canProceed={canProceed}
             stepNumber={3 + fnStepIdx}
             last={fnStepIdx === FUNCTIONS.length - 1}
           >
-            {/* FRAMEWORK BADGE */}
-            <div className="mb-6 bg-slate-100/80 border border-slate-200/80 px-4 py-3 rounded-xl flex items-center gap-3 text-xs text-slate-600">
-              <Info size={16} className="text-blue-600 shrink-0" />
+            <div style={{ backgroundColor: "#0F172A", border: "1px solid #334155", padding: "12px 16px", borderRadius: "10px", fontSize: "12px", color: "#94A3B8", marginBottom: "24px", display: "flex", alignItems: "center", gap: "8px" }}>
+              <Info size={16} color="#60A5FA" />
               <span>
-                <strong>Resmi Model Hizalaması:</strong> EU DMAT: <em>{FRAMEWORK_ALIGNMENT[step].dmat}</em> · TÜBİTAK DDX: <em>{FRAMEWORK_ALIGNMENT[step].ddx}</em> · MEXT SIRI: <em>{FRAMEWORK_ALIGNMENT[step].siri}</em>
+                <strong>Resmi Model Hizalaması:</strong> EU DMAT: <em>{FRAMEWORK_ALIGNMENT[step].dmat}</em> · TÜBİTAK DDX: <em>{FRAMEWORK_ALIGNMENT[step].ddx}</em>
               </span>
             </div>
 
-            {/* QUESTIONS LIST */}
-            <div className="space-y-8">
+            <div style={{ display: "flex", flexDirection: "column", gap: "28px" }}>
               {QUESTIONS[step].map((q, qIdx) => (
-                <div key={qIdx} className="bg-white p-6 rounded-2xl border border-slate-200/80 shadow-sm space-y-4">
-                  <h4 className="font-bold text-base text-slate-900 flex items-start gap-3">
-                    <span className="w-6 h-6 rounded-full bg-blue-100 text-blue-700 text-xs font-black flex items-center justify-center shrink-0 mt-0.5">
+                <div key={qIdx} style={{ backgroundColor: "#0F172A", padding: "20px", borderRadius: "14px", border: "1px solid #334155" }}>
+                  <h4 style={{ fontSize: "15px", fontWeight: "700", color: "#FFF", marginBottom: "14px", display: "flex", alignItems: "center", gap: "10px" }}>
+                    <span style={{ width: "24px", height: "24px", borderRadius: "50%", backgroundColor: "rgba(37, 99, 235, 0.2)", color: "#60A5FA", fontSize: "12px", fontWeight: "800", display: "inline-flex", alignItems: "center", justifyContent: "center" }}>
                       {qIdx + 1}
                     </span>
-                    <span>{q.text}</span>
+                    {q.text}
                   </h4>
 
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1">
+                  <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))", gap: "10px" }}>
                     {q.options.map((opt, oIdx) => {
                       const isSelected = answers[step][qIdx] === oIdx + 1;
                       return (
                         <button
                           key={oIdx}
                           onClick={() => setAnswer(step, qIdx, oIdx + 1)}
-                          className={`p-4 rounded-xl text-left text-xs font-medium transition-all border flex items-start gap-3 ${
-                            isSelected
-                              ? "bg-blue-50/80 border-blue-600 text-blue-950 font-bold ring-1 ring-blue-600/30"
-                              : "bg-slate-50/50 border-slate-200/70 text-slate-700 hover:bg-slate-100/60 hover:border-slate-300"
-                          }`}
+                          style={{
+                            padding: "14px",
+                            borderRadius: "10px",
+                            textAlign: "left",
+                            fontSize: "12px",
+                            fontWeight: "500",
+                            backgroundColor: isSelected ? "#2563EB" : "#1E293B",
+                            color: isSelected ? "#FFF" : "#CBD5E1",
+                            border: isSelected ? "1px solid #60A5FA" : "1px solid #334155",
+                            cursor: "pointer",
+                            display: "flex",
+                            alignItems: "flex-start",
+                            gap: "10px"
+                          }}
                         >
-                          <span className={`w-5 h-5 rounded-md text-[10px] font-bold flex items-center justify-center shrink-0 border ${
-                            isSelected ? "bg-blue-600 border-blue-600 text-white" : "bg-white border-slate-300 text-slate-500"
-                          }`}>
-                            {oIdx + 1}
-                          </span>
-                          <span className="leading-relaxed">{opt}</span>
+                          <span style={{ fontWeight: "800", fontSize: "11px", opacity: 0.7 }}>{oIdx + 1}.</span>
+                          <span style={{ lineHeight: "1.4" }}>{opt}</span>
                         </button>
                       );
                     })}
@@ -704,201 +642,95 @@ export default function App() {
           </StepContainer>
         )}
 
-        {/* STEP 7: RESULTS & REPORT */}
+        {/* STEP 7: RESULTS */}
         {step === "results" && (
-          <div className="space-y-10">
+          <div style={{ display: "flex", flexDirection: "column", gap: "32px" }}>
             
-            {/* OVERALL SUMMARY HEADER */}
-            <div className="bg-slate-900 text-white rounded-3xl p-8 sm:p-10 shadow-2xl relative overflow-hidden print-card">
-              <div className="absolute top-0 right-0 w-96 h-96 bg-blue-600/10 rounded-full filter blur-3xl" />
-              
-              <div className="relative z-10 flex flex-col md:flex-row items-center justify-between gap-8">
-                <div className="space-y-4 text-center md:text-left">
-                  <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/20 text-blue-300 border border-blue-500/30 text-xs font-bold">
-                    <Award size={14} />
-                    <span>DİJİTAL DÖNÜŞÜM KARNESİ</span>
-                  </div>
-                  <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight">
-                    Genel Olgunluk: <span style={{ color: LEVELS[overallLevel].color }}>{LEVELS[overallLevel].label}</span>
-                  </h2>
-                  <p className="text-slate-300 text-sm max-w-xl leading-relaxed">
-                    <strong>{selectedSectorObj?.label}</strong> sektöründe faaliyet gösteren <strong>{selectedSizeObj?.label}</strong> ölçeğindeki işletmeniz için hazırlanan analiz sonuçları aşağıdadır.
-                  </p>
-                  <div className="pt-2 flex flex-wrap items-center justify-center md:justify-start gap-4 text-xs text-slate-400">
-                    <span>Sektör Odak Noktası: <strong className="text-slate-200">{selectedSectorObj?.note}</strong></span>
-                  </div>
+            {/* OVERALL HEADER */}
+            <div className="print-card" style={{ backgroundColor: "#1E293B", padding: "36px", borderRadius: "24px", border: "1px solid #334155", display: "flex", flexWrap: "wrap", alignItems: "center", justifyBetween: "space-between", gap: "24px" }}>
+              <div>
+                <div style={{ display: "inline-flex", alignItems: "center", gap: "6px", backgroundColor: "rgba(37, 99, 235, 0.2)", color: "#60A5FA", padding: "4px 12px", borderRadius: "12px", fontSize: "11px", fontWeight: "800", marginBottom: "12px" }}>
+                  <Award size={14} /> DİJİTAL DÖNÜŞÜM KARNESİ
                 </div>
+                <h2 style={{ fontSize: "32px", fontWeight: "900", color: "#FFF", margin: 0 }}>
+                  Genel Olgunluk: <span style={{ color: LEVELS[overallLevel].color }}>{LEVELS[overallLevel].label}</span>
+                </h2>
+                <p style={{ fontSize: "14px", color: "#94A3B8", marginTop: "8px", margin: 0 }}>
+                  <strong>{selectedSectorObj?.label}</strong> · <strong>{selectedSizeObj?.label}</strong>
+                </p>
+              </div>
 
-                <div className="bg-slate-800/80 p-6 rounded-2xl border border-slate-700/80 text-center shrink-0 min-w-[220px]">
-                  <ScoreGauge score={overallAvg} level={overallLevel} />
-                  <div className="mt-3 pt-3 border-t border-slate-700 text-xs font-bold text-slate-300">
-                    Genel Skor Ortalaması
-                  </div>
-                </div>
+              <div style={{ backgroundColor: "#0F172A", padding: "20px 28px", borderRadius: "16px", border: "1px solid #334155", textAlign: "center", minWidth: "180px" }}>
+                <ScoreGauge score={overallAvg} level={overallLevel} />
+                <div style={{ fontSize: "11px", fontWeight: "800", color: "#94A3B8", marginTop: "8px" }}>DİJİTAL SKOR ORTALAMASI</div>
               </div>
             </div>
 
-            {/* DETAILED FUNCTION BREAKDOWN */}
-            <div className="space-y-8">
-              <div className="flex items-center justify-between">
-                <div>
-                  <h3 className="text-xl font-extrabold text-slate-900">Operasyonel Alan Analizleri & Araç Önerileri</h3>
-                  <p className="text-xs text-slate-500 mt-0.5">Her alan için mevcut seviyeniz ve atılabilecek somut adımlar</p>
-                </div>
-              </div>
+            {/* DETAILED CARDS */}
+            {results.map((r) => {
+              const levelObj = LEVELS[r.level];
+              return (
+                <div key={r.id} className="print-card" style={{ backgroundColor: "#1E293B", borderRadius: "20px", border: "1px solid #334155", padding: "28px" }}>
+                  <div style={{ display: "flex", alignItems: "center", justifyBetween: "space-between", flexWrap: "wrap", gap: "16px", paddingBottom: "20px", borderBottom: "1px solid #334155" }}>
+                    <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
+                      <div style={{ width: "42px", height: "42px", borderRadius: "12px", backgroundColor: "#2563EB", color: "#FFF", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                        <r.icon size={22} />
+                      </div>
+                      <div>
+                        <h3 style={{ fontSize: "18px", fontWeight: "800", color: "#FFF", margin: 0 }}>{r.label}</h3>
+                        <span style={{ fontSize: "12px", color: levelObj.color, fontWeight: "700" }}>
+                          {levelObj.label} ({r.avg.toFixed(1)} / 4.0)
+                        </span>
+                      </div>
+                    </div>
+                  </div>
 
-              {results.map((r) => {
-                const levelObj = LEVELS[r.level];
-                return (
-                  <div key={r.id} className="bg-white rounded-3xl border border-slate-200/80 shadow-sm overflow-hidden print-card">
-                    {/* CARD HEADER */}
-                    <div className="p-6 sm:p-8 border-b border-slate-100 flex flex-col sm:flex-row sm:items-center justify-between gap-6 bg-slate-50/50">
-                      <div className="flex items-start gap-4">
-                        <div className="w-12 h-12 rounded-2xl bg-blue-600 text-white flex items-center justify-center shrink-0 font-bold shadow-md shadow-blue-600/20">
-                          <r.icon size={24} />
-                        </div>
-                        <div>
-                          <div className="flex items-center gap-3">
-                            <h4 className="font-extrabold text-xl text-slate-900">{r.label}</h4>
-                            <span className="px-3 py-1 rounded-full text-xs font-bold" style={{ backgroundColor: levelObj.bg, color: levelObj.color, border: `1px solid ${levelObj.border}` }}>
-                              {levelObj.label} ({r.avg.toFixed(1)} / 4.0)
-                            </span>
+                  <div style={{ backgroundColor: "#0F172A", padding: "16px", borderRadius: "12px", border: "1px solid #334155", margin: "20px 0", fontSize: "13px", color: "#E2E8F0", display: "flex", gap: "10px", alignItems: "center" }}>
+                    <Target size={18} color="#60A5FA" />
+                    <span>{NEED_STATEMENTS[r.id]}</span>
+                  </div>
+
+                  {/* TOOLS */}
+                  <div style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
+                    {TIER_ORDER.map((tierKey) => {
+                      const tierInfo = TIER_PRESENTATION[tierKey];
+                      const isCurrentLevelTier = r.level === tierKey;
+                      const toolsList = TOOLS[r.id][tierKey];
+
+                      return (
+                        <div key={tierKey} style={{ backgroundColor: "#0F172A", padding: "16px", borderRadius: "12px", border: isCurrentLevelTier ? "2px solid #F59E0B" : "1px solid #334155" }}>
+                          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "12px" }}>
+                            <div style={{ fontSize: "13px", fontWeight: "800", color: "#FFF" }}>{tierInfo.heading}</div>
+                            {isCurrentLevelTier && (
+                              <span style={{ backgroundColor: "#F59E0B", color: "#000", fontSize: "10px", fontWeight: "900", padding: "2px 8px", borderRadius: "4px" }}>
+                                MEVCUT SEVİYENİZ
+                              </span>
+                            )}
                           </div>
-                          <p className="text-xs font-medium text-slate-500 mt-1">
-                            Resmi Boyut: EU DMAT ({FRAMEWORK_ALIGNMENT[r.id].dmat}) · TÜBİTAK DDX ({FRAMEWORK_ALIGNMENT[r.id].ddx})
-                          </p>
-                        </div>
-                      </div>
-                    </div>
 
-                    {/* NEED STATEMENT */}
-                    <div className="p-6 sm:p-8 space-y-6">
-                      <div className="bg-blue-50/70 border border-blue-200/60 p-4 rounded-xl flex items-start gap-3 text-xs sm:text-sm text-blue-950 font-semibold">
-                        <Target size={18} className="text-blue-600 shrink-0 mt-0.5" />
-                        <span>{NEED_STATEMENTS[r.id]}</span>
-                      </div>
-
-                      {/* TOOL TIERS */}
-                      <div className="space-y-6">
-                        <h5 className="text-xs font-bold text-slate-400 uppercase tracking-wider">
-                          SEVİYEYE GÖRE TAVSİYE EDİLEN YAZILIM / ARAC KATALOĞU
-                        </h5>
-
-                        <div className="grid grid-cols-1 gap-5">
-                          {TIER_ORDER.map((tierKey) => {
-                            const tierInfo = TIER_PRESENTATION[tierKey];
-                            const isCurrentLevelTier = r.level === tierKey;
-                            const toolsList = TOOLS[r.id][tierKey];
-
-                            return (
-                              <div 
-                                key={tierKey}
-                                className={`p-5 rounded-2xl border transition-all ${
-                                  isCurrentLevelTier
-                                    ? "bg-amber-50/30 border-amber-300/80 ring-2 ring-amber-400/20"
-                                    : "bg-slate-50/40 border-slate-200/70"
-                                }`}
-                              >
-                                <div className="flex items-center justify-between mb-4">
-                                  <div>
-                                    <div className="flex items-center gap-2">
-                                      <h6 className="font-bold text-sm text-slate-900">{tierInfo.heading}</h6>
-                                      {isCurrentLevelTier && (
-                                        <span className="bg-amber-500 text-white text-[10px] font-black px-2 py-0.5 rounded-md shadow-sm">
-                                          MEVCUT SEVİYENİZ
-                                        </span>
-                                      )}
-                                    </div>
-                                    <p className="text-xs text-slate-500 mt-0.5">{tierInfo.sub}</p>
-                                  </div>
-                                  <span className="text-xs font-bold px-2.5 py-1 rounded-lg bg-slate-200/70 text-slate-700">
-                                    {tierInfo.badge}
-                                  </span>
-                                </div>
-
-                                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                                  {toolsList.map((tool, tIdx) => (
-                                    <div key={tIdx} className="bg-white p-4 rounded-xl border border-slate-200/80 shadow-sm flex flex-col justify-between">
-                                      <div>
-                                        <div className="flex items-center justify-between gap-2 mb-2">
-                                          <span className="font-bold text-sm text-slate-900">{tool.name}</span>
-                                          <span className={`text-[10px] font-bold px-2 py-0.5 rounded ${
-                                            tool.origin === "yerli" ? "bg-emerald-100 text-emerald-800" : "bg-slate-100 text-slate-700"
-                                          }`}>
-                                            {tool.origin === "yerli" ? "Yerli Yazılım" : tool.origin === "uluslararası" ? "Global" : "Örnek"}
-                                          </span>
-                                        </div>
-                                        <p className="text-xs text-slate-600 leading-relaxed mb-3">{tool.why}</p>
-                                      </div>
-                                      <div className="pt-2 border-t border-slate-100 flex items-center justify-between text-[11px] text-slate-400 font-medium">
-                                        <span>Alt: {tool.alt}</span>
-                                        <span className="mono text-[10px]">{tool.verified}</span>
-                                      </div>
-                                    </div>
-                                  ))}
-                                </div>
+                          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))", gap: "12px" }}>
+                            {toolsList.map((tool, tIdx) => (
+                              <div key={tIdx} style={{ backgroundColor: "#1E293B", padding: "14px", borderRadius: "10px", border: "1px solid #334155" }}>
+                                <div style={{ fontSize: "13px", fontWeight: "700", color: "#60A5FA", marginBottom: "4px" }}>{tool.name}</div>
+                                <p style={{ fontSize: "11px", color: "#94A3B8", margin: 0, lineHeight: "1.4" }}>{tool.why}</p>
                               </div>
-                            );
-                          })}
+                            ))}
+                          </div>
                         </div>
-                      </div>
-                    </div>
+                      );
+                    })}
                   </div>
-                );
-              })}
-            </div>
-
-            {/* METHODOLOGY & REFERENCES SECTION */}
-            <div className="bg-white rounded-3xl p-8 border border-slate-200/80 shadow-sm space-y-6 print-card">
-              <h3 className="font-extrabold text-xl text-slate-900 flex items-center gap-2">
-                <BarChart3 size={22} className="text-blue-600" />
-                <span>Metodoloji, Puanlama & Resmi Kaynakça</span>
-              </h3>
-
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-xs text-slate-600 leading-relaxed">
-                <div className="space-y-2 bg-slate-50 p-5 rounded-2xl border border-slate-100">
-                  <h4 className="font-bold text-slate-900 text-sm">Puanlama Esasları</h4>
-                  <p>{SCORING_METHOD_TEXT}</p>
                 </div>
-                <div className="space-y-2 bg-slate-50 p-5 rounded-2xl border border-slate-100">
-                  <h4 className="font-bold text-slate-900 text-sm">Şeffaflık & Tarafsızlık İlkesi</h4>
-                  <p>
-                    Önerilen tüm araçlar bağımsız değerlendirmelerle seçilmiş olup Çorlu TSO herhangi bir ticari ortaklık yürütmemektedir. 
-                    Veri doğrulama tarihi: <strong>{METHODOLOGY_LAST_UPDATED}</strong>.
-                  </p>
-                </div>
-              </div>
+              );
+            })}
 
-              <div className="pt-4 border-t border-slate-100">
-                <h4 className="font-bold text-slate-900 text-xs uppercase tracking-wider mb-4">REFERANS DİJİTAL OLGUNLUK ÇERÇEVELERİ</h4>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  {SOURCES.map((src, sIdx) => (
-                    <div key={sIdx} className="p-4 rounded-xl border border-slate-100 bg-slate-50/50 space-y-1">
-                      <div className="font-bold text-xs text-slate-900">{src.org}</div>
-                      <div className="font-semibold text-blue-600 text-xs">{src.title}</div>
-                      <p className="text-[11px] text-slate-500 leading-normal">{src.desc}</p>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-
-            {/* BOTTOM RESTART / ACTION BUTTONS */}
-            <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-6 no-print">
-              <button 
-                onClick={restart}
-                className="w-full sm:w-auto px-6 py-3.5 rounded-xl border border-slate-300 bg-white text-slate-700 font-bold text-xs hover:bg-slate-50 transition-all flex items-center justify-center gap-2"
-              >
-                <RotateCcw size={16} />
-                <span>Yeniden Başlat</span>
+            {/* ACTION BUTTONS */}
+            <div className="no-print" style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: "16px", paddingTop: "16px" }}>
+              <button onClick={restart} style={{ backgroundColor: "transparent", color: "#94A3B8", border: "1px solid #334155", padding: "12px 24px", borderRadius: "10px", fontSize: "13px", fontWeight: "700", cursor: "pointer", display: "flex", alignItems: "center", gap: "8px" }}>
+                <RotateCcw size={16} /> Yeniden Başlat
               </button>
-
-              <button 
-                onClick={() => window.print()}
-                className="w-full sm:w-auto bg-blue-600 hover:bg-blue-500 text-white font-bold text-sm px-8 py-3.5 rounded-xl shadow-lg shadow-blue-600/20 transition-all flex items-center justify-center gap-2"
-              >
-                <FileDown size={18} />
-                <span>Raporu PDF Olarak Yazdır / Kaydet</span>
+              <button onClick={() => window.print()} style={{ backgroundColor: "#2563EB", color: "#FFF", border: "none", padding: "14px 28px", borderRadius: "10px", fontSize: "14px", fontWeight: "800", cursor: "pointer", display: "flex", alignItems: "center", gap: "8px" }}>
+                <FileDown size={18} /> Raporu Yazdır / Kaydet
               </button>
             </div>
 
@@ -906,60 +738,47 @@ export default function App() {
         )}
 
       </main>
-
-      {/* FOOTER */}
-      <footer className="bg-slate-900 text-slate-400 border-t border-slate-800 py-10 mt-20 no-print">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-xs space-y-3">
-          <p className="font-bold text-slate-300">ÇORLU TİCARET VE SANAYİ ODASI · DİJİTAL DÖNÜŞÜM MERKEZİ</p>
-          <p className="text-slate-500 max-w-2xl mx-auto">
-            Bu rehber KOBİ'lerin dijitalleşme süreçlerine rehberlik etmek amacıyla hazırlanmış bir ön tarama aracıdır. 
-            Resmi teşvik başvuruları için yetkili Danışmanlar üzerinden resmi DDX veya SIRI raporu alınması gerekmektedir.
-          </p>
-          <p className="text-slate-600 pt-4">© 2026 Çorlu TSO. Tüm hakları saklıdır.</p>
-        </div>
-      </footer>
     </div>
   );
 }
 
 /* ---------------------------------------------------------
-   REUSABLE STEP CONTAINER COMPONENT
+   REUSABLE STEP SHELL
 --------------------------------------------------------- */
 function StepContainer({ title, subtitle, children, onBack, onNext, canProceed, stepNumber, last }) {
   return (
-    <div className="bg-white rounded-3xl border border-slate-200/80 shadow-sm p-6 sm:p-10 space-y-8">
-      {/* STEP HEADER */}
-      <div className="flex items-center justify-between border-b border-slate-100 pb-6">
-        <div>
-          <div className="inline-flex items-center gap-2 text-xs font-bold text-blue-600 uppercase tracking-widest mb-1">
-            <span>AŞAMA {stepNumber} / 6</span>
-          </div>
-          <h2 className="text-2xl font-extrabold text-slate-900 tracking-tight">{title}</h2>
-          <p className="text-xs text-slate-500 mt-1">{subtitle}</p>
+    <div style={{ backgroundColor: "#1E293B", borderRadius: "24px", border: "1px solid #334155", padding: "36px" }}>
+      <div style={{ borderBottom: "1px solid #334155", paddingBottom: "20px", marginBottom: "24px" }}>
+        <div style={{ fontSize: "11px", fontWeight: "800", color: "#60A5FA", letterSpacing: "1px", textTransform: "uppercase", marginBottom: "4px" }}>
+          AŞAMA {stepNumber} / 6
         </div>
+        <h2 style={{ fontSize: "24px", fontWeight: "900", color: "#FFF", margin: 0 }}>{title}</h2>
+        <p style={{ fontSize: "12px", color: "#94A3B8", marginTop: "4px", margin: 0 }}>{subtitle}</p>
       </div>
 
-      {/* STEP CONTENT */}
       <div>{children}</div>
 
-      {/* STEP FOOTER NAV */}
-      <div className="flex items-center justify-between pt-6 border-t border-slate-100 no-print">
-        <button
-          onClick={onBack}
-          className="px-5 py-3 rounded-xl border border-slate-200 text-slate-600 font-bold text-xs hover:bg-slate-50 transition-all flex items-center gap-2"
-        >
-          <ArrowLeft size={16} />
-          <span>Geri</span>
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: "32px", paddingTop: "20px", borderTop: "1px solid #334155" }} className="no-print">
+        <button onClick={onBack} style={{ backgroundColor: "transparent", color: "#94A3B8", border: "1px solid #334155", padding: "10px 20px", borderRadius: "8px", fontSize: "13px", fontWeight: "700", cursor: "pointer", display: "flex", alignItems: "center", gap: "6px" }}>
+          <ArrowLeft size={16} /> Geri
         </button>
 
         <button
           onClick={onNext}
           disabled={!canProceed}
-          className={`px-8 py-3.5 rounded-xl font-bold text-xs transition-all flex items-center gap-2 shadow-md ${
-            canProceed
-              ? "bg-blue-600 hover:bg-blue-500 text-white shadow-blue-600/20"
-              : "bg-slate-100 text-slate-400 cursor-not-allowed shadow-none"
-          }`}
+          style={{
+            backgroundColor: canProceed ? "#2563EB" : "#334155",
+            color: canProceed ? "#FFF" : "#64748B",
+            border: "none",
+            padding: "12px 28px",
+            borderRadius: "10px",
+            fontSize: "13px",
+            fontWeight: "800",
+            cursor: canProceed ? "pointer" : "not-allowed",
+            display: "flex",
+            alignItems: "center",
+            gap: "8px"
+          }}
         >
           <span>{last ? "Karnemi Oluştur" : "Devam Et"}</span>
           <ArrowRight size={16} />
