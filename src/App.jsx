@@ -64,52 +64,7 @@ const FRAMEWORK_ALIGNMENT = {
   musteri: { dmat: "Akıllı Müşteri Deneyimi", ddx: "CRM ve YZ Desteği", siri: "Süreç Entegrasyonu" },
 };
 
-/* ---------------------------------------------------------
-   METODOLOJİ VE KAYNAKÇA — bu rehberin dayandığı akademik ve
-   kurumsal çerçeveler. Sorularımızı sıfırdan uydurmuyoruz;
-   AB'nin ve Türkiye'nin resmi dijital olgunluk modellerinin
-   boyutlarına haritalıyoruz (yukarıdaki FRAMEWORK_ALIGNMENT).
---------------------------------------------------------- */
 const METHODOLOGY_LAST_UPDATED = "14 Ağustos 2026";
-
-const SOURCES = [
-  {
-    org: "Avrupa Komisyonu JRC / EDIH Ağı",
-    title: "Digital Maturity Assessment Tool (DMAT)",
-    desc: "AB Dijital Avrupa Programı kapsamında Avrupa Dijital İnovasyon Merkezlerinin (EDIH) kullandığı, KOBİ dijital olgunluğunu 6 boyutta (dijital strateji, dijital hazırlık, insan-merkezli dijitalleşme, veri yönetimi, otomasyon & YZ, yeşil dijitalleşme) ölçen resmi AB çerçevesi.",
-    url: "european-digital-innovation-hubs.ec.europa.eu/dma-tool",
-  },
-  {
-    org: "TÜBİTAK TÜSSİDE (Boğaziçi Üniversitesi işbirliğiyle)",
-    title: "DDX Dijital Dönüşüm Değerlendirme Modeli / D3A",
-    desc: "İşletmelerin dijital dönüşüm olgunluğunu 5 boyutta (Kurumsal Yönetim, Müşteri ve Pazar Yönetimi, Ar-Ge ve Ürün Yönetimi, Tedarik Yönetimi, Üretim Yönetimi) değerlendiren, KOSGEB'in resmi olarak tanıdığı ulusal akademik model.",
-    url: "ddxmodel.tubitak.gov.tr",
-  },
-  {
-    org: "MEXT Teknoloji Merkezi",
-    title: "SIRI — Smart Industry Readiness Index",
-    desc: "Singapur Ekonomik Kalkınma Ajansı'nın McKinsey, Siemens, SAP ve TÜV SÜD işbirliğiyle geliştirdiği; Süreç / Teknoloji / Organizasyon olmak üzere 3 yapı taşına dayanan, MEXT tarafından Türkiye'de uygulanan uluslararası ölçüm standardı.",
-    url: "mext.org.tr/siri",
-  },
-  {
-    org: "KOSGEB",
-    title: "KOBİ Dijital Dönüşüm Destek Programı",
-    desc: "Destek başvurusu için DDX veya SIRI formatında resmi dijital olgunluk raporu şartı koşan program. Bu rehber o resmi raporun yerine geçmez; ona hazırlık amaçlı bir ön taramadır.",
-    url: "kosgeb.gov.tr",
-  },
-];
-
-const SCORING_METHOD_TEXT =
-  "Her fonksiyon için 3 soru, 4'lü Likert ölçeğinde (1 = tamamen manuel, 4 = YZ destekli tam otomasyon) puanlanır. " +
-  "Sorunun ortalaması 2'nin altındaysa Temel Seviye, 2–3 arasıysa Gelişen Seviye, 3 ve üzeriyse İleri Seviye olarak sınıflandırılır. " +
-  "Bu eşik değerleri sabittir ve tüm kullanıcılara aynı şekilde uygulanır; sektöre veya ölçeğe göre ağırlıklandırma yapılmaz.";
-
-const TIER_PRESENTATION = {
-  baslangic: { heading: "Ücretsiz / başlangıç seçenekleri", badge: "Ücretsiz" },
-  gelisen: { heading: "Temel / gerekli seçenekler", badge: "Temel" },
-  ileri: { heading: "Kurumsal seçenekler (tavsiye niteliğinde)", badge: "Kurumsal" },
-};
-const TIER_ORDER = ["baslangic", "gelisen", "ileri"];
 
 const QUESTIONS = {
   ik: [
@@ -197,58 +152,58 @@ const QUESTIONS = {
 const TOOLS = {
   ik: {
     baslangic: [
-      { name: "ChatGPT / Claude İK Şablonları", why: "İş ilanı, mülakat soruları ve görev tanımlarını YZ ile üretir.", sourceUrl: "openai.com", verified: "Ağu 2026", origin: "uluslararası" },
-      { name: "Google Forms + Sheets İK Otomasyonu", why: "Kodsuz formlarla başvuru toplayıp otomatik tablolandırır.", sourceUrl: "workspace.google.com", verified: "Ağu 2026", origin: "uluslararası" },
+      { name: "ChatGPT / Claude İK Şablonları", why: "İş ilanı, mülakat soruları ve görev tanımlarını YZ ile üretir." },
+      { name: "Google Forms + Sheets İK Otomasyonu", why: "Kodsuz formlarla başvuru toplayıp otomatik tablolandırır." },
     ],
     gelisen: [
-      { name: "Manatal AI Recruiting", why: "CV'leri yapay zeka ile ayrıştırır, puanlar ve en uygun adayları sıralar.", sourceUrl: "manatal.com", verified: "Ağu 2026", origin: "uluslararası" },
-      { name: "Kolay İK Bulut Platformu", why: "İzin, puantaj ve özlük süreçlerini otomatikleştiren KVKK uyumlu yerli yazılım.", sourceUrl: "", verified: "Doğrulanmadı — kurul tekil ürün seçmeli", origin: "yerli" },
+      { name: "Manatal AI Recruiting", why: "CV'leri yapay zeka ile ayrıştırır, puanlar ve en uygun adayları sıralar." },
+      { name: "Kolay İK Bulut Platformu", why: "İzin, puantaj ve özlük süreçlerini otomatikleştiren KVKK uyumlu yerli yazılım." },
     ],
     ileri: [
-      { name: "Bordro.io Entegre İK & Vardiya", why: "Bordro, dijital imza ve vardiya süreçlerini otomasyonla birleştirir.", sourceUrl: "bordro.io", verified: "Ağu 2026", origin: "yerli" },
-      { name: "SAP SuccessFactors AI Suite", why: "Kurumsal ölçekte YZ destekli yetenek yönetimi ve performans analitiği.", sourceUrl: "sap.com", verified: "Ağu 2026", origin: "uluslararası" },
+      { name: "Bordro.io Entegre İK & Vardiya", why: "Bordro, dijital imza ve vardiya süreçlerini otomasyonla birleştirir." },
+      { name: "SAP SuccessFactors AI Suite", why: "Kurumsal ölçekte YZ destekli yetenek yönetimi ve performans analitiği." },
     ],
   },
   pazarlama: {
     baslangic: [
-      { name: "Canva Magic Studio (YZ Tasarım)", why: "Yapay zeka ile saniyeler içinde sosyal medya görselleri üretir.", sourceUrl: "canva.com", verified: "Ağu 2026", origin: "uluslararası" },
-      { name: "ChatGPT / Gemini Pro Metin Asistanı", why: "Reklam metinleri ve e-posta taslaklarını otomatik hazırlar.", sourceUrl: "gemini.google.com", verified: "Ağu 2026", origin: "uluslararası" },
+      { name: "Canva Magic Studio (YZ Tasarım)", why: "Yapay zeka ile saniyeler içinde sosyal medya görselleri üretir." },
+      { name: "ChatGPT / Gemini Pro Metin Asistanı", why: "Reklam metinleri ve e-posta taslaklarını otomatik hazırlar." },
     ],
     gelisen: [
-      { name: "Brevo (Sendinblue) AI Kampanya", why: "En uygun gönderim zamanını YZ ile belirleyen otomatik e-posta platformu.", sourceUrl: "brevo.com", verified: "Ağu 2026", origin: "uluslararası" },
-      { name: "Meta & Google AI Ads Manager", why: "Akıllı Kampanyalar ile reklam bütçesini YZ algoritmalarına optimize ettirir.", sourceUrl: "ads.google.com", verified: "Ağu 2026", origin: "uluslararası" },
+      { name: "Brevo (Sendinblue) AI Kampanya", why: "En uygun gönderim zamanını YZ ile belirleyen otomatik e-posta platformu." },
+      { name: "Meta & Google AI Ads Manager", why: "Akıllı Kampanyalar ile reklam bütçesini YZ algoritmalarına optimize ettirir." },
     ],
     ileri: [
-      { name: "Insider AI Omnichannel", why: "Çoklu kanalda kişiselleştirilmiş YZ pazarlama deneyimi sunan platform.", sourceUrl: "useinsider.com", verified: "Ağu 2026", origin: "yerli" },
-      { name: "HubSpot Marketing Hub AI", why: "Inbound pazarlama ve müşteri skorlamayı YZ ile entegre eder.", sourceUrl: "hubspot.com", verified: "Ağu 2026", origin: "uluslararası" },
+      { name: "Insider AI Omnichannel", why: "Çoklu kanalda kişiselleştirilmiş YZ pazarlama deneyimi sunan platform." },
+      { name: "HubSpot Marketing Hub AI", why: "Inbound pazarlama ve müşteri skorlamayı YZ ile entegre eder." },
     ],
   },
   stok: {
     baslangic: [
-      { name: "Excel AI Formülleri & Stok Şablonu", why: "Manuel sayım hatalarını azaltarak temel stok ve sipariş takibi yaptırır.", sourceUrl: "", verified: "N/A — tekil ürün değil", origin: "kategori örneği" },
-      { name: "inFlow Inventory Akıllı Mobil", why: "Mobil kamera ile barkod okutarak anlık stok güncellemesi sağlar.", sourceUrl: "inflowinventory.com", verified: "Ağu 2026", origin: "uluslararası" },
+      { name: "Excel AI Formülleri & Stok Şablonu", why: "Manuel sayım hatalarını azaltarak temel stok ve sipariş takibi yaptırır." },
+      { name: "inFlow Inventory Akıllı Mobil", why: "Mobil kamera ile barkod okutarak anlık stok güncellemesi sağlar." },
     ],
     gelisen: [
-      { name: "Odoo ERP Akıllı Stok & Satın Alma", why: "Stok tükenme sürelerini hesaplayıp otomatik satın alma önerisi çıkarır.", sourceUrl: "odoo.com", verified: "Ağu 2026", origin: "uluslararası" },
-      { name: "Mikro Run / Jump Otomasyon", why: "Yerli e-fatura ve mevzuata tam uyumlu stok ve sipariş otomasyonu.", sourceUrl: "mikro.com.tr", verified: "Ağu 2026", origin: "yerli" },
+      { name: "Odoo ERP Akıllı Stok & Satın Alma", why: "Stok tükenme sürelerini hesaplayıp otomatik satın alma önerisi çıkarır." },
+      { name: "Mikro Run / Jump Otomasyon", why: "Yerli e-fatura ve mevzuata tam uyumlu stok ve sipariş otomasyonu." },
     ],
     ileri: [
-      { name: "Logo Tiger 3 Enterprise MRP", why: "Gelişmiş üretim planlama ve tedarik zinciri otomasyonu.", sourceUrl: "logo.com.tr", verified: "Ağu 2026", origin: "yerli" },
-      { name: "SAP Business One AI Supply Chain", why: "Tahminleme algoritmalarıyla çalışan depo ve üretim yazılımı.", sourceUrl: "sap.com", verified: "Ağu 2026", origin: "uluslararası" },
+      { name: "Logo Tiger 3 Enterprise MRP", why: "Gelişmiş üretim planlama ve tedarik zinciri otomasyonu." },
+      { name: "SAP Business One AI Supply Chain", why: "Tahminleme algoritmalarıyla çalışan depo ve üretim yazılımı." },
     ],
   },
   musteri: {
     baslangic: [
-      { name: "WhatsApp Business Otomatik Yanıtlar", why: "Müşterilere hazır hızlı yanıtlar ve katalog seçenekleri sunar.", sourceUrl: "business.whatsapp.com", verified: "Ağu 2026", origin: "uluslararası" },
-      { name: "Notion AI Müşteri Veritabanı", why: "Müşteri görüşme notlarını YZ ile özetleyen aranabilir pano.", sourceUrl: "notion.so", verified: "Ağu 2026", origin: "uluslararası" },
+      { name: "WhatsApp Business Otomatik Yanıtlar", why: "Müşterilere hazır hızlı yanıtlar ve katalog seçenekleri sunar." },
+      { name: "Notion AI Müşteri Veritabanı", why: "Müşteri görüşme notlarını YZ ile özetleyen aranabilir pano." },
     ],
     gelisen: [
-      { name: "HubSpot Free / Starter CRM", why: "Satış fırsatlarını ve teklif takibini otomatikleştiren CRM.", sourceUrl: "hubspot.com", verified: "Ağu 2026", origin: "uluslararası" },
-      { name: "Zoho SalesIQ Akıllı Chatbot", why: "Web sitenize gelen ziyaretçileri karşılayan mesajlaşma botu.", sourceUrl: "zoho.com", verified: "Ağu 2026", origin: "uluslararası" },
+      { name: "HubSpot Free / Starter CRM", why: "Satış fırsatlarını ve teklif takibini otomatikleştiren CRM." },
+      { name: "Zoho SalesIQ Akıllı Chatbot", why: "Web sitenize gelen ziyaretçileri karşılayan mesajlaşma botu." },
     ],
     ileri: [
-      { name: "Salesforce Einstein AI CRM", why: "Satış kapatma ihtimallerini YZ ile tahmin eden CRM altyapısı.", sourceUrl: "salesforce.com", verified: "Ağu 2026", origin: "uluslararası" },
-      { name: "Zoho One Akıllı İş Süiti", why: "40+ entegre uygulama ile tüm müşteri süreçlerini otomatikleştiren platform.", sourceUrl: "zoho.com", verified: "Ağu 2026", origin: "uluslararası" },
+      { name: "Salesforce Einstein AI CRM", why: "Satış kapatma ihtimallerini YZ ile tahmin eden CRM altyapısı." },
+      { name: "Zoho One Akıllı İş Süiti", why: "40+ entegre uygulama ile tüm müşteri süreçlerini otomatikleştiren platform." },
     ],
   },
 };
@@ -294,7 +249,7 @@ function ScoreGauge({ score, level }) {
 }
 
 /* ---------------------------------------------------------
-   MAIN APPLICATION (RESPONSIVE FULL-SCREEN DASHBOARD)
+   MAIN APPLICATION
 --------------------------------------------------------- */
 const STEPS = ["intro", "sector", "size", "ik", "pazarlama", "stok", "musteri", "results"];
 
@@ -363,6 +318,56 @@ export default function App() {
   const selectedSectorObj = useMemo(() => SECTORS.find((s) => s.id === sector), [sector]);
   const selectedSizeObj = useMemo(() => SIZES.find((s) => s.id === size), [size]);
 
+  // DOĞRUDAN HTML RAPORU İNDİRME İŞLEVİ (Yazdır Pencereli Değil)
+  const downloadReportHTML = () => {
+    const htmlContent = `
+      <!DOCTYPE html>
+      <html lang="tr">
+      <head>
+        <meta charset="UTF-8">
+        <title>ÇTSO YZ ve Otomasyon Değerlendirme Raporu</title>
+        <style>
+          body { font-family: Arial, sans-serif; padding: 40px; color: #0f172a; line-height: 1.6; }
+          .header { border-bottom: 2px solid #2563eb; padding-bottom: 15px; margin-bottom: 25px; }
+          .title { font-size: 24px; font-weight: bold; color: #2563eb; }
+          .score-card { background: #f8fafc; border: 1px solid #e2e8f0; padding: 20px; border-radius: 8px; margin-bottom: 25px; }
+          .func-card { border: 1px solid #e2e8f0; padding: 15px; border-radius: 8px; margin-bottom: 15px; }
+          .tool { background: #eff6ff; padding: 8px 12px; border-radius: 4px; margin-top: 5px; font-size: 13px; }
+        </style>
+      </head>
+      <body>
+        <div class="header">
+          <div class="title">ÇORLU TSO — Yapay Zeka & Otomasyon Adaptasyon Raporu</div>
+          <div>Tarih: ${METHODOLOGY_LAST_UPDATED} | Sektör: ${selectedSectorObj?.label || "Belirtilmedi"} | Ölçek: ${selectedSizeObj?.label || "Belirtilmedi"}</div>
+        </div>
+        <div class="score-card">
+          <h2>Genel Skor: ${overallAvg.toFixed(1)} / 4.0</h2>
+          <h3>Adaptasyon Seviyesi: ${LEVELS[overallLevel].label}</h3>
+        </div>
+        <h3>Departman Bazlı YZ Önerileri</h3>
+        ${results.map(r => `
+          <div class="func-card">
+            <h4>${r.label} — Skor: ${r.avg.toFixed(1)} / 4.0 (${LEVELS[r.level].label})</h4>
+            <p><strong>Öncelikli Odak:</strong> ${NEED_STATEMENTS[r.id]}</p>
+            <p><strong>Önerilen Araçlar:</strong></p>
+            ${TOOLS[r.id][r.level].map(t => `<div class="tool"><strong>${t.name}:</strong> ${t.why}</div>`).join('')}
+          </div>
+        `).join('')}
+      </body>
+      </html>
+    `;
+
+    const blob = new Blob([htmlContent], { type: "text/html" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `CTSO_YZ_Adaptasyon_Raporu_${(sector || "kobi")}.html`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  };
+
   return (
     <div style={{
       position: "fixed",
@@ -371,12 +376,6 @@ export default function App() {
       width: "100vw",
       height: "100vh",
       backgroundColor: "#F8FAFC",
-      backgroundImage: `
-        radial-gradient(circle at 8% 8%, rgba(37,99,235,0.07) 0%, transparent 40%),
-        radial-gradient(circle at 95% 15%, rgba(37,99,235,0.05) 0%, transparent 35%),
-        radial-gradient(circle at 50% 100%, rgba(37,99,235,0.05) 0%, transparent 45%),
-        linear-gradient(180deg, #FFFFFF 0%, #F1F5F9 100%)
-      `,
       color: "#0F172A",
       fontFamily: "system-ui, -apple-system, sans-serif",
       display: "flex",
@@ -384,26 +383,11 @@ export default function App() {
       overflow: "hidden",
       boxSizing: "border-box"
     }}>
-      {/* İNCE NOKTA DOKUSU — arka planın düz kalmaması için */}
-      <div style={{
-        position: "absolute",
-        inset: 0,
-        backgroundImage: "radial-gradient(rgba(15,23,42,0.045) 1px, transparent 1px)",
-        backgroundSize: "22px 22px",
-        pointerEvents: "none",
-        zIndex: 0
-      }} />
       
       {/* HEADER */}
-      <header style={{ backgroundColor: "#FFFFFF", borderBottom: "1px solid #E2E8F0", height: "64px", padding: "0 32px", display: "flex", alignItems: "center", justifyContent: "space-between", flexShrink: 0, position: "relative", zIndex: 1 }}>
+      <header style={{ backgroundColor: "#FFFFFF", borderBottom: "1px solid #E2E8F0", height: "64px", padding: "0 32px", display: "flex", alignItems: "center", justifyContent: "space-between", flexShrink: 0 }}>
         <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
-          <img
-            src="/logo.jpg"
-            alt="Çorlu Ticaret ve Sanayi Odası logosu"
-            style={{ width: "44px", height: "44px", objectFit: "contain", flexShrink: 0 }}
-            onError={(e) => { e.currentTarget.style.display = "none"; e.currentTarget.nextSibling.style.display = "flex"; }}
-          />
-          <div style={{ width: "38px", height: "38px", borderRadius: "8px", backgroundColor: "#2563EB", color: "#FFF", fontWeight: "900", fontSize: "18px", display: "none", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+          <div style={{ width: "38px", height: "38px", borderRadius: "8px", backgroundColor: "#2563EB", color: "#FFF", fontWeight: "900", fontSize: "18px", display: "flex", alignItems: "center", justifyContent: "center" }}>
             Ç
           </div>
           <div>
@@ -429,7 +413,7 @@ export default function App() {
 
         {step === "results" && (
           <button
-            onClick={() => window.print()}
+            onClick={downloadReportHTML}
             style={{ backgroundColor: "#2563EB", color: "#FFF", border: "none", padding: "8px 18px", borderRadius: "6px", fontWeight: "700", fontSize: "12px", cursor: "pointer", display: "flex", alignItems: "center", gap: "6px" }}
           >
             <FileDown size={14} /> Raporu İndir
@@ -438,16 +422,16 @@ export default function App() {
       </header>
 
       {/* MAIN CONTENT AREA */}
-      <main style={{ flex: 1, display: "flex", alignItems: "flex-start", justifyContent: "center", padding: "32px 32px 60px 32px", boxSizing: "border-box", overflowY: "auto", position: "relative", zIndex: 1 }}>
+      <main style={{ flex: 1, display: "flex", alignItems: "center", justifyContent: "center", padding: "16px 32px", boxSizing: "border-box", overflow: "hidden" }}>
         
         {/* INTRO SCREEN */}
         {step === "intro" && (
-          <div style={{ maxWidth: "960px", width: "100%", textAlign: "center", display: "flex", flexDirection: "column", gap: "24px" }}>
+          <div style={{ maxWidth: "960px", width: "100%", textAlign: "center", display: "flex", flexDirection: "column", gap: "20px" }}>
             <div style={{ display: "inline-flex", alignItems: "center", gap: "6px", backgroundColor: "#EFF6FF", border: "1px solid #BFDBFE", padding: "6px 16px", borderRadius: "20px", color: "#2563EB", fontSize: "13px", fontWeight: "700", margin: "0 auto" }}>
               <Bot size={16} /> YAPAY ZEKA VE OTOMASYON ADAPTASYON REHBERİ
             </div>
             
-            <h1 style={{ fontSize: "36px", fontWeight: "900", letterSpacing: "-0.5px", lineHeight: "1.25", color: "#0F172A", margin: 0 }}>
+            <h1 style={{ fontSize: "32px", fontWeight: "900", letterSpacing: "-0.5px", lineHeight: "1.25", color: "#0F172A", margin: 0 }}>
               Süreçleriniz Yapay Zekaya Ne Kadar Hazır?<br />
               <span style={{ color: "#2563EB" }}>İşletme Ölçeğinize Uyumlu YZ Araç Önerileri ve Adaptasyon Rehberi</span>
             </h1>
@@ -457,9 +441,9 @@ export default function App() {
               işletme ölçeğinize en uygun YZ ve otomasyon araç önerilerini anında edinin.
             </p>
 
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "16px", margin: "12px 0" }}>
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "16px", margin: "8px 0" }}>
               {FUNCTIONS.map((f) => (
-                <div key={f.id} style={{ backgroundColor: "#FFFFFF", border: "1px solid #E2E8F0", padding: "18px", borderRadius: "12px", textAlign: "left", boxShadow: "0 1px 3px rgba(0,0,0,0.05)" }}>
+                <div key={f.id} style={{ backgroundColor: "#FFFFFF", border: "1px solid #E2E8F0", padding: "16px", borderRadius: "12px", textAlign: "left", boxShadow: "0 1px 3px rgba(0,0,0,0.05)" }}>
                   <f.icon size={22} color="#2563EB" style={{ marginBottom: "8px" }} />
                   <div style={{ fontWeight: "800", fontSize: "14px", color: "#0F172A" }}>{f.label}</div>
                   <div style={{ fontSize: "12px", color: "#64748B", marginTop: "4px", lineHeight: "1.4" }}>{f.desc}</div>
@@ -467,47 +451,19 @@ export default function App() {
               ))}
             </div>
 
-            {/* METODOLOJİ — akademik/uluslararası dayanak */}
-            <div style={{ backgroundColor: "#FFFFFF", border: "1px solid #E2E8F0", borderRadius: "14px", padding: "22px 26px", textAlign: "left", boxShadow: "0 1px 3px rgba(0,0,0,0.05)" }}>
-              <div style={{ display: "inline-flex", alignItems: "center", gap: "6px", color: "#2563EB", fontSize: "11px", fontWeight: "800", letterSpacing: "0.5px", marginBottom: "10px" }}>
-                <ShieldCheck size={14} /> METODOLOJİ VE BİLİMSEL DAYANAK
-              </div>
-              <p style={{ fontSize: "13px", color: "#334155", lineHeight: "1.6", margin: "0 0 14px 0" }}>
-                Bu rehberin soru ve puanlama yapısı sıfırdan uydurulmamıştır; Avrupa Birliği'nin ve Türkiye'nin
-                resmi dijital olgunluk değerlendirme çerçevelerinin boyutlarına haritalanmıştır. Sonuç bir
-                ön taramadır ve KOSGEB başvurusu için gereken resmi DDX/SIRI raporunun yerine geçmez.
-              </p>
-              <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "12px" }}>
-                {[
-                  { k: "DMAT", org: "AB Komisyonu JRC / EDIH Ağı", d: "6 boyutlu resmi AB dijital olgunluk çerçevesi." },
-                  { k: "DDX / D3A", org: "TÜBİTAK TÜSSİDE + Boğaziçi Üni.", d: "KOSGEB'in tanıdığı 5 boyutlu ulusal model." },
-                  { k: "SIRI", org: "MEXT / Smart Industry Readiness Index", d: "Singapur kökenli, 3 yapı taşlı uluslararası endeks." },
-                ].map((m, i) => (
-                  <div key={i} style={{ backgroundColor: "#F8FAFC", border: "1px solid #E2E8F0", borderRadius: "10px", padding: "12px" }}>
-                    <div style={{ fontSize: "12px", fontWeight: "800", color: "#2563EB" }}>{m.k}</div>
-                    <div style={{ fontSize: "10px", fontWeight: "700", color: "#64748B", margin: "2px 0 4px 0" }}>{m.org}</div>
-                    <div style={{ fontSize: "11px", color: "#475569", lineHeight: "1.4" }}>{m.d}</div>
-                  </div>
-                ))}
-              </div>
-              <div style={{ fontSize: "11px", color: "#94A3B8", marginTop: "12px" }}>
-                Kaynakça ve tam metodoloji, testi tamamladığınızda raporun sonunda ayrıntılı olarak yer alır.
-              </div>
-            </div>
-
             <button
               onClick={goNext}
-              style={{ backgroundColor: "#2563EB", color: "#FFF", border: "none", padding: "16px 36px", borderRadius: "10px", fontSize: "16px", fontWeight: "800", cursor: "pointer", display: "inline-flex", alignItems: "center", gap: "8px", margin: "0 auto", boxShadow: "0 4px 14px rgba(37, 99, 235, 0.25)" }}
+              style={{ backgroundColor: "#2563EB", color: "#FFF", border: "none", padding: "14px 36px", borderRadius: "10px", fontSize: "16px", fontWeight: "800", cursor: "pointer", display: "inline-flex", alignItems: "center", gap: "8px", margin: "0 auto", boxShadow: "0 4px 14px rgba(37, 99, 235, 0.25)" }}
             >
               YZ Araç Rehberini Başlat <ArrowRight size={20} />
             </button>
           </div>
         )}
 
-        {/* STEP 1: SECTOR (FULL EXPANDED RESPONSIVE GRID) */}
+        {/* STEP 1: SECTOR */}
         {step === "sector" && (
           <StepContainer title="1 · Sektörünüz" subtitle="İşletmenizin ana faaliyet alanını seçin." onBack={goBack} onNext={goNext} canProceed={canProceed}>
-            <div style={{ display: "flex", flexDirection: "column", gap: "16px", height: "100%" }}>
+            <div style={{ display: "flex", flexDirection: "column", gap: "12px", height: "100%" }}>
               <div style={{ display: "flex", gap: "12px", alignItems: "center" }}>
                 <div style={{ position: "relative", flex: 1 }}>
                   <Search size={18} style={{ position: "absolute", left: "14px", top: "12px", color: "#94A3B8" }} />
@@ -538,8 +494,7 @@ export default function App() {
                 </div>
               </div>
 
-              {/* Grid 4x4 - Fully Stretchable */}
-              <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gridTemplateRows: "repeat(4, 1fr)", gap: "12px", flex: 1, overflow: "hidden" }}>
+              <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gridTemplateRows: "repeat(4, 1fr)", gap: "10px", flex: 1, overflow: "hidden" }}>
                 {filteredSectors.slice(0, 16).map((s) => {
                   const isSelected = sector === s.id;
                   return (
@@ -547,7 +502,7 @@ export default function App() {
                       key={s.id}
                       onClick={() => setSector(s.id)}
                       style={{
-                        padding: "12px 14px",
+                        padding: "10px 12px",
                         borderRadius: "10px",
                         textAlign: "left",
                         backgroundColor: isSelected ? "#EFF6FF" : "#FFFFFF",
@@ -555,17 +510,16 @@ export default function App() {
                         cursor: "pointer",
                         display: "flex",
                         alignItems: "center",
-                        gap: "12px",
-                        boxSizing: "border-box",
-                        boxShadow: isSelected ? "0 2px 8px rgba(37,99,235,0.15)" : "none"
+                        gap: "10px",
+                        boxSizing: "border-box"
                       }}
                     >
-                      <div style={{ width: "36px", height: "36px", borderRadius: "8px", backgroundColor: isSelected ? "#2563EB" : "#F1F5F9", color: isSelected ? "#FFF" : "#64748B", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
-                        <s.icon size={18} />
+                      <div style={{ width: "32px", height: "32px", borderRadius: "8px", backgroundColor: isSelected ? "#2563EB" : "#F1F5F9", color: isSelected ? "#FFF" : "#64748B", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+                        <s.icon size={16} />
                       </div>
                       <div style={{ overflow: "hidden" }}>
                         <div style={{ fontWeight: "700", fontSize: "13px", color: "#0F172A", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{s.label}</div>
-                        <div style={{ fontSize: "11px", color: "#64748B", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", marginTop: "2px" }}>{s.note}</div>
+                        <div style={{ fontSize: "11px", color: "#64748B", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{s.note}</div>
                       </div>
                     </button>
                   );
@@ -586,7 +540,7 @@ export default function App() {
                     key={s.id}
                     onClick={() => setSize(s.id)}
                     style={{
-                      padding: "24px",
+                      padding: "20px",
                       borderRadius: "14px",
                       textAlign: "left",
                       backgroundColor: isSelected ? "#EFF6FF" : "#FFFFFF",
@@ -595,16 +549,15 @@ export default function App() {
                       display: "flex",
                       flexDirection: "column",
                       justifyContent: "space-between",
-                      height: "220px",
-                      boxSizing: "border-box",
-                      boxShadow: isSelected ? "0 4px 12px rgba(37,99,235,0.12)" : "0 1px 3px rgba(0,0,0,0.05)"
+                      height: "200px",
+                      boxSizing: "border-box"
                     }}
                   >
                     <div>
-                      <span style={{ fontSize: "11px", fontWeight: "800", backgroundColor: isSelected ? "#2563EB" : "#E2E8F0", color: isSelected ? "#FFF" : "#475569", padding: "4px 10px", borderRadius: "6px", display: "inline-block", marginBottom: "12px" }}>
+                      <span style={{ fontSize: "11px", fontWeight: "800", backgroundColor: isSelected ? "#2563EB" : "#E2E8F0", color: isSelected ? "#FFF" : "#475569", padding: "4px 10px", borderRadius: "6px", display: "inline-block", marginBottom: "10px" }}>
                         {s.sub}
                       </span>
-                      <h4 style={{ fontSize: "18px", fontWeight: "800", color: "#0F172A", margin: "0 0 8px 0" }}>{s.label}</h4>
+                      <h4 style={{ fontSize: "18px", fontWeight: "800", color: "#0F172A", margin: "0 0 6px 0" }}>{s.label}</h4>
                       <p style={{ fontSize: "13px", color: "#64748B", lineHeight: "1.5", margin: 0 }}>{s.desc}</p>
                     </div>
                   </button>
@@ -614,7 +567,7 @@ export default function App() {
           </StepContainer>
         )}
 
-        {/* STEPS 3-6: QUESTIONS */}
+        {/* STEPS 3-6: QUESTIONS (SIKIŞTIRILMIŞ VE ERGONOMİK) */}
         {fnStepIdx >= 0 && (
           <StepContainer
             title={`${3 + fnStepIdx} · ${FUNCTIONS[fnStepIdx].label}`}
@@ -624,17 +577,18 @@ export default function App() {
             canProceed={canProceed}
             last={fnStepIdx === FUNCTIONS.length - 1}
           >
-            <div style={{ display: "flex", flexDirection: "column", gap: "14px", height: "100%", justifyContent: "space-evenly" }}>
+            <div style={{ display: "flex", flexDirection: "column", gap: "10px", height: "100%", justifyContent: "center" }}>
               {QUESTIONS[step].map((q, qIdx) => (
-                <div key={qIdx} style={{ backgroundColor: "#FFFFFF", padding: "16px 20px", borderRadius: "12px", border: "1px solid #E2E8F0", boxShadow: "0 1px 3px rgba(0,0,0,0.03)" }}>
-                  <div style={{ fontSize: "14px", fontWeight: "700", color: "#0F172A", marginBottom: "10px", display: "flex", alignItems: "center", gap: "8px" }}>
-                    <span style={{ width: "22px", height: "22px", borderRadius: "50%", backgroundColor: "#EFF6FF", color: "#2563EB", fontSize: "11px", fontWeight: "800", display: "inline-flex", alignItems: "center", justifyContent: "center" }}>
+                <div key={qIdx} style={{ backgroundColor: "#FFFFFF", padding: "12px 16px", borderRadius: "10px", border: "1px solid #E2E8F0" }}>
+                  <div style={{ fontSize: "15px", fontWeight: "800", color: "#0F172A", marginBottom: "8px", display: "flex", alignItems: "center", gap: "8px" }}>
+                    <span style={{ width: "22px", height: "22px", borderRadius: "50%", backgroundColor: "#EFF6FF", color: "#2563EB", fontSize: "12px", fontWeight: "900", display: "inline-flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
                       {qIdx + 1}
                     </span>
                     {q.text}
                   </div>
 
-                  <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "10px" }}>
+                  {/* 2 SÜTUNLU RAHAT ŞABLON */}
+                  <div style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: "8px" }}>
                     {q.options.map((opt, oIdx) => {
                       const isSelected = answers[step][qIdx] === oIdx + 1;
                       return (
@@ -645,17 +599,20 @@ export default function App() {
                             padding: "10px 12px",
                             borderRadius: "8px",
                             textAlign: "left",
-                            fontSize: "11px",
+                            fontSize: "13px",
+                            fontWeight: isSelected ? "700" : "500",
                             backgroundColor: isSelected ? "#2563EB" : "#F8FAFC",
-                            color: isSelected ? "#FFF" : "#334155",
-                            border: isSelected ? "1px solid #2563EB" : "1px solid #E2E8F0",
+                            color: isSelected ? "#FFF" : "#1E293B",
+                            border: isSelected ? "2px solid #2563EB" : "1px solid #CBD5E1",
                             cursor: "pointer",
-                            lineHeight: "1.4",
-                            boxShadow: isSelected ? "0 2px 6px rgba(37,99,235,0.2)" : "none"
+                            lineHeight: "1.3",
+                            display: "flex",
+                            alignItems: "flex-start",
+                            gap: "8px"
                           }}
                         >
-                          <span style={{ fontWeight: "800", opacity: 0.8 }}>{oIdx + 1}. </span>
-                          {opt}
+                          <span style={{ fontWeight: "900", opacity: 0.8 }}>{oIdx + 1}.</span>
+                          <span>{opt}</span>
                         </button>
                       );
                     })}
@@ -668,151 +625,63 @@ export default function App() {
 
         {/* STEP 7: RESULTS */}
         {step === "results" && (
-          <div style={{ width: "100%", maxWidth: "1300px", display: "flex", flexDirection: "column", gap: "16px", paddingBottom: "20px" }}>
-
+          <div style={{ width: "100%", height: "100%", display: "flex", flexDirection: "column", gap: "14px" }}>
+            
             {/* OVERVIEW BAR */}
-            <div style={{ backgroundColor: "#FFFFFF", padding: "16px 24px", borderRadius: "14px", border: "1px solid #E2E8F0", display: "flex", alignItems: "center", justifyContent: "space-between", boxShadow: "0 1px 3px rgba(0,0,0,0.05)", flexWrap: "wrap", gap: "12px" }}>
+            <div style={{ backgroundColor: "#FFFFFF", padding: "14px 24px", borderRadius: "12px", border: "1px solid #E2E8F0", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
               <div>
                 <div style={{ display: "inline-flex", alignItems: "center", gap: "6px", backgroundColor: "#EFF6FF", color: "#2563EB", padding: "3px 10px", borderRadius: "6px", fontSize: "11px", fontWeight: "800", marginBottom: "4px" }}>
-                  <Award size={14} /> YZ & OTOMASYON KARNESİ — RESMİ ÖN TARAMA RAPORU
+                  <Award size={14} /> YZ & OTOMASYON KARNESİ
                 </div>
-                <h2 style={{ fontSize: "22px", fontWeight: "900", color: "#0F172A", margin: 0 }}>
+                <h2 style={{ fontSize: "20px", fontWeight: "900", color: "#0F172A", margin: 0 }}>
                   Adaptasyon Seviyesi: <span style={{ color: LEVELS[overallLevel].color }}>{LEVELS[overallLevel].label}</span>
                 </h2>
                 <div style={{ fontSize: "12px", color: "#64748B", marginTop: "2px" }}>
                   {selectedSectorObj?.label} · {selectedSizeObj?.label}
-                </div>
-                <div style={{ fontSize: "11px", color: "#94A3B8", marginTop: "6px", fontFamily: "monospace" }}>
-                  Rapor Tarihi: {METHODOLOGY_LAST_UPDATED} · Referans: ÇTSO-YZ-{(sector || "").toUpperCase().slice(0, 3)}-{(size || "").toUpperCase().slice(0, 3)}
                 </div>
               </div>
 
               <ScoreGauge score={overallAvg} level={overallLevel} />
             </div>
 
-            {/* 4 FUNCTION RESULT CARDS — HER BİRİ 3 KADEMELİ ARAÇ LİSTESİ */}
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: "14px" }}>
-              {results.map((r) => (
-                <div key={r.id} style={{ backgroundColor: "#FFFFFF", borderRadius: "12px", border: "1px solid #E2E8F0", borderLeft: `4px solid ${LEVELS[r.level].color}`, padding: "18px", boxShadow: "0 1px 3px rgba(0,0,0,0.05)" }}>
-                  <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "6px" }}>
-                    <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-                      <r.icon size={18} color="#2563EB" />
-                      <span style={{ fontWeight: "800", fontSize: "15px", color: "#0F172A" }}>{r.label}</span>
-                    </div>
-                    <span style={{ fontSize: "11px", fontWeight: "800", color: LEVELS[r.level].color, backgroundColor: "#F8FAFC", padding: "2px 8px", borderRadius: "6px", border: "1px solid #E2E8F0" }}>
-                      {r.avg.toFixed(1)} / 4.0
-                    </span>
-                  </div>
-
-                  <div style={{ fontSize: "10px", color: "#94A3B8", marginBottom: "10px", lineHeight: "1.5" }}>
-                    DMAT: {FRAMEWORK_ALIGNMENT[r.id].dmat} · DDX: {FRAMEWORK_ALIGNMENT[r.id].ddx} · SIRI: {FRAMEWORK_ALIGNMENT[r.id].siri}
-                  </div>
-
-                  <p style={{ fontSize: "12px", color: "#334155", margin: "0 0 14px 0", lineHeight: "1.5", backgroundColor: "#F8FAFC", padding: "8px 10px", borderRadius: "8px" }}>
-                    {NEED_STATEMENTS[r.id]}
-                  </p>
-
-                  {TIER_ORDER.map((tierKey) => (
-                    <div key={tierKey} style={{ marginBottom: "12px" }}>
-                      <div style={{ display: "flex", alignItems: "center", gap: "6px", marginBottom: "6px" }}>
-                        <span style={{ fontSize: "10px", fontWeight: "800", color: "#475569", letterSpacing: "0.4px" }}>
-                          {TIER_PRESENTATION[tierKey].heading.toUpperCase()}
+            {/* 4 FUNCTION RESULT CARDS */}
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gridTemplateRows: "repeat(2, 1fr)", gap: "12px", flex: 1 }}>
+              {results.map((r) => {
+                const toolsList = TOOLS[r.id][r.level];
+                return (
+                  <div key={r.id} style={{ backgroundColor: "#FFFFFF", borderRadius: "12px", border: "1px solid #E2E8F0", padding: "14px", display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
+                    <div>
+                      <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "6px" }}>
+                        <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+                          <r.icon size={18} color="#2563EB" />
+                          <span style={{ fontWeight: "800", fontSize: "14px", color: "#0F172A" }}>{r.label}</span>
+                        </div>
+                        <span style={{ fontSize: "11px", fontWeight: "800", color: LEVELS[r.level].color, backgroundColor: "#F8FAFC", padding: "2px 8px", borderRadius: "6px", border: "1px solid #E2E8F0" }}>
+                          {r.avg.toFixed(1)} / 4.0
                         </span>
-                        {r.level === tierKey && (
-                          <span style={{ fontSize: "9px", fontWeight: "800", color: "#FFF", backgroundColor: "#0F172A", padding: "1px 6px", borderRadius: "5px" }}>
-                            SİZİN SEVİYENİZ
-                          </span>
-                        )}
+                      </div>
+
+                      <p style={{ fontSize: "11px", color: "#475569", margin: "0 0 8px 0", lineHeight: "1.4" }}>
+                        {NEED_STATEMENTS[r.id]}
+                      </p>
+                    </div>
+
+                    <div>
+                      <div style={{ fontSize: "10px", fontWeight: "800", color: "#64748B", letterSpacing: "0.5px", marginBottom: "4px" }}>
+                        ÖNERİLEN YAPAY ZEKA ARAÇLARI:
                       </div>
                       <div style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: "8px" }}>
-                        {TOOLS[r.id][tierKey].map((t, idx) => (
-                          <div key={idx} style={{ backgroundColor: r.level === tierKey ? "#F8FAFC" : "#FCFCFD", border: "1px solid #E2E8F0", padding: "8px", borderRadius: "8px", opacity: r.level === tierKey ? 1 : 0.8 }}>
-                            <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: "4px", marginBottom: "2px" }}>
-                              <span style={{ fontSize: "11px", fontWeight: "700", color: "#2563EB" }}>{t.name}</span>
-                              <span style={{ fontSize: "8px", fontWeight: "700", color: "#64748B", backgroundColor: "#EEF2F6", padding: "1px 5px", borderRadius: "4px", whiteSpace: "nowrap" }}>
-                                {t.origin === "yerli" ? "Yerli" : t.origin === "uluslararası" ? "Uluslararası" : "Örnek"}
-                              </span>
-                            </div>
-                            <div style={{ fontSize: "9px", color: "#64748B", lineHeight: "1.3", marginBottom: "3px" }}>{t.why}</div>
-                            <div style={{ fontSize: "8px", color: t.sourceUrl ? "#94A3B8" : "#EF4444", fontFamily: "monospace" }}>
-                              {t.sourceUrl || "belirlenmedi"} · {t.verified}
-                            </div>
+                        {toolsList.map((t, idx) => (
+                          <div key={idx} style={{ backgroundColor: "#F8FAFC", border: "1px solid #E2E8F0", padding: "8px", borderRadius: "8px" }}>
+                            <div style={{ fontSize: "11px", fontWeight: "700", color: "#2563EB", marginBottom: "2px" }}>{t.name}</div>
+                            <div style={{ fontSize: "10px", color: "#64748B", lineHeight: "1.3" }}>{t.why}</div>
                           </div>
                         ))}
                       </div>
                     </div>
-                  ))}
-                </div>
-              ))}
-            </div>
-
-            {/* METODOLOJİ VE KAYNAKÇA — TAM RAPOR */}
-            <div style={{ backgroundColor: "#FFFFFF", borderRadius: "14px", border: "1px solid #E2E8F0", padding: "24px 28px", boxShadow: "0 1px 3px rgba(0,0,0,0.05)" }}>
-              <div style={{ display: "inline-flex", alignItems: "center", gap: "6px", color: "#2563EB", fontSize: "12px", fontWeight: "800", letterSpacing: "0.5px", marginBottom: "14px" }}>
-                <ShieldCheck size={15} /> METODOLOJİ VE KAYNAKÇA
-              </div>
-
-              <div style={{ marginBottom: "16px" }}>
-                <div style={{ fontSize: "12px", fontWeight: "800", color: "#0F172A", marginBottom: "4px" }}>Nasıl puanladık</div>
-                <p style={{ fontSize: "12px", color: "#475569", lineHeight: "1.6", margin: 0 }}>{SCORING_METHOD_TEXT}</p>
-              </div>
-
-              <div style={{ marginBottom: "16px" }}>
-                <div style={{ fontSize: "12px", fontWeight: "800", color: "#0F172A", marginBottom: "8px" }}>Soru ve boyutlarımızı neye göre hazırladık</div>
-                <div style={{ overflowX: "auto" }}>
-                  <table style={{ width: "100%", borderCollapse: "collapse", fontSize: "11px" }}>
-                    <thead>
-                      <tr style={{ borderBottom: "1px solid #E2E8F0" }}>
-                        <th style={{ textAlign: "left", padding: "6px 10px 6px 0", color: "#64748B" }}>Fonksiyon</th>
-                        <th style={{ textAlign: "left", padding: "6px 10px", color: "#64748B" }}>DMAT boyutu</th>
-                        <th style={{ textAlign: "left", padding: "6px 10px", color: "#64748B" }}>DDX/D3A boyutu</th>
-                        <th style={{ textAlign: "left", padding: "6px 10px", color: "#64748B" }}>SIRI yapı taşı</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {FUNCTIONS.map((f) => (
-                        <tr key={f.id} style={{ borderBottom: "1px solid #F1F5F9" }}>
-                          <td style={{ padding: "6px 10px 6px 0", fontWeight: "700", color: "#0F172A" }}>{f.label}</td>
-                          <td style={{ padding: "6px 10px", color: "#334155" }}>{FRAMEWORK_ALIGNMENT[f.id].dmat}</td>
-                          <td style={{ padding: "6px 10px", color: "#334155" }}>{FRAMEWORK_ALIGNMENT[f.id].ddx}</td>
-                          <td style={{ padding: "6px 10px", color: "#334155" }}>{FRAMEWORK_ALIGNMENT[f.id].siri}</td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-
-              <div style={{ marginBottom: "16px" }}>
-                <div style={{ fontSize: "12px", fontWeight: "800", color: "#0F172A", marginBottom: "4px" }}>Araç önerileri için kaynak disiplini</div>
-                <p style={{ fontSize: "12px", color: "#475569", lineHeight: "1.6", margin: 0 }}>
-                  Her önerilen uygulama için üreticinin resmi sitesi birincil kaynak olarak işaretlenir ve son doğrulama tarihi
-                  kart üzerinde gösterilir. Somut bir ürüne bağlanmamış kategori örnekleri ayrıca belirtilir. Her maliyet
-                  kademesinde en az iki alternatif sunulur ve kökeni (yerli/uluslararası) etiketlenir; Çorlu TSO hiçbir ürünü
-                  resmi olarak onaylamaz. Liste 3 ayda bir kurul tarafından gözden geçirilir. Son güncelleme: {METHODOLOGY_LAST_UPDATED}.
-                </p>
-              </div>
-
-              <div style={{ marginBottom: "16px" }}>
-                <div style={{ fontSize: "12px", fontWeight: "800", color: "#0F172A", marginBottom: "4px" }}>Sınırlamalar</div>
-                <p style={{ fontSize: "12px", color: "#475569", lineHeight: "1.6", margin: 0 }}>
-                  Bu araç bir <strong>ön tarama</strong>dır. KOSGEB Dijital Dönüşüm Destek Programı başvurusu için TÜBİTAK
-                  TÜSSİDE, MEXT veya İHKİB Dijital Dönüşüm Merkezi tarafından yetkilendirilmiş bir danışmandan alınacak resmi
-                  DDX veya SIRI raporunun yerine geçmez.
-                </p>
-              </div>
-
-              <div>
-                <div style={{ fontSize: "12px", fontWeight: "800", color: "#0F172A", marginBottom: "8px" }}>Kaynakça</div>
-                <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
-                  {SOURCES.map((s, i) => (
-                    <div key={i} style={{ fontSize: "11px", color: "#475569", lineHeight: "1.5" }}>
-                      <span style={{ fontWeight: "700", color: "#0F172A" }}>{s.org}</span> — {s.title}. {s.desc}{" "}
-                      <span style={{ fontFamily: "monospace", color: "#94A3B8" }}>({s.url})</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
+                  </div>
+                );
+              })}
             </div>
 
             {/* ACTION BUTTONS */}
@@ -820,8 +689,8 @@ export default function App() {
               <button onClick={restart} style={{ backgroundColor: "transparent", color: "#64748B", border: "1px solid #CBD5E1", padding: "8px 16px", borderRadius: "8px", fontSize: "12px", fontWeight: "700", cursor: "pointer", display: "flex", alignItems: "center", gap: "6px" }}>
                 <RotateCcw size={14} /> Yeniden Başlat
               </button>
-              <button onClick={() => window.print()} style={{ backgroundColor: "#2563EB", color: "#FFF", border: "none", padding: "10px 22px", borderRadius: "8px", fontSize: "13px", fontWeight: "800", cursor: "pointer", display: "flex", alignItems: "center", gap: "6px" }}>
-                <FileDown size={16} /> YZ Önerilerini İndir / Yazdır
+              <button onClick={downloadReportHTML} style={{ backgroundColor: "#2563EB", color: "#FFF", border: "none", padding: "10px 22px", borderRadius: "8px", fontSize: "13px", fontWeight: "800", cursor: "pointer", display: "flex", alignItems: "center", gap: "6px" }}>
+                <FileDown size={16} /> Raporu İndir
               </button>
             </div>
 
@@ -833,18 +702,18 @@ export default function App() {
   );
 }
 
-/* REUSABLE CONTAINER (RESPONSIVE EXPANDED VIEWPORT) */
+/* REUSABLE CONTAINER */
 function StepContainer({ title, subtitle, children, onBack, onNext, canProceed, last }) {
   return (
-    <div style={{ backgroundColor: "#FFFFFF", borderRadius: "16px", border: "1px solid #E2E8F0", padding: "24px 32px", width: "92vw", maxWidth: "1300px", height: "calc(100vh - 132px)", maxHeight: "820px", display: "flex", flexDirection: "column", justifyContent: "space-between", boxSizing: "border-box", boxShadow: "0 4px 20px rgba(0, 0, 0, 0.04)" }}>
-      <div style={{ borderBottom: "1px solid #F1F5F9", paddingBottom: "12px", marginBottom: "12px" }}>
-        <h2 style={{ fontSize: "18px", fontWeight: "800", color: "#0F172A", margin: 0 }}>{title}</h2>
+    <div style={{ backgroundColor: "#FFFFFF", borderRadius: "16px", border: "1px solid #E2E8F0", padding: "20px 28px", width: "94vw", maxWidth: "1250px", height: "calc(100vh - 100px)", display: "flex", flexDirection: "column", justifyContent: "space-between", boxSizing: "border-box", boxShadow: "0 4px 16px rgba(0, 0, 0, 0.04)" }}>
+      <div style={{ borderBottom: "1px solid #F1F5F9", paddingBottom: "8px", marginBottom: "8px" }}>
+        <h2 style={{ fontSize: "20px", fontWeight: "900", color: "#0F172A", margin: 0 }}>{title}</h2>
         <p style={{ fontSize: "12px", color: "#64748B", margin: "2px 0 0 0" }}>{subtitle}</p>
       </div>
 
-      <div style={{ flex: 1, overflowY: "auto" }}>{children}</div>
+      <div style={{ flex: 1, overflow: "hidden" }}>{children}</div>
 
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", paddingTop: "12px", borderTop: "1px solid #F1F5F9" }}>
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", paddingTop: "10px", borderTop: "1px solid #F1F5F9" }}>
         <button onClick={onBack} style={{ backgroundColor: "transparent", color: "#64748B", border: "1px solid #CBD5E1", padding: "8px 18px", borderRadius: "8px", fontSize: "12px", fontWeight: "700", cursor: "pointer", display: "flex", alignItems: "center", gap: "6px" }}>
           <ArrowLeft size={16} /> Geri
         </button>
