@@ -3,7 +3,7 @@ import {
   Shirt, Wheat, Cog, ShoppingCart, Users, Megaphone, Boxes, Headphones,
   FlaskConical, Car, Hammer, HardHat, Truck, Tractor, UtensilsCrossed,
   Laptop, Stethoscope, GraduationCap, Landmark, Recycle, Search,
-  ArrowRight, ArrowLeft, CheckCircle2, Sparkles, RotateCcw
+  ArrowRight, ArrowLeft, CheckCircle2, Sparkles, RotateCcw, FileDown
 } from "lucide-react";
 
 /* ---------------------------------------------------------
@@ -51,6 +51,17 @@ const FUNCTIONS = [
   { id: "stok", label: "Stok / Üretim", icon: Boxes },
   { id: "musteri", label: "Müşteri İlişkileri", icon: Headphones },
 ];
+
+/* İHTİYAÇ TANIMLARI — önce ürün adı değil, işletmenin ihtiyacı olan sistem
+   TÜRÜ söylenir. Örnek uygulamalar bu ihtiyacın altında, ücretsizden ücretliye
+   doğru sıralanır. Amaç: "şu ürünü al" değil "bu tür bir sisteme ihtiyacınız
+   var, örnekleri şunlar" algısı yaratmak. */
+const NEED_STATEMENTS = {
+  ik: "İhtiyacınız: başvuru, puantaj ve performans kayıtlarını dağınık kağıt/Excel yerine tek bir dijital sistemde tutmak.",
+  pazarlama: "İhtiyacınız: içerik üretimini ve müşteri iletişimini plansız paylaşımlar yerine düzenli, ölçülebilir bir sisteme bağlamak.",
+  stok: "İhtiyacınız: stok ve üretim planlamasını gözle/Excel takibi yerine gerçek zamanlı izlenebilir hale getirmek.",
+  musteri: "İhtiyacınız: müşteri geçmişini ve talepleri dağınık not/hafıza yerine merkezi bir kayıt sisteminde tutmak.",
+};
 
 /* ---------------------------------------------------------
    METODOLOJİ HİZALAMASI — her fonksiyonun hangi resmi
@@ -224,6 +235,17 @@ const LEVELS = {
   ileri: { label: "İleri", color: "#4C7A63" },
 };
 
+/* Araç listesi sunumunda kullanılan sıra ve başlıklar — her zaman bu sırayla
+   gösterilir: önce ücretsiz, sonra temel/gerekli, en son ücretli/kurumsal
+   (tavsiye niteliğinde). "level" alanı hem olgunluk hem maliyet kademesini
+   temsil ediyor. */
+const TIER_PRESENTATION = {
+  baslangic: { heading: "Ücretsiz seçenekler", badge: "Ücretsiz" },
+  gelisen: { heading: "Temel / gerekli seçenekler", badge: "Temel" },
+  ileri: { heading: "Kurumsal seçenekler (tavsiye niteliğinde)", badge: "Ücretli" },
+};
+const TIER_ORDER = ["baslangic", "gelisen", "ileri"];
+
 function levelFromScore(avg) {
   if (avg < 2) return "baslangic";
   if (avg < 3) return "gelisen";
@@ -307,8 +329,7 @@ export default function App() {
       const arr = answers[f.id] || [];
       const avg = arr.length ? arr.reduce((a, b) => a + b, 0) / arr.length : 1;
       const level = levelFromScore(avg);
-      const tools = (TOOLS[f.id][level] || []);
-      return { ...f, avg, level, tools };
+      return { ...f, avg, level };
     });
   }, [answers]);
 
@@ -346,6 +367,11 @@ export default function App() {
         .opt-btn { border: 1px solid var(--paper-dark); background: var(--white); transition: all .12s ease; text-align: left; }
         .opt-btn:hover { border-color: var(--brass); }
         .opt-btn.selected { border-color: var(--brass); background: #FBF3DC; }
+        @media print {
+          .no-print { display: none !important; }
+          body, #root { background: white !important; }
+          .card { border: 1px solid #ccc !important; break-inside: avoid; }
+        }
       ` }} />
 
       <header className="px-6 md:px-12 pt-10 pb-6 border-b" style={{ borderColor: "var(--paper-dark)" }}>
@@ -509,26 +535,46 @@ export default function App() {
                   <div className="mono text-xs mt-3 pt-3" style={{ color: "var(--moss)", borderTop: "1px solid var(--paper-dark)" }}>
                     Resmi boyut karşılığı — DMAT: {FRAMEWORK_ALIGNMENT[r.id].dmat} · DDX: {FRAMEWORK_ALIGNMENT[r.id].ddx} · SIRI: {FRAMEWORK_ALIGNMENT[r.id].siri}
                   </div>
-                  <div className="mt-4 flex flex-col gap-3">
-                    {r.tools.map((t, i) => (
-                      <div key={i} className="p-3 rounded-sm" style={{ background: "var(--paper)" }}>
-                        <div className="flex items-center justify-between flex-wrap gap-1">
-                          <span className="font-medium text-sm">{t.name}</span>
-                          <div className="flex items-center gap-1">
-                            <span className="mono text-xs px-2 py-0.5 rounded-sm" style={{ background: "var(--paper)", border: "1px solid var(--paper-dark)", color: "var(--moss)" }}>
-                              {t.origin === "yerli" ? "Yerli" : t.origin === "uluslararası" ? "Uluslararası" : "Kategori örneği"}
-                            </span>
-                            <span className="mono text-xs px-2 py-0.5 rounded-sm" style={{ background: "var(--brass)", color: "var(--ink)" }}>{t.tier}</span>
-                          </div>
-                        </div>
-                        <p className="text-sm mt-1">{t.why}</p>
-                        <p className="text-xs mt-1" style={{ color: "var(--moss)" }}>Alternatif: {t.alt}</p>
-                        <p className="text-xs mt-1 mono" style={{ color: t.sourceUrl ? "var(--moss)" : "#9C4A3C" }}>
-                          Kaynak: {t.sourceUrl || "belirlenmedi"} · Son doğrulama: {t.verified}
-                        </p>
-                      </div>
-                    ))}
+
+                  <div className="mt-4 p-3 rounded-sm text-sm font-medium" style={{ background: "var(--paper)" }}>
+                    {NEED_STATEMENTS[r.id]}
                   </div>
+
+                  {TIER_ORDER.map((tierKey) => (
+                    <div key={tierKey} className="mt-5">
+                      <div className="flex items-center gap-2 mb-2">
+                        <span className="disp text-sm">{TIER_PRESENTATION[tierKey].heading}</span>
+                        {r.level === tierKey && (
+                          <span className="mono text-xs px-2 py-0.5 rounded-sm" style={{ background: "var(--ink)", color: "var(--white)" }}>
+                            Sizin seviyeniz
+                          </span>
+                        )}
+                      </div>
+                      <p className="mono text-xs mb-2" style={{ color: "var(--moss)" }}>
+                        {tierKey === "ileri" ? "Örnek uygulamalar (tavsiye niteliğinde):" : "Örnek uygulamalar:"}
+                      </p>
+                      <div className="flex flex-col gap-3">
+                        {TOOLS[r.id][tierKey].map((t, i) => (
+                          <div key={i} className="p-3 rounded-sm" style={{ background: "var(--paper)", opacity: r.level === tierKey ? 1 : 0.75 }}>
+                            <div className="flex items-center justify-between flex-wrap gap-1">
+                              <span className="font-medium text-sm">{t.name}</span>
+                              <div className="flex items-center gap-1">
+                                <span className="mono text-xs px-2 py-0.5 rounded-sm" style={{ background: "var(--paper)", border: "1px solid var(--paper-dark)", color: "var(--moss)" }}>
+                                  {t.origin === "yerli" ? "Yerli" : t.origin === "uluslararası" ? "Uluslararası" : "Kategori örneği"}
+                                </span>
+                                <span className="mono text-xs px-2 py-0.5 rounded-sm" style={{ background: "var(--brass)", color: "var(--ink)" }}>{TIER_PRESENTATION[tierKey].badge}</span>
+                              </div>
+                            </div>
+                            <p className="text-sm mt-1">{t.why}</p>
+                            <p className="text-xs mt-1" style={{ color: "var(--moss)" }}>Alternatif: {t.alt}</p>
+                            <p className="text-xs mt-1 mono" style={{ color: t.sourceUrl ? "var(--moss)" : "#9C4A3C" }}>
+                              Kaynak: {t.sourceUrl || "belirlenmedi"} · Son doğrulama: {t.verified}
+                            </p>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  ))}
                 </div>
               ))}
             </div>
@@ -549,7 +595,10 @@ export default function App() {
               </div>
             </div>
 
-            <button className="btn-primary disp px-5 py-3 mt-6 flex items-center gap-2" onClick={restart}>
+            <button className="btn-primary disp px-5 py-3 mt-6 flex items-center gap-2 no-print" onClick={() => window.print()}>
+              <FileDown size={16} /> PDF olarak indir
+            </button>
+            <button className="disp px-5 py-3 mt-3 flex items-center gap-2 no-print" style={{ color: "var(--moss)" }} onClick={restart}>
               <RotateCcw size={16} /> Yeniden Başlat
             </button>
           </div>
