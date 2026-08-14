@@ -67,82 +67,82 @@ const FRAMEWORK_ALIGNMENT = {
 const QUESTIONS = {
   ik: [
     { text: "İşe alımda yapay zeka veya otomasyon araçları kullanıyor musunuz?", options: [
-      "Hayır, tamamen manuel yürütüyoruz",
+      "Hayır, tamamen manuel ve kağıt/sözlü takip ediyoruz",
       "Kısmen; e-posta ve Excel tabloları aktif",
-      "Aday takip yazılımları (ATS) kullanıyoruz",
-      "YZ destekli otomatik aday eleme araçları aktif"
+      "Aday takip yazılımları (ATS) ve iş ilan siteleri kullanıyoruz",
+      "YZ destekli otomatik CV tarama ve aday eleme araçları aktif"
     ]},
     { text: "Puantaj, izin ve özlük süreçleriniz otomasyona bağlı mı?", options: [
-      "Sözlü veya kağıt imza defteri ile manuel",
-      "Excel üzerinde manuel kayıt takibi",
-      "Muhasebe/ERP temel puantaj modülü",
-      "Bulut tabanlı, mobil onaylı İK yazılımı"
+      "Sözlü onay veya kağıt imza defteri ile manuel yürütülüyor",
+      "Excel üzerinde manuel kayıt takibi yapılıyor",
+      "Muhasebe / ERP programının temel puantaj modülü aktif",
+      "Bulut tabanlı, mobil onaylı özel İK ve izin yazılımı kullanılıyor"
     ]},
     { text: "Personel performans değerlendirme ve hedef takibi nasıl yapılıyor?", options: [
       "Performans takibi yapılmıyor",
-      "Yılda bir sözlü veya kağıt üzerinden",
-      "Excel KPI şablonları ile periyodik",
-      "Dijital OKR/KPI platformu ve YZ analitiği"
+      "Yılda bir kez sözlü veya kağıt üzerinden yapılıyor",
+      "Excel KPI şablonları ile periyodik kontrol ediliyor",
+      "Dijital OKR / KPI platformu ve YZ analitik raporları kullanılıyor"
     ]}
   ],
   pazarlama: [
-    { text: "İçerik/görsel üretiminde Yapay Zeka (ChatGPT, Canva AI vb.) kullanıyor musunuz?", options: [
-      "Hayır, yapay zeka kullanılmıyor",
-      "Çalışanlar bireysel olarak nadiren deniyor",
+    { text: "İçerik ve görsel üretiminde Yapay Zeka (ChatGPT, Canva AI vb.) kullanıyor musunuz?", options: [
+      "Hayır, yapay zeka araçları hiç kullanılmıyor",
+      "Çalışanlar bireysel olarak nadiren metin yazımı için deniyor",
       "Düzenli içerik takvimi ve YZ tasarım araçları aktif",
-      "Tüm içerik ve reklam kurguları YZ ile yönetiliyor"
+      "Tüm içerik, görsel ve reklam kurguları YZ araçlarıyla yönetiliyor"
     ]},
     { text: "Müşteri iletişim listelerine yönelik otomatik pazarlama kurgularınız var mı?", options: [
-      "Toplu iletişim yapılmıyor",
-      "Manuel notlar ve telefon rehberi üzerinden",
-      "Toplu e-posta / WhatsApp araçları manuel",
-      "Müşteri davranışına göre otomatik tetiklenen YZ e-posta/SMS"
+      "Toplu müşteri iletişimi ve duyurusu yapılmıyor",
+      "Manuel notlar veya telefon rehberi üzerinden tek tek yapılıyor",
+      "Toplu e-posta / WhatsApp araçlarıyla manuel gönderiliyor",
+      "Müşteri davranışına göre otomatik tetiklenen YZ e-posta/SMS kurguları aktif"
     ]},
     { text: "Pazarlama harcamalarınızın dönüşümü (ROI) otomasyonla izleniyor mu?", options: [
-      "Ölçüm yapılmıyor",
-      "Genel satış rakamlarına göre hissi",
-      "Sosyal medya platformlarının temel analitiği",
-      "Google/Meta Analytics ve YZ panelleri ile anlık"
+      "Herhangi bir dönüşüm ölçümü yapılmıyor",
+      "Genel satış rakamlarına göre tahmini yorumlanıyor",
+      "Sosyal medya platformlarının kendi temel analitiği inceleniyor",
+      "Google/Meta Analytics ve YZ panelleri ile anlık dönüşüm izleniyor"
     ]}
   ],
   stok: [
-    { text: "Stok ihtiyacını tahminlemede yapay zeka/yazılım kullanıyor musunuz?", options: [
-      "Gözle kontrol ve tecrübeye dayalı",
-      "Manuel Excel kayıtları ile izleniyor",
-      "Stok yazılımındaki sabit uyarılara bakılıyor",
-      "Gelecek ihtiyacı tahmin eden YZ/ERP algoritmaları aktif"
+    { text: "Stok ihtiyacını tahminlemede yapay zeka veya yazılım kullanıyor musunuz?", options: [
+      "Gözle kontrol ve geçmiş tecrübeye dayalı tahmin yapılıyor",
+      "Manuel Excel kayıtları ve sayım defterleriyle izleniyor",
+      "Stok yazılımındaki sabit kritik stok uyarısına bakılıyor",
+      "Gelecek ihtiyacı tahmin eden YZ / ERP algoritmaları aktif"
     ]},
     { text: "Üretim ve sipariş planlamasında dijital otomasyon var mı?", options: [
-      "Sipariş geldikçe anlık/plansız",
-      "Haftalık kağıt/pano üzeri planlama",
-      "Excel bazlı kapasite takip dosyaları",
-      "MES/APS veya ERP entegreli otomatik planlama"
+      "Sipariş geldikçe anlık ve plansız müdahale ediliyor",
+      "Haftalık kağıt / pano üzeri üretim planlaması yapılıyor",
+      "Excel bazlı kapasite ve üretim takip dosyaları kullanılıyor",
+      "MES / APS veya ERP entegreli otomatik üretim planlama aktif"
     ]},
     { text: "Tedarikçi sipariş süreçleri otomatikleştirilmiş mi?", options: [
-      "Sözlü / WhatsApp mesajları ile",
-      "Not defteri veya manuel fişlerle",
-      "Excel sipariş takip dosyaları ile",
-      "Kritik stoğa düşen ürünü ERP otomatik sipariş veriyor"
+      "Sözlü iletişim veya WhatsApp mesajları ile sipariş veriliyor",
+      "Not defteri veya manuel satın alma fişleri kullanılıyor",
+      "Excel sipariş takip dosyaları ile kontrol ediliyor",
+      "Kritik stoğa düşen ürünü ERP sistemi otomatik sipariş geçiyor"
     ]}
   ],
   musteri: [
     { text: "Müşteri sorularına yanıt veren YZ Chatbot veya Asistanınız var mı?", options: [
-      "Tüm sorulara insan çalışanlar manuel yanıt veriyor",
-      "Sadece WhatsApp Business otomatik karşılama var",
-      "Web sitesinde temel sabit menülü chatbot mevcut",
-      "Doğal dil işleyen (NLP) YZ Chatbot 7/24 aktif"
+      "Tüm sorulara insan çalışanlarımız manuel yanıt veriyor",
+      "Sadece WhatsApp Business otomatik karşılama mesajı var",
+      "Web sitesinde temel sabit menülü (kural tabanlı) chatbot mevcut",
+      "Doğal dil işleyen (NLP) YZ Chatbot 7/24 müşteri yanıtlıyor"
     ]},
     { text: "Müşteri geçmişine ve eski tekliflere ne kadar sürede ulaşıyorsunuz?", options: [
-      "Müşteri geçmişi kayıt altına alınmıyor",
-      "Fiziki klasör/arşiv taranarak uzun sürede",
-      "Excel dosyalarında arama yapılarak",
-      "CRM ekranından müşteri profiline tıklayarak anında"
+      "Müşteri geçmişi ve iletişim detayları kayıt altına alınmıyor",
+      "Fiziki klasör veya arşiv faturaları taranarak uzun sürede",
+      "Excel arşiv dosyalarında arama yapılarak ulaşılıyor",
+      "CRM ekranından müşteri profiline tıklanarak anında görüntüleniyor"
     ]},
     { text: "Mevcut müşterilere tekrar satış için otomasyon kurgularınız var mı?", options: [
-      "Sistemsel bir takip yapılmıyor",
-      "Hatırlandıkça manuel telefon aramaları",
-      "Periyodik olarak manuel toplu duyurular",
-      "CRM otomasyonu yaklaşan tarihlerde otomatik teklif çıkarıyor"
+      "Tekrar satış için sistemsel bir takip yapılmıyor",
+      "Hatırlandıkça manuel telefon aramaları yapılıyor",
+      "Periyodik olarak manuel toplu bilgilendirme mesajları gönderiliyor",
+      "CRM otomasyonu yaklaşan tarihlerde otomatik teklif ve hatırlatma çıkarıyor"
     ]}
   ]
 };
@@ -225,13 +225,13 @@ function ScoreGauge({ score, level }) {
 
   return (
     <div style={{ display: "flex", flexDirection: "column", alignItems: "center", position: "relative" }}>
-      <svg width="150" height="80" viewBox="0 0 150 80">
-        <path d="M 15 70 A 60 60 0 0 1 135 70" fill="none" stroke="#E2E8F0" strokeWidth="10" strokeLinecap="round" />
+      <svg width="160" height="85" viewBox="0 0 160 85">
+        <path d="M 15 75 A 65 65 0 0 1 145 75" fill="none" stroke="#E2E8F0" strokeWidth="12" strokeLinecap="round" />
         <path
-          d="M 15 70 A 60 60 0 0 1 135 70"
+          d="M 15 75 A 65 65 0 0 1 145 75"
           fill="none"
           stroke={LEVELS[level].color}
-          strokeWidth="10"
+          strokeWidth="12"
           strokeLinecap="round"
           strokeDasharray={strokeDasharray}
           strokeDashoffset={strokeDashoffset}
@@ -239,15 +239,15 @@ function ScoreGauge({ score, level }) {
         />
       </svg>
       <div style={{ position: "absolute", bottom: "0px", textAlign: "center" }}>
-        <span style={{ fontSize: "22px", fontWeight: "800", color: "#0F172A" }}>{score.toFixed(1)}</span>
-        <span style={{ fontSize: "11px", color: "#64748B" }}> / 4.0</span>
+        <span style={{ fontSize: "26px", fontWeight: "900", color: "#0F172A" }}>{score.toFixed(1)}</span>
+        <span style={{ fontSize: "12px", color: "#64748B", fontWeight: "700" }}> / 4.0</span>
       </div>
     </div>
   );
 }
 
 /* ---------------------------------------------------------
-   MAIN APPLICATION (RESPONSIVE FULL-SCREEN DASHBOARD)
+   MAIN APPLICATION (ACCESSIBLE HIGH-CONTRAST LAYOUT)
 --------------------------------------------------------- */
 const STEPS = ["intro", "sector", "size", "ik", "pazarlama", "stok", "musteri", "results"];
 
@@ -333,100 +333,100 @@ export default function App() {
     }}>
       
       {/* HEADER */}
-      <header style={{ backgroundColor: "#FFFFFF", borderBottom: "1px solid #E2E8F0", height: "64px", padding: "0 32px", display: "flex", alignItems: "center", justifyContent: "space-between", flexShrink: 0 }}>
-        <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
-          <div style={{ width: "38px", height: "38px", borderRadius: "8px", backgroundColor: "#2563EB", color: "#FFF", fontWeight: "900", fontSize: "18px", display: "flex", alignItems: "center", justifyContent: "center" }}>
+      <header style={{ backgroundColor: "#FFFFFF", borderBottom: "1px solid #E2E8F0", height: "70px", padding: "0 32px", display: "flex", alignItems: "center", justifyContent: "space-between", flexShrink: 0 }}>
+        <div style={{ display: "flex", alignItems: "center", gap: "14px" }}>
+          <div style={{ width: "42px", height: "42px", borderRadius: "10px", backgroundColor: "#2563EB", color: "#FFF", fontWeight: "900", fontSize: "22px", display: "flex", alignItems: "center", justifyContent: "center" }}>
             Ç
           </div>
           <div>
-            <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-              <span style={{ fontWeight: "800", fontSize: "16px", color: "#0F172A" }}>ÇORLU TSO</span>
-              <span style={{ backgroundColor: "#EFF6FF", color: "#2563EB", border: "1px solid #BFDBFE", padding: "2px 6px", borderRadius: "4px", fontSize: "10px", fontWeight: "700" }}>
+            <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+              <span style={{ fontWeight: "900", fontSize: "18px", color: "#0F172A" }}>ÇORLU TSO</span>
+              <span style={{ backgroundColor: "#EFF6FF", color: "#2563EB", border: "1px solid #BFDBFE", padding: "3px 8px", borderRadius: "6px", fontSize: "11px", fontWeight: "800" }}>
                 DİJİTAL DÖNÜŞÜM MERKEZİ
               </span>
             </div>
-            <p style={{ fontSize: "11px", color: "#64748B", margin: 0 }}>KOBİ Yapay Zeka & Otomasyon Araç Rehberi</p>
+            <p style={{ fontSize: "13px", color: "#64748B", margin: 0, fontWeight: "600" }}>KOBİ Yapay Zeka & Otomasyon Araç Rehberi</p>
           </div>
         </div>
 
         {stepIdx > 0 && stepIdx < STEPS.length - 1 && (
-          <div style={{ display: "flex", alignItems: "center", gap: "12px", backgroundColor: "#F1F5F9", padding: "6px 14px", borderRadius: "8px" }}>
-            <span style={{ fontSize: "12px", fontWeight: "600", color: "#64748B" }}>İlerleme:</span>
-            <div style={{ width: "120px", backgroundColor: "#CBD5E1", height: "6px", borderRadius: "3px", overflow: "hidden" }}>
+          <div style={{ display: "flex", alignItems: "center", gap: "12px", backgroundColor: "#F1F5F9", padding: "8px 16px", borderRadius: "10px" }}>
+            <span style={{ fontSize: "13px", fontWeight: "700", color: "#64748B" }}>İlerleme:</span>
+            <div style={{ width: "140px", backgroundColor: "#CBD5E1", height: "8px", borderRadius: "4px", overflow: "hidden" }}>
               <div style={{ backgroundColor: "#2563EB", height: "100%", width: `${(stepIdx / (STEPS.length - 1)) * 100}%` }} />
             </div>
-            <span style={{ fontSize: "12px", fontWeight: "800", color: "#2563EB" }}>%{Math.round((stepIdx / (STEPS.length - 1)) * 100)}</span>
+            <span style={{ fontSize: "14px", fontWeight: "900", color: "#2563EB" }}>%{Math.round((stepIdx / (STEPS.length - 1)) * 100)}</span>
           </div>
         )}
 
         {step === "results" && (
           <button
             onClick={() => window.print()}
-            style={{ backgroundColor: "#2563EB", color: "#FFF", border: "none", padding: "8px 18px", borderRadius: "6px", fontWeight: "700", fontSize: "12px", cursor: "pointer", display: "flex", alignItems: "center", gap: "6px" }}
+            style={{ backgroundColor: "#2563EB", color: "#FFF", border: "none", padding: "10px 20px", borderRadius: "8px", fontWeight: "800", fontSize: "14px", cursor: "pointer", display: "flex", alignItems: "center", gap: "8px" }}
           >
-            <FileDown size={14} /> Raporu İndir
+            <FileDown size={18} /> Raporu İndir / Yazdır
           </button>
         )}
       </header>
 
-      {/* MAIN CONTENT AREA */}
-      <main style={{ flex: 1, display: "flex", alignItems: "center", justifyContent: "center", padding: "20px 32px", boxSizing: "border-box", overflow: "hidden" }}>
+      {/* MAIN BODY AREA */}
+      <main style={{ flex: 1, display: "flex", alignItems: "center", justifyContent: "center", padding: "24px 32px", boxSizing: "border-box", overflow: "hidden" }}>
         
         {/* INTRO SCREEN */}
         {step === "intro" && (
-          <div style={{ maxWidth: "960px", width: "100%", textAlign: "center", display: "flex", flexDirection: "column", gap: "24px" }}>
-            <div style={{ display: "inline-flex", alignItems: "center", gap: "6px", backgroundColor: "#EFF6FF", border: "1px solid #BFDBFE", padding: "6px 16px", borderRadius: "20px", color: "#2563EB", fontSize: "13px", fontWeight: "700", margin: "0 auto" }}>
-              <Bot size={16} /> YAPAY ZEKA VE OTOMASYON ADAPTASYON REHBERİ
+          <div style={{ maxWidth: "1000px", width: "100%", textAlign: "center", display: "flex", flexDirection: "column", gap: "28px" }}>
+            <div style={{ display: "inline-flex", alignItems: "center", gap: "8px", backgroundColor: "#EFF6FF", border: "1px solid #BFDBFE", padding: "8px 20px", borderRadius: "30px", color: "#2563EB", fontSize: "14px", fontWeight: "800", margin: "0 auto" }}>
+              <Bot size={18} /> YAPAY ZEKA VE OTOMASYON ADAPTASYON REHBERİ
             </div>
             
-            <h1 style={{ fontSize: "36px", fontWeight: "900", letterSpacing: "-0.5px", lineHeight: "1.25", color: "#0F172A", margin: 0 }}>
+            <h1 style={{ fontSize: "40px", fontWeight: "900", letterSpacing: "-0.5px", lineHeight: "1.25", color: "#0F172A", margin: 0 }}>
               Süreçleriniz Yapay Zekaya Ne Kadar Hazır?<br />
               <span style={{ color: "#2563EB" }}>İşletme Ölçeğinize Uyumlu YZ Araç Önerileri ve Adaptasyon Rehberi</span>
             </h1>
 
-            <p style={{ fontSize: "15px", color: "#475569", lineHeight: "1.6", margin: 0, maxWidth: "800px", alignSelf: "center" }}>
+            <p style={{ fontSize: "17px", color: "#475569", lineHeight: "1.6", margin: 0, maxWidth: "850px", alignSelf: "center", fontWeight: "500" }}>
               5 dakikalık hızlı analizle İK, Pazarlama, Üretim/Stok ve Müşteri İlişkileri süreçlerinizde yapay zeka potansiyelinizi görün; 
               işletme ölçeğinize en uygun YZ ve otomasyon araç önerilerini anında edinin.
             </p>
 
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "16px", margin: "12px 0" }}>
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "18px", margin: "12px 0" }}>
               {FUNCTIONS.map((f) => (
-                <div key={f.id} style={{ backgroundColor: "#FFFFFF", border: "1px solid #E2E8F0", padding: "18px", borderRadius: "12px", textAlign: "left", boxShadow: "0 1px 3px rgba(0,0,0,0.05)" }}>
-                  <f.icon size={22} color="#2563EB" style={{ marginBottom: "8px" }} />
-                  <div style={{ fontWeight: "800", fontSize: "14px", color: "#0F172A" }}>{f.label}</div>
-                  <div style={{ fontSize: "12px", color: "#64748B", marginTop: "4px", lineHeight: "1.4" }}>{f.desc}</div>
+                <div key={f.id} style={{ backgroundColor: "#FFFFFF", border: "1px solid #E2E8F0", padding: "20px", borderRadius: "14px", textAlign: "left", boxShadow: "0 2px 6px rgba(0,0,0,0.04)" }}>
+                  <f.icon size={26} color="#2563EB" style={{ marginBottom: "10px" }} />
+                  <div style={{ fontWeight: "800", fontSize: "16px", color: "#0F172A" }}>{f.label}</div>
+                  <div style={{ fontSize: "13px", color: "#64748B", marginTop: "6px", lineHeight: "1.4" }}>{f.desc}</div>
                 </div>
               ))}
             </div>
 
             <button
               onClick={goNext}
-              style={{ backgroundColor: "#2563EB", color: "#FFF", border: "none", padding: "16px 36px", borderRadius: "10px", fontSize: "16px", fontWeight: "800", cursor: "pointer", display: "inline-flex", alignItems: "center", gap: "8px", margin: "0 auto", boxShadow: "0 4px 14px rgba(37, 99, 235, 0.25)" }}
+              style={{ backgroundColor: "#2563EB", color: "#FFF", border: "none", padding: "18px 42px", borderRadius: "12px", fontSize: "18px", fontWeight: "800", cursor: "pointer", display: "inline-flex", alignItems: "center", gap: "10px", margin: "0 auto", boxShadow: "0 6px 18px rgba(37, 99, 235, 0.3)" }}
             >
-              YZ Araç Rehberini Başlat <ArrowRight size={20} />
+              YZ Araç Rehberini Başlat <ArrowRight size={22} />
             </button>
           </div>
         )}
 
-        {/* STEP 1: SECTOR (FULL EXPANDED RESPONSIVE GRID) */}
+        {/* STEP 1: SECTOR */}
         {step === "sector" && (
           <StepContainer title="1 · Sektörünüz" subtitle="İşletmenizin ana faaliyet alanını seçin." onBack={goBack} onNext={goNext} canProceed={canProceed}>
-            <div style={{ display: "flex", flexDirection: "column", gap: "16px", height: "100%" }}>
-              <div style={{ display: "flex", gap: "12px", alignItems: "center" }}>
+            <div style={{ display: "flex", flexDirection: "column", gap: "18px", height: "100%" }}>
+              <div style={{ display: "flex", gap: "14px", alignItems: "center" }}>
                 <div style={{ position: "relative", flex: 1 }}>
-                  <Search size={18} style={{ position: "absolute", left: "14px", top: "12px", color: "#94A3B8" }} />
+                  <Search size={20} style={{ position: "absolute", left: "16px", top: "14px", color: "#94A3B8" }} />
                   <input
                     type="text"
                     value={sectorQuery}
                     onChange={(e) => setSectorQuery(e.target.value)}
-                    placeholder="Sektör ara..."
-                    style={{ width: "100%", padding: "10px 14px 10px 42px", backgroundColor: "#F8FAFC", border: "1px solid #CBD5E1", borderRadius: "8px", color: "#0F172A", fontSize: "13px", outline: "none", boxSizing: "border-box" }}
+                    placeholder="Sektörünüzü arayın (Tekstil, Metal, Gıda vb.)..."
+                    style={{ width: "100%", padding: "12px 16px 12px 48px", backgroundColor: "#F8FAFC", border: "1px solid #CBD5E1", borderRadius: "10px", color: "#0F172A", fontSize: "15px", fontWeight: "600", outline: "none", boxSizing: "border-box" }}
                   />
                 </div>
-                <div style={{ display: "flex", gap: "6px" }}>
+                <div style={{ display: "flex", gap: "8px" }}>
                   <button
                     onClick={() => setSectorGroup("all")}
-                    style={{ padding: "8px 14px", borderRadius: "8px", fontSize: "12px", fontWeight: "700", border: "none", cursor: "pointer", backgroundColor: sectorGroup === "all" ? "#2563EB" : "#E2E8F0", color: sectorGroup === "all" ? "#FFF" : "#475569" }}
+                    style={{ padding: "10px 18px", borderRadius: "8px", fontSize: "14px", fontWeight: "800", border: "none", cursor: "pointer", backgroundColor: sectorGroup === "all" ? "#2563EB" : "#E2E8F0", color: sectorGroup === "all" ? "#FFF" : "#475569" }}
                   >
                     Tümü
                   </button>
@@ -434,7 +434,7 @@ export default function App() {
                     <button
                       key={g.id}
                       onClick={() => setSectorGroup(g.id)}
-                      style={{ padding: "8px 14px", borderRadius: "8px", fontSize: "12px", fontWeight: "700", border: "none", cursor: "pointer", backgroundColor: sectorGroup === g.id ? "#2563EB" : "#E2E8F0", color: sectorGroup === g.id ? "#FFF" : "#475569" }}
+                      style={{ padding: "10px 18px", borderRadius: "8px", fontSize: "14px", fontWeight: "800", border: "none", cursor: "pointer", backgroundColor: sectorGroup === g.id ? "#2563EB" : "#E2E8F0", color: sectorGroup === g.id ? "#FFF" : "#475569" }}
                     >
                       {g.label}
                     </button>
@@ -442,34 +442,34 @@ export default function App() {
                 </div>
               </div>
 
-              {/* Grid 4x4 - Fully Stretchable */}
-              <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gridTemplateRows: "repeat(4, 1fr)", gap: "12px", flex: 1, overflow: "hidden" }}>
-                {filteredSectors.slice(0, 16).map((s) => {
+              {/* Grid 2 Columns for Large Readable Cards */}
+              <div style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: "12px", flex: 1, overflowY: "auto", paddingRight: "6px" }}>
+                {filteredSectors.map((s) => {
                   const isSelected = sector === s.id;
                   return (
                     <button
                       key={s.id}
                       onClick={() => setSector(s.id)}
                       style={{
-                        padding: "12px 14px",
-                        borderRadius: "10px",
+                        padding: "16px 20px",
+                        borderRadius: "12px",
                         textAlign: "left",
                         backgroundColor: isSelected ? "#EFF6FF" : "#FFFFFF",
                         border: isSelected ? "2px solid #2563EB" : "1px solid #E2E8F0",
                         cursor: "pointer",
                         display: "flex",
                         alignItems: "center",
-                        gap: "12px",
+                        gap: "16px",
                         boxSizing: "border-box",
-                        boxShadow: isSelected ? "0 2px 8px rgba(37,99,235,0.15)" : "none"
+                        boxShadow: isSelected ? "0 4px 12px rgba(37,99,235,0.12)" : "0 1px 3px rgba(0,0,0,0.03)"
                       }}
                     >
-                      <div style={{ width: "36px", height: "36px", borderRadius: "8px", backgroundColor: isSelected ? "#2563EB" : "#F1F5F9", color: isSelected ? "#FFF" : "#64748B", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
-                        <s.icon size={18} />
+                      <div style={{ width: "44px", height: "44px", borderRadius: "10px", backgroundColor: isSelected ? "#2563EB" : "#F1F5F9", color: isSelected ? "#FFF" : "#2563EB", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+                        <s.icon size={22} />
                       </div>
-                      <div style={{ overflow: "hidden" }}>
-                        <div style={{ fontWeight: "700", fontSize: "13px", color: "#0F172A", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{s.label}</div>
-                        <div style={{ fontSize: "11px", color: "#64748B", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", marginTop: "2px" }}>{s.note}</div>
+                      <div>
+                        <div style={{ fontWeight: "800", fontSize: "15px", color: "#0F172A" }}>{s.label}</div>
+                        <div style={{ fontSize: "13px", color: "#64748B", marginTop: "2px", fontWeight: "500" }}>{s.note}</div>
                       </div>
                     </button>
                   );
@@ -482,7 +482,7 @@ export default function App() {
         {/* STEP 2: SIZE */}
         {step === "size" && (
           <StepContainer title="2 · İşletme Ölçeği" subtitle="Çalışan sayınıza uygun ölçeği seçin." onBack={goBack} onNext={goNext} canProceed={canProceed}>
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "16px", height: "100%", alignItems: "center" }}>
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "20px", height: "100%", alignItems: "center" }}>
               {SIZES.map((s) => {
                 const isSelected = size === s.id;
                 return (
@@ -490,8 +490,8 @@ export default function App() {
                     key={s.id}
                     onClick={() => setSize(s.id)}
                     style={{
-                      padding: "24px",
-                      borderRadius: "14px",
+                      padding: "28px",
+                      borderRadius: "16px",
                       textAlign: "left",
                       backgroundColor: isSelected ? "#EFF6FF" : "#FFFFFF",
                       border: isSelected ? "2px solid #2563EB" : "1px solid #E2E8F0",
@@ -499,17 +499,17 @@ export default function App() {
                       display: "flex",
                       flexDirection: "column",
                       justifyContent: "space-between",
-                      height: "220px",
+                      height: "240px",
                       boxSizing: "border-box",
-                      boxShadow: isSelected ? "0 4px 12px rgba(37,99,235,0.12)" : "0 1px 3px rgba(0,0,0,0.05)"
+                      boxShadow: isSelected ? "0 6px 16px rgba(37,99,235,0.15)" : "0 2px 6px rgba(0,0,0,0.04)"
                     }}
                   >
                     <div>
-                      <span style={{ fontSize: "11px", fontWeight: "800", backgroundColor: isSelected ? "#2563EB" : "#E2E8F0", color: isSelected ? "#FFF" : "#475569", padding: "4px 10px", borderRadius: "6px", display: "inline-block", marginBottom: "12px" }}>
+                      <span style={{ fontSize: "12px", fontWeight: "800", backgroundColor: isSelected ? "#2563EB" : "#E2E8F0", color: isSelected ? "#FFF" : "#475569", padding: "5px 12px", borderRadius: "6px", display: "inline-block", marginBottom: "14px" }}>
                         {s.sub}
                       </span>
-                      <h4 style={{ fontSize: "18px", fontWeight: "800", color: "#0F172A", margin: "0 0 8px 0" }}>{s.label}</h4>
-                      <p style={{ fontSize: "13px", color: "#64748B", lineHeight: "1.5", margin: 0 }}>{s.desc}</p>
+                      <h4 style={{ fontSize: "20px", fontWeight: "900", color: "#0F172A", margin: "0 0 10px 0" }}>{s.label}</h4>
+                      <p style={{ fontSize: "14px", color: "#64748B", lineHeight: "1.5", margin: 0, fontWeight: "500" }}>{s.desc}</p>
                     </div>
                   </button>
                 );
@@ -518,7 +518,7 @@ export default function App() {
           </StepContainer>
         )}
 
-        {/* STEPS 3-6: QUESTIONS */}
+        {/* STEPS 3-6: QUESTIONS (HIGH-READABILITY SINGLE SMT LAYOUT) */}
         {fnStepIdx >= 0 && (
           <StepContainer
             title={`${3 + fnStepIdx} · ${FUNCTIONS[fnStepIdx].label}`}
@@ -528,17 +528,18 @@ export default function App() {
             canProceed={canProceed}
             last={fnStepIdx === FUNCTIONS.length - 1}
           >
-            <div style={{ display: "flex", flexDirection: "column", gap: "14px", height: "100%", justifyContent: "space-evenly" }}>
+            <div style={{ display: "flex", flexDirection: "column", gap: "20px", height: "100%", overflowY: "auto", paddingRight: "8px" }}>
               {QUESTIONS[step].map((q, qIdx) => (
-                <div key={qIdx} style={{ backgroundColor: "#FFFFFF", padding: "16px 20px", borderRadius: "12px", border: "1px solid #E2E8F0", boxShadow: "0 1px 3px rgba(0,0,0,0.03)" }}>
-                  <div style={{ fontSize: "14px", fontWeight: "700", color: "#0F172A", marginBottom: "10px", display: "flex", alignItems: "center", gap: "8px" }}>
-                    <span style={{ width: "22px", height: "22px", borderRadius: "50%", backgroundColor: "#EFF6FF", color: "#2563EB", fontSize: "11px", fontWeight: "800", display: "inline-flex", alignItems: "center", justifyContent: "center" }}>
+                <div key={qIdx} style={{ backgroundColor: "#FFFFFF", padding: "20px 24px", borderRadius: "14px", border: "1px solid #E2E8F0", boxShadow: "0 2px 6px rgba(0,0,0,0.03)" }}>
+                  <div style={{ fontSize: "17px", fontWeight: "800", color: "#0F172A", marginBottom: "14px", display: "flex", alignItems: "center", gap: "10px" }}>
+                    <span style={{ width: "26px", height: "26px", borderRadius: "50%", backgroundColor: "#EFF6FF", color: "#2563EB", fontSize: "13px", fontWeight: "900", display: "inline-flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
                       {qIdx + 1}
                     </span>
                     {q.text}
                   </div>
 
-                  <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "10px" }}>
+                  {/* 2x2 Grid for Easy Large Buttons */}
+                  <div style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: "12px" }}>
                     {q.options.map((opt, oIdx) => {
                       const isSelected = answers[step][qIdx] === oIdx + 1;
                       return (
@@ -546,20 +547,24 @@ export default function App() {
                           key={oIdx}
                           onClick={() => setAnswer(step, qIdx, oIdx + 1)}
                           style={{
-                            padding: "10px 12px",
-                            borderRadius: "8px",
+                            padding: "14px 18px",
+                            borderRadius: "10px",
                             textAlign: "left",
-                            fontSize: "11px",
+                            fontSize: "14px",
+                            fontWeight: isSelected ? "700" : "500",
                             backgroundColor: isSelected ? "#2563EB" : "#F8FAFC",
-                            color: isSelected ? "#FFF" : "#334155",
-                            border: isSelected ? "1px solid #2563EB" : "1px solid #E2E8F0",
+                            color: isSelected ? "#FFF" : "#1E293B",
+                            border: isSelected ? "2px solid #2563EB" : "1px solid #E2E8F0",
                             cursor: "pointer",
                             lineHeight: "1.4",
-                            boxShadow: isSelected ? "0 2px 6px rgba(37,99,235,0.2)" : "none"
+                            display: "flex",
+                            alignItems: "flex-start",
+                            gap: "10px",
+                            boxShadow: isSelected ? "0 4px 10px rgba(37,99,235,0.2)" : "none"
                           }}
                         >
-                          <span style={{ fontWeight: "800", opacity: 0.8 }}>{oIdx + 1}. </span>
-                          {opt}
+                          <span style={{ fontWeight: "900", opacity: 0.8, fontSize: "13px" }}>{oIdx + 1}.</span>
+                          <span>{opt}</span>
                         </button>
                       );
                     })}
@@ -572,18 +577,18 @@ export default function App() {
 
         {/* STEP 7: RESULTS */}
         {step === "results" && (
-          <div style={{ width: "100%", height: "100%", display: "flex", flexDirection: "column", gap: "16px" }}>
+          <div style={{ width: "100%", height: "100%", display: "flex", flexDirection: "column", gap: "20px" }}>
             
             {/* OVERVIEW BAR */}
-            <div style={{ backgroundColor: "#FFFFFF", padding: "16px 24px", borderRadius: "14px", border: "1px solid #E2E8F0", display: "flex", alignItems: "center", justifyContent: "space-between", boxShadow: "0 1px 3px rgba(0,0,0,0.05)" }}>
+            <div style={{ backgroundColor: "#FFFFFF", padding: "20px 28px", borderRadius: "16px", border: "1px solid #E2E8F0", display: "flex", alignItems: "center", justifyContent: "space-between", boxShadow: "0 2px 8px rgba(0,0,0,0.04)" }}>
               <div>
-                <div style={{ display: "inline-flex", alignItems: "center", gap: "6px", backgroundColor: "#EFF6FF", color: "#2563EB", padding: "3px 10px", borderRadius: "6px", fontSize: "11px", fontWeight: "800", marginBottom: "4px" }}>
-                  <Award size={14} /> YZ & OTOMASYON KARNESİ
+                <div style={{ display: "inline-flex", alignItems: "center", gap: "6px", backgroundColor: "#EFF6FF", color: "#2563EB", padding: "4px 12px", borderRadius: "8px", fontSize: "12px", fontWeight: "800", marginBottom: "6px" }}>
+                  <Award size={16} /> YAPAY ZEKA & OTOMASYON KARNESİ
                 </div>
-                <h2 style={{ fontSize: "22px", fontWeight: "900", color: "#0F172A", margin: 0 }}>
+                <h2 style={{ fontSize: "24px", fontWeight: "900", color: "#0F172A", margin: 0 }}>
                   Adaptasyon Seviyesi: <span style={{ color: LEVELS[overallLevel].color }}>{LEVELS[overallLevel].label}</span>
                 </h2>
-                <div style={{ fontSize: "12px", color: "#64748B", marginTop: "2px" }}>
+                <div style={{ fontSize: "14px", color: "#64748B", marginTop: "4px", fontWeight: "600" }}>
                   {selectedSectorObj?.label} · {selectedSizeObj?.label}
                 </div>
               </div>
@@ -592,36 +597,36 @@ export default function App() {
             </div>
 
             {/* 4 FUNCTION RESULT CARDS (2x2 GRID) */}
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gridTemplateRows: "repeat(2, 1fr)", gap: "14px", flex: 1 }}>
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gridTemplateRows: "repeat(2, 1fr)", gap: "16px", flex: 1, overflowY: "auto" }}>
               {results.map((r) => {
                 const toolsList = TOOLS[r.id][r.level];
                 return (
-                  <div key={r.id} style={{ backgroundColor: "#FFFFFF", borderRadius: "12px", border: "1px solid #E2E8F0", padding: "16px", display: "flex", flexDirection: "column", justifyContent: "space-between", boxShadow: "0 1px 3px rgba(0,0,0,0.05)" }}>
+                  <div key={r.id} style={{ backgroundColor: "#FFFFFF", borderRadius: "14px", border: "1px solid #E2E8F0", padding: "20px", display: "flex", flexDirection: "column", justifyContent: "space-between", boxShadow: "0 2px 6px rgba(0,0,0,0.04)" }}>
                     <div>
-                      <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "8px" }}>
-                        <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-                          <r.icon size={18} color="#2563EB" />
-                          <span style={{ fontWeight: "800", fontSize: "14px", color: "#0F172A" }}>{r.label}</span>
+                      <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "10px" }}>
+                        <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+                          <r.icon size={22} color="#2563EB" />
+                          <span style={{ fontWeight: "900", fontSize: "16px", color: "#0F172A" }}>{r.label}</span>
                         </div>
-                        <span style={{ fontSize: "11px", fontWeight: "800", color: LEVELS[r.level].color, backgroundColor: "#F8FAFC", padding: "2px 8px", borderRadius: "6px", border: "1px solid #E2E8F0" }}>
+                        <span style={{ fontSize: "12px", fontWeight: "800", color: LEVELS[r.level].color, backgroundColor: "#F8FAFC", padding: "4px 10px", borderRadius: "8px", border: "1px solid #E2E8F0" }}>
                           {r.avg.toFixed(1)} / 4.0
                         </span>
                       </div>
 
-                      <p style={{ fontSize: "11px", color: "#475569", margin: "0 0 10px 0", lineHeight: "1.4" }}>
+                      <p style={{ fontSize: "13px", color: "#475569", margin: "0 0 12px 0", lineHeight: "1.5", fontWeight: "500" }}>
                         {NEED_STATEMENTS[r.id]}
                       </p>
                     </div>
 
                     <div>
-                      <div style={{ fontSize: "10px", fontWeight: "800", color: "#64748B", letterSpacing: "0.5px", marginBottom: "6px" }}>
+                      <div style={{ fontSize: "11px", fontWeight: "800", color: "#64748B", letterSpacing: "0.5px", marginBottom: "8px" }}>
                         ÖNERİLEN YAPAY ZEKA ARAÇLARI:
                       </div>
-                      <div style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: "8px" }}>
+                      <div style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: "10px" }}>
                         {toolsList.map((t, idx) => (
-                          <div key={idx} style={{ backgroundColor: "#F8FAFC", border: "1px solid #E2E8F0", padding: "8px", borderRadius: "8px" }}>
-                            <div style={{ fontSize: "11px", fontWeight: "700", color: "#2563EB", marginBottom: "2px" }}>{t.name}</div>
-                            <div style={{ fontSize: "9px", color: "#64748B", lineHeight: "1.3" }}>{t.why}</div>
+                          <div key={idx} style={{ backgroundColor: "#F8FAFC", border: "1px solid #E2E8F0", padding: "10px 12px", borderRadius: "10px" }}>
+                            <div style={{ fontSize: "13px", fontWeight: "800", color: "#2563EB", marginBottom: "3px" }}>{t.name}</div>
+                            <div style={{ fontSize: "11px", color: "#64748B", lineHeight: "1.3", fontWeight: "500" }}>{t.why}</div>
                           </div>
                         ))}
                       </div>
@@ -633,11 +638,11 @@ export default function App() {
 
             {/* ACTION BUTTONS */}
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-              <button onClick={restart} style={{ backgroundColor: "transparent", color: "#64748B", border: "1px solid #CBD5E1", padding: "8px 16px", borderRadius: "8px", fontSize: "12px", fontWeight: "700", cursor: "pointer", display: "flex", alignItems: "center", gap: "6px" }}>
-                <RotateCcw size={14} /> Yeniden Başlat
+              <button onClick={restart} style={{ backgroundColor: "transparent", color: "#64748B", border: "1px solid #CBD5E1", padding: "10px 20px", borderRadius: "8px", fontSize: "13px", fontWeight: "800", cursor: "pointer", display: "flex", alignItems: "center", gap: "6px" }}>
+                <RotateCcw size={16} /> Yeniden Başlat
               </button>
-              <button onClick={() => window.print()} style={{ backgroundColor: "#2563EB", color: "#FFF", border: "none", padding: "10px 22px", borderRadius: "8px", fontSize: "13px", fontWeight: "800", cursor: "pointer", display: "flex", alignItems: "center", gap: "6px" }}>
-                <FileDown size={16} /> YZ Önerilerini İndir / Yazdır
+              <button onClick={() => window.print()} style={{ backgroundColor: "#2563EB", color: "#FFF", border: "none", padding: "12px 26px", borderRadius: "8px", fontSize: "14px", fontWeight: "800", cursor: "pointer", display: "flex", alignItems: "center", gap: "8px" }}>
+                <FileDown size={18} /> YZ Önerilerini İndir / Yazdır
               </button>
             </div>
 
@@ -652,17 +657,17 @@ export default function App() {
 /* REUSABLE CONTAINER (RESPONSIVE EXPANDED VIEWPORT) */
 function StepContainer({ title, subtitle, children, onBack, onNext, canProceed, last }) {
   return (
-    <div style={{ backgroundColor: "#FFFFFF", borderRadius: "16px", border: "1px solid #E2E8F0", padding: "24px 32px", width: "92vw", maxWidth: "1300px", height: "calc(100vh - 100px)", display: "flex", flexDirection: "column", justifyContent: "space-between", boxSizing: "border-box", boxShadow: "0 4px 20px rgba(0, 0, 0, 0.04)" }}>
-      <div style={{ borderBottom: "1px solid #F1F5F9", paddingBottom: "12px", marginBottom: "12px" }}>
-        <h2 style={{ fontSize: "18px", fontWeight: "800", color: "#0F172A", margin: 0 }}>{title}</h2>
-        <p style={{ fontSize: "12px", color: "#64748B", margin: "2px 0 0 0" }}>{subtitle}</p>
+    <div style={{ backgroundColor: "#FFFFFF", borderRadius: "20px", border: "1px solid #E2E8F0", padding: "28px 36px", width: "94vw", maxWidth: "1350px", height: "calc(100vh - 110px)", display: "flex", flexDirection: "column", justifyContent: "space-between", boxSizing: "border-box", boxShadow: "0 6px 24px rgba(0, 0, 0, 0.05)" }}>
+      <div style={{ borderBottom: "1px solid #F1F5F9", paddingBottom: "14px", marginBottom: "16px" }}>
+        <h2 style={{ fontSize: "22px", fontWeight: "900", color: "#0F172A", margin: 0 }}>{title}</h2>
+        <p style={{ fontSize: "14px", color: "#64748B", margin: "4px 0 0 0", fontWeight: "500" }}>{subtitle}</p>
       </div>
 
       <div style={{ flex: 1, overflow: "hidden" }}>{children}</div>
 
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", paddingTop: "12px", borderTop: "1px solid #F1F5F9" }}>
-        <button onClick={onBack} style={{ backgroundColor: "transparent", color: "#64748B", border: "1px solid #CBD5E1", padding: "8px 18px", borderRadius: "8px", fontSize: "12px", fontWeight: "700", cursor: "pointer", display: "flex", alignItems: "center", gap: "6px" }}>
-          <ArrowLeft size={16} /> Geri
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", paddingTop: "16px", borderTop: "1px solid #F1F5F9" }}>
+        <button onClick={onBack} style={{ backgroundColor: "transparent", color: "#64748B", border: "1px solid #CBD5E1", padding: "10px 22px", borderRadius: "8px", fontSize: "14px", fontWeight: "800", cursor: "pointer", display: "flex", alignItems: "center", gap: "8px" }}>
+          <ArrowLeft size={18} /> Geri
         </button>
 
         <button
@@ -672,18 +677,18 @@ function StepContainer({ title, subtitle, children, onBack, onNext, canProceed, 
             backgroundColor: canProceed ? "#2563EB" : "#94A3B8",
             color: "#FFF",
             border: "none",
-            padding: "10px 24px",
+            padding: "12px 30px",
             borderRadius: "8px",
-            fontSize: "13px",
+            fontSize: "15px",
             fontWeight: "800",
             cursor: canProceed ? "pointer" : "not-allowed",
             display: "flex",
             alignItems: "center",
-            gap: "8px"
+            gap: "10px"
           }}
         >
           <span>{last ? "Önerileri Gör" : "Devam Et"}</span>
-          <ArrowRight size={16} />
+          <ArrowRight size={18} />
         </button>
       </div>
     </div>
