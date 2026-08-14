@@ -156,56 +156,64 @@ const QUESTIONS = {
 /* Kaynak alanları: sourceUrl = üreticinin resmi kök alan adı (birincil kaynak).
    "örn." ile başlayan kategori örnekleri (tekil ürün olmayanlar) için sourceUrl
    boş bırakılır — kurul bu satırları somut bir ürüne bağlayıp doğrulamalı.
-   verified = son doğrulama ayı/yılı; her çeyreklik incelemede güncellenmeli. */
+   verified = son doğrulama ayı/yılı; her çeyreklik incelemede güncellenmeli.
+   origin = 'yerli' | 'uluslararası' | 'kategori örneği' — favoritizm algısını
+   azaltmak için her seviyede en az 2 seçenek ve mümkün olduğunda karışık köken. */
 const TOOLS = {
   ik: {
     baslangic: [
-      { name: "Kariyer.net / Yenibiriş ücretsiz ilan modülü", tier: "Ücretsiz", why: "Elden/kağıt başvuru takibini tek dijital listeye taşır.", alt: "LinkedIn ücretsiz ilan", sourceUrl: "kariyer.net", verified: "Ağu 2026" },
-      { name: "Google Forms + Sheets başvuru formu", tier: "Ücretsiz", why: "Kod yazmadan başvuru formu kurup otomatik tabloya aktarır.", alt: "Microsoft Forms", sourceUrl: "workspace.google.com", verified: "Ağu 2026" },
+      { name: "Kariyer.net / Yenibiriş ücretsiz ilan modülü", tier: "Ücretsiz", why: "Elden/kağıt başvuru takibini tek dijital listeye taşır.", alt: "LinkedIn ücretsiz ilan", sourceUrl: "kariyer.net", verified: "Ağu 2026", origin: "yerli" },
+      { name: "Google Forms + Sheets başvuru formu", tier: "Ücretsiz", why: "Kod yazmadan başvuru formu kurup otomatik tabloya aktarır.", alt: "Microsoft Forms", sourceUrl: "workspace.google.com", verified: "Ağu 2026", origin: "uluslararası" },
     ],
     gelisen: [
-      { name: "Manatal (no-code ATS)", tier: "Düşük maliyetli, aylık abonelik", why: "CV'leri otomatik puanlar, ekip içi ortak değerlendirmeyi hızlandırır.", alt: "Recruitee", sourceUrl: "manatal.com", verified: "Ağu 2026" },
-      { name: "Bulut bordro/puantaj yazılımı (Logo, Zirve vb.)", tier: "Düşük-orta maliyetli", why: "Excel'deki puantaj hatasını azaltır, izin taleplerini otomatikleştirir.", alt: "Kolay Bordro", sourceUrl: "", verified: "Doğrulanmadı — kurul tekil ürün seçmeli" },
+      { name: "Manatal (no-code ATS)", tier: "Düşük maliyetli, aylık abonelik", why: "CV'leri otomatik puanlar, ekip içi ortak değerlendirmeyi hızlandırır.", alt: "Recruitee", sourceUrl: "manatal.com", verified: "Ağu 2026", origin: "uluslararası" },
+      { name: "Bulut bordro/puantaj yazılımı (Logo, Zirve vb.)", tier: "Düşük-orta maliyetli", why: "Excel'deki puantaj hatasını azaltır, izin taleplerini otomatikleştirir.", alt: "Kolay Bordro", sourceUrl: "", verified: "Doğrulanmadı — kurul tekil ürün seçmeli", origin: "yerli" },
     ],
     ileri: [
-      { name: "Kurumsal İK bilgi sistemi (örn. Bordro.io, SAP SuccessFactors)", tier: "Kurumsal", why: "İşe alım, bordro ve performansı tek platformda birleştirip raporlar.", alt: "Workday (büyük ölçek)", sourceUrl: "", verified: "Doğrulanmadı — kurul tekil ürün seçmeli" },
+      { name: "Bordro.io", tier: "Kurumsal", why: "Bordro, izin ve özlük süreçlerini tek bulut platformda birleştirir, Türkiye mevzuatına göre çalışır.", alt: "Logo HR", sourceUrl: "bordro.io", verified: "Ağu 2026", origin: "yerli" },
+      { name: "SAP SuccessFactors", tier: "Kurumsal", why: "İşe alım, bordro ve performansı tek platformda birleştirip uluslararası raporlama sağlar.", alt: "Workday (büyük ölçek)", sourceUrl: "sap.com", verified: "Ağu 2026", origin: "uluslararası" },
     ],
   },
   pazarlama: {
     baslangic: [
-      { name: "Canva (ücretsiz plan)", tier: "Ücretsiz", why: "Tasarım bilgisi gerektirmeden sosyal medya görseli/broşür üretir.", alt: "Adobe Express", sourceUrl: "canva.com", verified: "Ağu 2026" },
-      { name: "Meta Business Suite", tier: "Ücretsiz", why: "Instagram/Facebook paylaşımlarını tek panelden planlar.", alt: "Buffer ücretsiz plan", sourceUrl: "business.facebook.com", verified: "Ağu 2026" },
+      { name: "Canva (ücretsiz plan)", tier: "Ücretsiz", why: "Tasarım bilgisi gerektirmeden sosyal medya görseli/broşür üretir.", alt: "Adobe Express", sourceUrl: "canva.com", verified: "Ağu 2026", origin: "uluslararası" },
+      { name: "Meta Business Suite", tier: "Ücretsiz", why: "Instagram/Facebook paylaşımlarını tek panelden planlar.", alt: "Buffer ücretsiz plan", sourceUrl: "business.facebook.com", verified: "Ağu 2026", origin: "uluslararası" },
     ],
     gelisen: [
-      { name: "Mailchimp (başlangıç planı)", tier: "Düşük maliyetli", why: "Müşteri e-posta listesiyle otomatik bülten/kampanya gönderir.", alt: "Brevo (Sendinblue)", sourceUrl: "mailchimp.com", verified: "Ağu 2026" },
-      { name: "Meta / Google reklam yöneticisi", tier: "Kullanım bazlı bütçe", why: "Hedefli reklamla yeni müşteri kazanımını ölçülebilir hale getirir.", alt: "TikTok Ads Manager", sourceUrl: "ads.google.com", verified: "Ağu 2026" },
+      { name: "Mailchimp (başlangıç planı)", tier: "Düşük maliyetli", why: "Müşteri e-posta listesiyle otomatik bülten/kampanya gönderir.", alt: "Brevo (Sendinblue)", sourceUrl: "mailchimp.com", verified: "Ağu 2026", origin: "uluslararası" },
+      { name: "Meta / Google reklam yöneticisi", tier: "Kullanım bazlı bütçe", why: "Hedefli reklamla yeni müşteri kazanımını ölçülebilir hale getirir.", alt: "TikTok Ads Manager", sourceUrl: "ads.google.com", verified: "Ağu 2026", origin: "uluslararası" },
     ],
     ileri: [
-      { name: "HubSpot Marketing Hub", tier: "Orta-kurumsal", why: "Pazarlama otomasyonu, aday skorlama ve raporlamayı birleştirir.", alt: "ActiveCampaign", sourceUrl: "hubspot.com", verified: "Ağu 2026" },
+      { name: "HubSpot Marketing Hub", tier: "Orta-kurumsal", why: "Pazarlama otomasyonu, aday skorlama ve raporlamayı birleştirir.", alt: "ActiveCampaign", sourceUrl: "hubspot.com", verified: "Ağu 2026", origin: "uluslararası" },
+      { name: "Insider", tier: "Orta-kurumsal", why: "Çoklu kanal (web, e-posta, WhatsApp, SMS) pazarlama otomasyonu ve müşteri segmentasyonu sunar.", alt: "HubSpot Marketing Hub", sourceUrl: "useinsider.com", verified: "Ağu 2026", origin: "yerli" },
     ],
   },
   stok: {
     baslangic: [
-      { name: "Excel şablon + barkod etiketleme", tier: "Ücretsiz / çok düşük", why: "Elle sayım hatasını azaltıp temel stok kaydı sağlar.", alt: "Google Sheets stok şablonu", sourceUrl: "", verified: "N/A — tekil ürün değil" },
-      { name: "Basit mobil stok takip uygulaması", tier: "Ücretsiz-düşük", why: "Telefonla barkod okutup anlık stok güncellemesi yapar.", alt: "inFlow ücretsiz plan", sourceUrl: "inflowinventory.com", verified: "Ağu 2026" },
+      { name: "Excel şablon + barkod etiketleme", tier: "Ücretsiz / çok düşük", why: "Elle sayım hatasını azaltıp temel stok kaydı sağlar.", alt: "Google Sheets stok şablonu", sourceUrl: "", verified: "N/A — tekil ürün değil", origin: "kategori örneği" },
+      { name: "Basit mobil stok takip uygulaması", tier: "Ücretsiz-düşük", why: "Telefonla barkod okutup anlık stok güncellemesi yapar.", alt: "inFlow ücretsiz plan", sourceUrl: "inflowinventory.com", verified: "Ağu 2026", origin: "uluslararası" },
     ],
     gelisen: [
-      { name: "Odoo Community (açık kaynak)", tier: "Kurulum/bakım hariç ücretsiz", why: "Stok, satın alma ve üretimi tek sistemde birbirine bağlar.", alt: "Zoho Inventory", sourceUrl: "odoo.com", verified: "Ağu 2026" },
+      { name: "Odoo Community (açık kaynak)", tier: "Kurulum/bakım hariç ücretsiz", why: "Stok, satın alma ve üretimi tek sistemde birbirine bağlar.", alt: "Zoho Inventory", sourceUrl: "odoo.com", verified: "Ağu 2026", origin: "uluslararası" },
+      { name: "Mikro Yazılım ERP", tier: "Düşük-orta maliyetli", why: "Türkiye muhasebe/e-fatura mevzuatına uyumlu stok ve satış modülleri sunar.", alt: "Odoo Community", sourceUrl: "mikro.com.tr", verified: "Ağu 2026", origin: "yerli" },
     ],
     ileri: [
-      { name: "Kurumsal ERP/MES (örn. Logo Tiger, SAP Business One)", tier: "Kurumsal", why: "Üretim planlama, stok ve muhasebeyi gerçek zamanlı entegre eder.", alt: "Microsoft Dynamics 365", sourceUrl: "", verified: "Doğrulanmadı — kurul tekil ürün seçmeli" },
+      { name: "Logo Tiger 3 Enterprise", tier: "Kurumsal", why: "Üretim planlama, stok ve muhasebeyi Türkiye mevzuatına uyumlu şekilde entegre eder.", alt: "SAP Business One", sourceUrl: "logo.com.tr", verified: "Ağu 2026", origin: "yerli" },
+      { name: "SAP Business One", tier: "Kurumsal", why: "Üretim, stok ve finansı uluslararası standartlarda tek sistemde birleştirir.", alt: "Microsoft Dynamics 365", sourceUrl: "sap.com", verified: "Ağu 2026", origin: "uluslararası" },
     ],
   },
   musteri: {
     baslangic: [
-      { name: "WhatsApp Business (ücretsiz)", tier: "Ücretsiz", why: "Otomatik karşılama mesajı ve katalogla iletişimi düzenler.", alt: "Telegram Business", sourceUrl: "business.whatsapp.com", verified: "Ağu 2026" },
-      { name: "Google Sheets müşteri listesi", tier: "Ücretsiz", why: "Dağınık not defterlerini tek merkezi listeye taşır.", alt: "Notion ücretsiz plan", sourceUrl: "workspace.google.com", verified: "Ağu 2026" },
+      { name: "WhatsApp Business (ücretsiz)", tier: "Ücretsiz", why: "Otomatik karşılama mesajı ve katalogla iletişimi düzenler.", alt: "Telegram Business", sourceUrl: "business.whatsapp.com", verified: "Ağu 2026", origin: "uluslararası" },
+      { name: "Google Sheets müşteri listesi", tier: "Ücretsiz", why: "Dağınık not defterlerini tek merkezi listeye taşır.", alt: "Notion ücretsiz plan", sourceUrl: "workspace.google.com", verified: "Ağu 2026", origin: "uluslararası" },
     ],
     gelisen: [
-      { name: "HubSpot Free CRM", tier: "Ücretsiz-düşük maliyetli", why: "Müşteri geçmişi, teklif ve takip görevlerini tek ekranda tutar.", alt: "Zoho CRM ücretsiz plan", sourceUrl: "hubspot.com", verified: "Ağu 2026" },
+      { name: "HubSpot Free CRM", tier: "Ücretsiz-düşük maliyetli", why: "Müşteri geçmişi, teklif ve takip görevlerini tek ekranda tutar.", alt: "Zoho CRM ücretsiz plan", sourceUrl: "hubspot.com", verified: "Ağu 2026", origin: "uluslararası" },
+      { name: "Zoho CRM (ücretsiz plan)", tier: "Ücretsiz-düşük maliyetli", why: "Küçük ekipler için temel satış hunisi ve iletişim geçmişi takibi sağlar.", alt: "HubSpot Free CRM", sourceUrl: "zoho.com", verified: "Ağu 2026", origin: "uluslararası" },
     ],
     ileri: [
-      { name: "Kurumsal CRM (örn. Zoho One, Salesforce)", tier: "Kurumsal", why: "Satış, hizmet ve pazarlamayı tek veri tabanında birleştirir.", alt: "Microsoft Dynamics CRM", sourceUrl: "", verified: "Doğrulanmadı — kurul tekil ürün seçmeli" },
+      { name: "Zoho One", tier: "Kurumsal", why: "Satış, hizmet ve pazarlamayı tek veri tabanında birleştirir, göreceli düşük maliyetli kurumsal seçenektir.", alt: "Salesforce", sourceUrl: "zoho.com", verified: "Ağu 2026", origin: "uluslararası" },
+      { name: "Salesforce", tier: "Kurumsal", why: "Büyük ölçekli satış/servis operasyonları için sektör standardı CRM altyapısı sunar.", alt: "Microsoft Dynamics CRM", sourceUrl: "salesforce.com", verified: "Ağu 2026", origin: "uluslararası" },
     ],
   },
 };
@@ -506,7 +514,12 @@ export default function App() {
                       <div key={i} className="p-3 rounded-sm" style={{ background: "var(--paper)" }}>
                         <div className="flex items-center justify-between flex-wrap gap-1">
                           <span className="font-medium text-sm">{t.name}</span>
-                          <span className="mono text-xs px-2 py-0.5 rounded-sm" style={{ background: "var(--brass)", color: "var(--ink)" }}>{t.tier}</span>
+                          <div className="flex items-center gap-1">
+                            <span className="mono text-xs px-2 py-0.5 rounded-sm" style={{ background: "var(--paper)", border: "1px solid var(--paper-dark)", color: "var(--moss)" }}>
+                              {t.origin === "yerli" ? "Yerli" : t.origin === "uluslararası" ? "Uluslararası" : "Kategori örneği"}
+                            </span>
+                            <span className="mono text-xs px-2 py-0.5 rounded-sm" style={{ background: "var(--brass)", color: "var(--ink)" }}>{t.tier}</span>
+                          </div>
                         </div>
                         <p className="text-sm mt-1">{t.why}</p>
                         <p className="text-xs mt-1" style={{ color: "var(--moss)" }}>Alternatif: {t.alt}</p>
@@ -529,6 +542,10 @@ export default function App() {
                 TÜBİTAK TÜSSİDE — DDX/D3A (Boğaziçi Üniversitesi) · MEXT — SIRI (Smart Industry Readiness Index).
                 Bu değerlendirme bir ön taramadır; KOSGEB Dijital Dönüşüm Destek Programı başvurusu için
                 yetkilendirilmiş danışmandan alınacak resmi DDX/SIRI raporunun yerine geçmez.
+              </div>
+              <div>
+                Her seviyede en az iki alternatif listelenmiştir; Çorlu TSO bu ürünlerden hiçbirini resmi
+                olarak onaylamamakta veya tavsiye etmemektedir — seçim işletmenin kendi değerlendirmesine aittir.
               </div>
             </div>
 
