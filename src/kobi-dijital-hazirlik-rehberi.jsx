@@ -4,7 +4,7 @@ import {
   FlaskConical, Car, Hammer, HardHat, Truck, Tractor, UtensilsCrossed,
   Laptop, Stethoscope, GraduationCap, Landmark, Recycle, Search,
   ArrowRight, ArrowLeft, CheckCircle2, Sparkles, RotateCcw, FileDown,
-  Award, ShieldCheck, BarChart3, Check, Info, Target, ExternalLink
+  Award, ShieldCheck, BarChart3, Check, Info, Target
 } from "lucide-react";
 
 /* ---------------------------------------------------------
@@ -375,7 +375,7 @@ export default function App() {
       <header style={{ backgroundColor: "#1E293B", borderBottom: "1px solid #334155", position: "sticky", top: 0, zIndex: 50 }}>
         <div style={{ maxWidth: "1150px", margin: "0 auto", padding: "0 24px", height: "72px", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
           <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
-            <div style={{ width: "40px", height: "40px", borderRadius: "10px", backgroundColor: "#2563EB", display: "flex", alignItems: "center", justifyCenter: "center", fontWeight: "900", fontSize: "20px", color: "#FFF", lineHeight: "40px", textAlign: "center" }}>
+            <div style={{ width: "40px", height: "40px", borderRadius: "10px", backgroundColor: "#2563EB", display: "flex", alignItems: "center", justifyContent: "center", fontWeight: "900", fontSize: "20px", color: "#FFF", lineHeight: "40px", textAlign: "center" }}>
               Ç
             </div>
             <div>
@@ -462,7 +462,7 @@ export default function App() {
             </div>
 
             <div style={{ backgroundColor: "#1E293B", padding: "28px", borderRadius: "16px", border: "1px solid #334155", display: "flex", gap: "16px", alignItems: "flex-start" }}>
-              <div style={{ width: "40px", height: "40px", borderRadius: "10px", backgroundColor: "rgba(16, 185, 129, 0.2)", color: "#34D399", display: "flex", alignItems: "center", justifyContent: "center", shrink: 0 }}>
+              <div style={{ width: "40px", height: "40px", borderRadius: "10px", backgroundColor: "rgba(16, 185, 129, 0.2)", color: "#34D399", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
                 <ShieldCheck size={22} />
               </div>
               <div>
@@ -525,12 +525,12 @@ export default function App() {
                       border: isSelected ? "2px solid #2563EB" : "1px solid #334155",
                       cursor: "pointer",
                       display: "flex",
-                      alignItems: "start",
+                      alignItems: "flex-start",
                       gap: "12px",
                       transition: "all 0.2s"
                     }}
                   >
-                    <div style={{ width: "36px", height: "36px", borderRadius: "8px", backgroundColor: isSelected ? "#2563EB" : "#1E293B", color: isSelected ? "#FFF" : "#94A3B8", display: "flex", alignItems: "center", justifyContent: "center", shrink: 0 }}>
+                    <div style={{ width: "36px", height: "36px", borderRadius: "8px", backgroundColor: isSelected ? "#2563EB" : "#1E293B", color: isSelected ? "#FFF" : "#94A3B8", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
                       <s.icon size={18} />
                     </div>
                     <div style={{ flex: 1 }}>
@@ -563,7 +563,7 @@ export default function App() {
                       cursor: "pointer",
                       display: "flex",
                       flexDirection: "column",
-                      justifySpace: "between"
+                      justifyContent: "space-between"
                     }}
                   >
                     <div>
@@ -647,7 +647,7 @@ export default function App() {
           <div style={{ display: "flex", flexDirection: "column", gap: "32px" }}>
             
             {/* OVERALL HEADER */}
-            <div className="print-card" style={{ backgroundColor: "#1E293B", padding: "36px", borderRadius: "24px", border: "1px solid #334155", display: "flex", flexWrap: "wrap", alignItems: "center", justifyBetween: "space-between", gap: "24px" }}>
+            <div className="print-card" style={{ backgroundColor: "#1E293B", padding: "36px", borderRadius: "24px", border: "1px solid #334155", display: "flex", flexWrap: "wrap", alignItems: "center", justifyContent: "space-between", gap: "24px" }}>
               <div>
                 <div style={{ display: "inline-flex", alignItems: "center", gap: "6px", backgroundColor: "rgba(37, 99, 235, 0.2)", color: "#60A5FA", padding: "4px 12px", borderRadius: "12px", fontSize: "11px", fontWeight: "800", marginBottom: "12px" }}>
                   <Award size={14} /> DİJİTAL DÖNÜŞÜM KARNESİ
@@ -671,7 +671,7 @@ export default function App() {
               const levelObj = LEVELS[r.level];
               return (
                 <div key={r.id} className="print-card" style={{ backgroundColor: "#1E293B", borderRadius: "20px", border: "1px solid #334155", padding: "28px" }}>
-                  <div style={{ display: "flex", alignItems: "center", justifyBetween: "space-between", flexWrap: "wrap", gap: "16px", paddingBottom: "20px", borderBottom: "1px solid #334155" }}>
+                  <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: "16px", paddingBottom: "20px", borderBottom: "1px solid #334155" }}>
                     <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
                       <div style={{ width: "42px", height: "42px", borderRadius: "12px", backgroundColor: "#2563EB", color: "#FFF", display: "flex", alignItems: "center", justifyContent: "center" }}>
                         <r.icon size={22} />
