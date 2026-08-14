@@ -57,13 +57,6 @@ const NEED_STATEMENTS = {
   musteri: "Öncelikli YZ Odağı: Müşteri taleplerini 7/24 karşılayan doğal dil işleme (NLP) destekli YZ asistanları ve akıllı CRM kurguları oluşturmak.",
 };
 
-const FRAMEWORK_ALIGNMENT = {
-  ik: { dmat: "İnsan-Merkezli YZ Uyum", ddx: "Yönetim Otomasyonu", siri: "Organizasyonel Dijitalleşme" },
-  pazarlama: { dmat: "Üretken YZ Stratejisi", ddx: "Müşteri Odaklı Otomasyon", siri: "Süreç Verimliliği" },
-  stok: { dmat: "Veri Analitiği & Tahminleme", ddx: "Üretim ve Tedarik YZ", siri: "Akıllı Operasyonlar" },
-  musteri: { dmat: "Akıllı Müşteri Deneyimi", ddx: "CRM ve YZ Desteği", siri: "Süreç Entegrasyonu" },
-};
-
 const METHODOLOGY_LAST_UPDATED = "14 Ağustos 2026";
 
 const QUESTIONS = {
@@ -318,54 +311,98 @@ export default function App() {
   const selectedSectorObj = useMemo(() => SECTORS.find((s) => s.id === sector), [sector]);
   const selectedSizeObj = useMemo(() => SIZES.find((s) => s.id === size), [size]);
 
-  // DOĞRUDAN HTML RAPORU İNDİRME İŞLEVİ (Yazdır Pencereli Değil)
-  const downloadReportHTML = () => {
-    const htmlContent = `
-      <!DOCTYPE html>
-      <html lang="tr">
-      <head>
-        <meta charset="UTF-8">
-        <title>ÇTSO YZ ve Otomasyon Değerlendirme Raporu</title>
-        <style>
-          body { font-family: Arial, sans-serif; padding: 40px; color: #0f172a; line-height: 1.6; }
-          .header { border-bottom: 2px solid #2563eb; padding-bottom: 15px; margin-bottom: 25px; }
-          .title { font-size: 24px; font-weight: bold; color: #2563eb; }
-          .score-card { background: #f8fafc; border: 1px solid #e2e8f0; padding: 20px; border-radius: 8px; margin-bottom: 25px; }
-          .func-card { border: 1px solid #e2e8f0; padding: 15px; border-radius: 8px; margin-bottom: 15px; }
-          .tool { background: #eff6ff; padding: 8px 12px; border-radius: 4px; margin-top: 5px; font-size: 13px; }
-        </style>
-      </head>
-      <body>
-        <div class="header">
-          <div class="title">ÇORLU TSO — Yapay Zeka & Otomasyon Adaptasyon Raporu</div>
-          <div>Tarih: ${METHODOLOGY_LAST_UPDATED} | Sektör: ${selectedSectorObj?.label || "Belirtilmedi"} | Ölçek: ${selectedSizeObj?.label || "Belirtilmedi"}</div>
+  // DOĞRUDAN .PDF DOSYASI İNDİRME İŞLEVİ (ÇORLU TSO LOGOLU)
+  const downloadReportPDF = async () => {
+    // 1. html2pdf kütüphanesini dinamik yükle (varsa tekrar yüklemez)
+    if (!window.html2pdf) {
+      await new Promise((resolve, reject) => {
+        const script = document.createElement("script");
+        script.src = "https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js";
+        script.onload = resolve;
+        script.onerror = reject;
+        document.head.appendChild(script);
+      });
+    }
+
+    // 2. PDF içeriğini şık bir kurumsal A4 şablonunda oluştur
+    const pdfContainer = document.createElement("div");
+    pdfContainer.style.width = "750px";
+    pdfContainer.style.padding = "30px";
+    pdfContainer.style.backgroundColor = "#FFFFFF";
+    pdfContainer.style.color = "#0F172A";
+    pdfContainer.style.fontFamily = "Arial, sans-serif";
+
+    pdfContainer.innerHTML = `
+      <div style="border-bottom: 2px solid #2563EB; padding-bottom: 16px; margin-bottom: 20px; display: flex; align-items: center; justify-content: space-between;">
+        <div style="display: flex; align-items: center; gap: 14px;">
+          <img src="/logo.jpg" alt="Çorlu TSO Logo" style="width: 55px; height: 55px; object-fit: contain;" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+          <div style="width: 44px; height: 44px; border-radius: 8px; background-color: #2563EB; color: #FFF; font-weight: 900; font-size: 20px; display: none; align-items: center; justify-content: center;">Ç</div>
+          <div>
+            <div style="font-size: 18px; font-weight: 900; color: #0F172A;">ÇORLU TİCARET VE SANAYİ ODASI</div>
+            <div style="font-size: 12px; font-weight: 800; color: #2563EB; margin-top: 2px;">DİJİTAL DÖNÜŞÜM MERKEZİ — YZ ADAPTASYON RAPORU</div>
+          </div>
         </div>
-        <div class="score-card">
-          <h2>Genel Skor: ${overallAvg.toFixed(1)} / 4.0</h2>
-          <h3>Adaptasyon Seviyesi: ${LEVELS[overallLevel].label}</h3>
+        <div style="text-align: right; font-size: 11px; color: #64748B;">
+          <div><strong>Tarih:</strong> ${METHODOLOGY_LAST_UPDATED}</div>
+          <div><strong>Referans:</strong> ÇTSO-YZ-${(sector || "KOBI").toUpperCase().slice(0, 3)}</div>
         </div>
-        <h3>Departman Bazlı YZ Önerileri</h3>
-        ${results.map(r => `
-          <div class="func-card">
-            <h4>${r.label} — Skor: ${r.avg.toFixed(1)} / 4.0 (${LEVELS[r.level].label})</h4>
-            <p><strong>Öncelikli Odak:</strong> ${NEED_STATEMENTS[r.id]}</p>
-            <p><strong>Önerilen Araçlar:</strong></p>
-            ${TOOLS[r.id][r.level].map(t => `<div class="tool"><strong>${t.name}:</strong> ${t.why}</div>`).join('')}
+      </div>
+
+      <div style="background-color: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 10px; padding: 18px; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center;">
+        <div>
+          <div style="font-size: 11px; font-weight: 800; color: #2563EB; letter-spacing: 0.5px; margin-bottom: 4px;">DİJİTAL UYUM VE OTOMASYON KARNESİ</div>
+          <div style="font-size: 20px; font-weight: 900; color: #0F172A;">
+            Seviye: <span style="color: ${LEVELS[overallLevel].color}">${LEVELS[overallLevel].label}</span>
+          </div>
+          <div style="font-size: 12px; color: #64748B; margin-top: 4px;">
+            Sektör: <strong>${selectedSectorObj?.label || "Belirtilmedi"}</strong> | Ölçek: <strong>${selectedSizeObj?.label || "Belirtilmedi"}</strong>
+          </div>
+        </div>
+        <div style="text-align: center; background: #FFFFFF; padding: 10px 18px; border-radius: 8px; border: 1px solid #CBD5E1;">
+          <div style="font-size: 24px; font-weight: 900; color: #0F172A;">${overallAvg.toFixed(1)} <span style="font-size: 12px; color: #64748B;">/ 4.0</span></div>
+          <div style="font-size: 10px; font-weight: 800; color: #64748B;">GENEL SKOR</div>
+        </div>
+      </div>
+
+      <h3 style="font-size: 15px; font-weight: 800; color: #0F172A; border-bottom: 1px solid #E2E8F0; padding-bottom: 6px; margin-bottom: 14px;">DEPARTMAN BAZLI ANALİZ VE YZ ARAÇ ÖNERİLERİ</h3>
+
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+        ${results.map((r) => `
+          <div style="border: 1px solid #E2E8F0; border-left: 4px solid ${LEVELS[r.level].color}; border-radius: 8px; padding: 12px; background-color: #FFFFFF; page-break-inside: avoid;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+              <span style="font-weight: 800; font-size: 13px; color: #0F172A;">${r.label}</span>
+              <span style="font-size: 10px; font-weight: 800; color: ${LEVELS[r.level].color}; background-color: #F8FAFC; padding: 2px 6px; border-radius: 4px; border: 1px solid #E2E8F0;">
+                ${r.avg.toFixed(1)} / 4.0
+              </span>
+            </div>
+            <p style="font-size: 10px; color: #334155; margin: 0 0 8px 0; background-color: #F8FAFC; padding: 6px; border-radius: 4px; line-height: 1.3;">
+              ${NEED_STATEMENTS[r.id]}
+            </p>
+            <div style="font-size: 9px; font-weight: 800; color: #64748B; margin-bottom: 4px;">ÖNERİLEN YAPAY ZEKA ARAÇLARI:</div>
+            ${TOOLS[r.id][r.level].map((t) => `
+              <div style="background-color: #EFF6FF; border: 1px solid #DBEAFE; padding: 6px 8px; border-radius: 6px; margin-bottom: 4px;">
+                <div style="font-size: 11px; font-weight: 800; color: #2563EB;">${t.name}</div>
+                <div style="font-size: 9px; color: #475569; margin-top: 2px;">${t.why}</div>
+              </div>
+            `).join('')}
           </div>
         `).join('')}
-      </body>
-      </html>
+      </div>
+
+      <div style="margin-top: 24px; padding-top: 12px; border-top: 1px solid #E2E8F0; text-align: center; font-size: 9px; color: #94A3B8;">
+        Çorlu Ticaret ve Sanayi Odası Dijital Dönüşüm Merkezi — İşletmenize özel bilgilendirme ve yönlendirme raporudur.
+      </div>
     `;
 
-    const blob = new Blob([htmlContent], { type: "text/html" });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = `CTSO_YZ_Adaptasyon_Raporu_${(sector || "kobi")}.html`;
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    URL.revokeObjectURL(url);
+    const opt = {
+      margin:       10,
+      filename:     `CTSO_YZ_Adaptasyon_Raporu_${(sector || "kobi")}.pdf`,
+      image:        { type: 'jpeg', quality: 0.98 },
+      html2canvas:  { scale: 2, useCORS: true, logging: false },
+      jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
+    };
+
+    window.html2pdf().set(opt).from(pdfContainer).save();
   };
 
   return (
@@ -413,10 +450,10 @@ export default function App() {
 
         {step === "results" && (
           <button
-            onClick={downloadReportHTML}
+            onClick={downloadReportPDF}
             style={{ backgroundColor: "#2563EB", color: "#FFF", border: "none", padding: "8px 18px", borderRadius: "6px", fontWeight: "700", fontSize: "12px", cursor: "pointer", display: "flex", alignItems: "center", gap: "6px" }}
           >
-            <FileDown size={14} /> Raporu İndir
+            <FileDown size={14} /> PDF Raporu İndir
           </button>
         )}
       </header>
@@ -567,7 +604,7 @@ export default function App() {
           </StepContainer>
         )}
 
-        {/* STEPS 3-6: QUESTIONS (SIKIŞTIRILMIŞ VE ERGONOMİK) */}
+        {/* STEPS 3-6: QUESTIONS */}
         {fnStepIdx >= 0 && (
           <StepContainer
             title={`${3 + fnStepIdx} · ${FUNCTIONS[fnStepIdx].label}`}
@@ -587,7 +624,6 @@ export default function App() {
                     {q.text}
                   </div>
 
-                  {/* 2 SÜTUNLU RAHAT ŞABLON */}
                   <div style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: "8px" }}>
                     {q.options.map((opt, oIdx) => {
                       const isSelected = answers[step][qIdx] === oIdx + 1;
@@ -689,8 +725,8 @@ export default function App() {
               <button onClick={restart} style={{ backgroundColor: "transparent", color: "#64748B", border: "1px solid #CBD5E1", padding: "8px 16px", borderRadius: "8px", fontSize: "12px", fontWeight: "700", cursor: "pointer", display: "flex", alignItems: "center", gap: "6px" }}>
                 <RotateCcw size={14} /> Yeniden Başlat
               </button>
-              <button onClick={downloadReportHTML} style={{ backgroundColor: "#2563EB", color: "#FFF", border: "none", padding: "10px 22px", borderRadius: "8px", fontSize: "13px", fontWeight: "800", cursor: "pointer", display: "flex", alignItems: "center", gap: "6px" }}>
-                <FileDown size={16} /> Raporu İndir
+              <button onClick={downloadReportPDF} style={{ backgroundColor: "#2563EB", color: "#FFF", border: "none", padding: "10px 22px", borderRadius: "8px", fontSize: "13px", fontWeight: "800", cursor: "pointer", display: "flex", alignItems: "center", gap: "6px" }}>
+                <FileDown size={16} /> PDF Raporu İndir
               </button>
             </div>
 
