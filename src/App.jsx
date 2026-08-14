@@ -52,6 +52,24 @@ const FUNCTIONS = [
   { id: "musteri", label: "Müşteri İlişkileri", icon: Headphones },
 ];
 
+/* ---------------------------------------------------------
+   METODOLOJİ HİZALAMASI — her fonksiyonun hangi resmi
+   dijital olgunluk çerçevesindeki boyuta karşılık geldiği.
+   Kaynaklar: DMAT (EDIH ağı / AB Komisyonu JRC),
+   DDX-D3A (TÜBİTAK TÜSSİDE + Boğaziçi Üniversitesi),
+   SIRI (MEXT / Smart Industry Readiness Index).
+   Bu eşleme özgün soru setimizi geçerli kılan referans
+   noktasıdır; resmi rapor yerine geçmez.
+--------------------------------------------------------- */
+const FRAMEWORK_ALIGNMENT = {
+  ik: { dmat: "İnsan-merkezli dijitalleşme", ddx: "Kurumsal Yönetim", siri: "Organizasyon" },
+  pazarlama: { dmat: "Dijital iş stratejisi", ddx: "Müşteri ve Pazar Yönetimi", siri: "Süreç" },
+  stok: { dmat: "Otomasyon & YZ / Veri yönetimi", ddx: "Üretim Yönetimi / Tedarik Yönetimi", siri: "Süreç / Teknoloji" },
+  musteri: { dmat: "Veri yönetimi", ddx: "Müşteri ve Pazar Yönetimi", siri: "Süreç" },
+};
+
+const METHODOLOGY_LAST_UPDATED = "14 Ağustos 2026";
+
 const QUESTIONS = {
   ik: [
     { text: "İşe alım başvurularını nasıl değerlendiriyorsunuz?", options: [
@@ -326,10 +344,16 @@ export default function App() {
       <main className="px-6 md:px-12 py-10 max-w-3xl mx-auto">
         {step === "intro" && (
           <div>
-            <p className="text-base leading-relaxed mb-6">
+            <p className="text-base leading-relaxed mb-3">
               10–16 soruluk kısa bir keşifle işletmenizin İnsan Kaynakları, Pazarlama, Stok/Üretim
               ve Müşteri İlişkileri süreçlerindeki dijital olgunluğunu ölçüyor; her alan için
               somut, düşük maliyetli araç önerisi ve yol haritası çıkarıyoruz.
+            </p>
+            <p className="mono text-xs mb-6 p-3 rounded-sm" style={{ background: "var(--paper-dark)", color: "var(--moss)" }}>
+              Soru ve boyut yapımız; AB EDIH ağının kullandığı DMAT çerçevesi, TÜBİTAK TÜSSİDE'nin
+              DDX/D3A modeli ve MEXT'in uyguladığı SIRI modeliyle hizalanmıştır. Bu bir ön tarama
+              aracıdır — KOSGEB Dijital Dönüşüm Destek Programı başvurusu için yetkilendirilmiş bir
+              danışmandan resmi DDX/SIRI raporu alınması gerekir.
             </p>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-8">
               {FUNCTIONS.map((f) => (
@@ -414,6 +438,9 @@ export default function App() {
             canProceed={canProceed}
             last={fnStepIdx === FUNCTIONS.length - 1}
           >
+            <div className="mono text-xs mb-5 px-3 py-2 rounded-sm inline-block" style={{ background: "var(--paper-dark)", color: "var(--moss)" }}>
+              Resmi boyut karşılığı — DMAT: {FRAMEWORK_ALIGNMENT[step].dmat} · DDX: {FRAMEWORK_ALIGNMENT[step].ddx} · SIRI: {FRAMEWORK_ALIGNMENT[step].siri}
+            </div>
             <div className="flex flex-col gap-8">
               {QUESTIONS[step].map((q, qIdx) => (
                 <div key={qIdx}>
@@ -467,6 +494,9 @@ export default function App() {
                       </div>
                     </div>
                   </div>
+                  <div className="mono text-xs mt-3 pt-3" style={{ color: "var(--moss)", borderTop: "1px solid var(--paper-dark)" }}>
+                    Resmi boyut karşılığı — DMAT: {FRAMEWORK_ALIGNMENT[r.id].dmat} · DDX: {FRAMEWORK_ALIGNMENT[r.id].ddx} · SIRI: {FRAMEWORK_ALIGNMENT[r.id].siri}
+                  </div>
                   <div className="mt-4 flex flex-col gap-3">
                     {r.tools.map((t, i) => (
                       <div key={i} className="p-3 rounded-sm" style={{ background: "var(--paper)" }}>
@@ -483,8 +513,16 @@ export default function App() {
               ))}
             </div>
 
-            <div className="mt-8 flex items-center gap-2 text-xs mono" style={{ color: "var(--moss)" }}>
-              <CheckCircle2 size={14} /> Araç listesi örnek/ilüstratiftir — canlı sürümde 3 ayda bir güncellenmesi önerilir.
+            <div className="mt-8 p-4 rounded-sm text-xs mono flex flex-col gap-2" style={{ background: "var(--paper-dark)", color: "var(--moss)" }}>
+              <div className="flex items-center gap-2">
+                <CheckCircle2 size={14} /> Araç listesi örnek/ilüstratiftir — 3 ayda bir gözden geçirilir. Son güncelleme: {METHODOLOGY_LAST_UPDATED}.
+              </div>
+              <div>
+                Metodoloji kaynakları: AB EDIH Ağı — Digital Maturity Assessment Tool (DMAT, JRC) ·
+                TÜBİTAK TÜSSİDE — DDX/D3A (Boğaziçi Üniversitesi) · MEXT — SIRI (Smart Industry Readiness Index).
+                Bu değerlendirme bir ön taramadır; KOSGEB Dijital Dönüşüm Destek Programı başvurusu için
+                yetkilendirilmiş danışmandan alınacak resmi DDX/SIRI raporunun yerine geçmez.
+              </div>
             </div>
 
             <button className="btn-primary disp px-5 py-3 mt-6 flex items-center gap-2" onClick={restart}>
