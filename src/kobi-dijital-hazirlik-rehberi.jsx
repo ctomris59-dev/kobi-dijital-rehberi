@@ -81,6 +81,41 @@ const FRAMEWORK_ALIGNMENT = {
 
 const METHODOLOGY_LAST_UPDATED = "14 Ağustos 2026";
 
+/* KAYNAKÇA — soru/boyut yapımızın ve puanlama mantığımızın dayandığı
+   resmi çerçeveler. Her girişte kurum, açıklama ve kaynak adresi var;
+   yeni kaynak eklenirse burada listelenmeli. */
+const SOURCES = [
+  {
+    org: "Avrupa Komisyonu JRC / EDIH Ağı",
+    title: "Digital Maturity Assessment Tool (DMAT)",
+    desc: "AB Dijital Avrupa Programı kapsamında EDIH'lerin kullandığı, KOBİ dijital olgunluğunu 6 boyutta ölçen resmi AB çerçevesi.",
+    url: "european-digital-innovation-hubs.ec.europa.eu/dma-tool",
+  },
+  {
+    org: "TÜBİTAK TÜSSİDE (Boğaziçi Üniversitesi işbirliğiyle)",
+    title: "DDX Dijital Dönüşüm Değerlendirme Modeli / D3A",
+    desc: "İşletmelerin dijital dönüşüm olgunluğunu 5 boyutta (Kurumsal Yönetim, Müşteri ve Pazar, Ar-Ge ve Ürün, Tedarik, Üretim Yönetimi) değerlendiren, KOSGEB'in tanıdığı ulusal model.",
+    url: "ddxmodel.tubitak.gov.tr",
+  },
+  {
+    org: "MEXT Teknoloji Merkezi",
+    title: "SIRI — Smart Industry Readiness Index",
+    desc: "Singapur kökenli, Süreç / Teknoloji / Organizasyon olmak üzere 3 yapı taşına dayanan; MEXT tarafından Türkiye'de uygulanan, KOSGEB'in de tanıdığı dijital olgunluk modeli.",
+    url: "mext.org.tr/siri",
+  },
+  {
+    org: "KOSGEB",
+    title: "KOBİ Dijital Dönüşüm Destek Programı",
+    desc: "Destek başvurusu için DDX veya SIRI formatında resmi dijital olgunluk raporu şartı koşan program; bu araç o resmi rapor değil, ona hazırlık amaçlı bir ön taramadır.",
+    url: "kosgeb.gov.tr",
+  },
+];
+
+const SCORING_METHOD_TEXT =
+  "Her fonksiyon için 3 soru, 4'lü Likert ölçeğinde (1=en düşük dijital olgunluk, 4=en yüksek) puanlanır. " +
+  "Sorunun ortalaması 2'nin altındaysa Başlangıç, 2–3 arasıysa Gelişen, 3 ve üzeriyse İleri seviye olarak sınıflandırılır. " +
+  "Bu eşik değerleri sabit ve tüm kullanıcılar için aynı şekilde uygulanır; sektöre veya ölçeğe göre ağırlıklandırma yapılmaz.";
+
 const QUESTIONS = {
   ik: [
     { text: "İşe alım başvurularını nasıl değerlendiriyorsunuz?", options: [
@@ -579,19 +614,77 @@ export default function App() {
               ))}
             </div>
 
-            <div className="mt-8 p-4 rounded-sm text-xs mono flex flex-col gap-2" style={{ background: "var(--paper-dark)", color: "var(--moss)" }}>
-              <div className="flex items-center gap-2">
-                <CheckCircle2 size={14} /> Araç listesi örnek/ilüstratiftir — 3 ayda bir gözden geçirilir. Son güncelleme: {METHODOLOGY_LAST_UPDATED}.
+            <div className="mt-10 card p-6 rounded-sm">
+              <h3 className="disp text-lg mb-4">Metodoloji ve Kaynakça</h3>
+
+              <div className="mb-5">
+                <div className="disp text-sm mb-1" style={{ color: "var(--moss)" }}>Nasıl puanladık</div>
+                <p className="text-sm leading-relaxed">{SCORING_METHOD_TEXT}</p>
               </div>
-              <div>
-                Metodoloji kaynakları: AB EDIH Ağı — Digital Maturity Assessment Tool (DMAT, JRC) ·
-                TÜBİTAK TÜSSİDE — DDX/D3A (Boğaziçi Üniversitesi) · MEXT — SIRI (Smart Industry Readiness Index).
-                Bu değerlendirme bir ön taramadır; KOSGEB Dijital Dönüşüm Destek Programı başvurusu için
-                yetkilendirilmiş danışmandan alınacak resmi DDX/SIRI raporunun yerine geçmez.
+
+              <div className="mb-5">
+                <div className="disp text-sm mb-2" style={{ color: "var(--moss)" }}>Soru ve boyutlarımızı neye göre hazırladık</div>
+                <p className="text-sm leading-relaxed mb-3">
+                  Kendi sorularımızı sıfırdan uydurmak yerine, aşağıdaki üç resmi çerçevenin boyutlarını
+                  esas aldık ve 4 fonksiyonumuzu (İK, Pazarlama, Stok/Üretim, Müşteri İlişkileri) bu
+                  boyutlara haritaladık. Bu sayede sorular, TSO'nun kendi görüşü değil, AB'nin ve
+                  Türkiye'nin dijital olgunluk değerlendirmelerinde kullandığı ölçütlerle tutarlı hale geldi.
+                </p>
+                <div className="overflow-x-auto">
+                  <table className="w-full text-xs mono" style={{ borderCollapse: "collapse" }}>
+                    <thead>
+                      <tr style={{ borderBottom: "1px solid var(--paper-dark)" }}>
+                        <th className="text-left py-2 pr-3">Fonksiyon</th>
+                        <th className="text-left py-2 pr-3">DMAT boyutu</th>
+                        <th className="text-left py-2 pr-3">DDX/D3A boyutu</th>
+                        <th className="text-left py-2 pr-3">SIRI yapı taşı</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {FUNCTIONS.map((f) => (
+                        <tr key={f.id} style={{ borderBottom: "1px solid var(--paper-dark)" }}>
+                          <td className="py-2 pr-3">{f.label}</td>
+                          <td className="py-2 pr-3">{FRAMEWORK_ALIGNMENT[f.id].dmat}</td>
+                          <td className="py-2 pr-3">{FRAMEWORK_ALIGNMENT[f.id].ddx}</td>
+                          <td className="py-2 pr-3">{FRAMEWORK_ALIGNMENT[f.id].siri}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
               </div>
+
+              <div className="mb-5">
+                <div className="disp text-sm mb-1" style={{ color: "var(--moss)" }}>Araç önerileri için kaynak disiplini</div>
+                <p className="text-sm leading-relaxed">
+                  Her önerilen uygulama için üreticinin resmi sitesi birincil kaynak olarak işaretlenir
+                  ve son doğrulama tarihi kart üzerinde gösterilir. Somut bir ürüne bağlanmamış kategori
+                  örnekleri ayrıca belirtilir. Her maliyet kademesinde en az iki alternatif sunulur ve
+                  kökeni (yerli/uluslararası) etiketlenir; Çorlu TSO hiçbir ürünü resmi olarak onaylamaz.
+                  Liste 3 ayda bir kurul tarafından gözden geçirilir. Son güncelleme: {METHODOLOGY_LAST_UPDATED}.
+                </p>
+              </div>
+
+              <div className="mb-5">
+                <div className="disp text-sm mb-1" style={{ color: "var(--moss)" }}>Sınırlamalar</div>
+                <p className="text-sm leading-relaxed">
+                  Bu araç bir <strong>ön tarama</strong>dır. KOSGEB Dijital Dönüşüm Destek Programı
+                  başvurusu için TÜBİTAK TÜSSİDE, MEXT veya İHKİB Dijital Dönüşüm Merkezi tarafından
+                  yetkilendirilmiş bir danışmandan alınacak resmi DDX veya SIRI raporunun yerine geçmez.
+                  Yüksek potansiyel gösteren işletmelere bu resmi rapor için yönlendirme yapılması önerilir.
+                </p>
+              </div>
+
               <div>
-                Her seviyede en az iki alternatif listelenmiştir; Çorlu TSO bu ürünlerden hiçbirini resmi
-                olarak onaylamamakta veya tavsiye etmemektedir — seçim işletmenin kendi değerlendirmesine aittir.
+                <div className="disp text-sm mb-2" style={{ color: "var(--moss)" }}>Kaynakça</div>
+                <ul className="text-xs flex flex-col gap-2">
+                  {SOURCES.map((s, i) => (
+                    <li key={i}>
+                      <span className="font-medium">{s.org}</span> — {s.title}. {s.desc}{" "}
+                      <span className="mono" style={{ color: "var(--moss)" }}>({s.url})</span>
+                    </li>
+                  ))}
+                </ul>
               </div>
             </div>
 
