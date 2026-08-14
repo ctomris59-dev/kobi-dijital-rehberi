@@ -4,145 +4,145 @@ import {
   FlaskConical, Car, Hammer, HardHat, Truck, Tractor, UtensilsCrossed,
   Laptop, Stethoscope, GraduationCap, Landmark, Recycle, Search,
   ArrowRight, ArrowLeft, Sparkles, RotateCcw, FileDown,
-  Award, ShieldCheck, Info, Target
+  Award, ShieldCheck, Info, Target, Bot, Cpu, Check
 } from "lucide-react";
 
 /* ---------------------------------------------------------
-   VERİ KATMANI — KOBİ Dijital Dönüşüm Veritabanı
+   VERİ KATMANI — KOBİ YZ & Otomasyon Araç Veritabanı
 --------------------------------------------------------- */
 
 const SECTOR_GROUPS = [
   { id: "imalat", label: "İmalat Sanayi" },
   { id: "tarimgida", label: "Tarım & Gıda" },
   { id: "ticaretlojistik", label: "Ticaret & Lojistik" },
-  { id: "hizmet", label: "Profesyonel Hizmetler" },
+  { id: "hizmet", label: "Hizmet Sanayi" },
 ];
 
 const SECTORS = [
-  { id: "tekstil", label: "Tekstil / Konfeksiyon", icon: Shirt, group: "imalat", note: "Sezonluk koleksiyon, varyant ve stok döngüsü yönetimi" },
-  { id: "metal", label: "Metal / Makine İmalatı", icon: Cog, group: "imalat", note: "Sipariş bazlı (MTO) üretim planlama ve iş emri takibi" },
-  { id: "plastik", label: "Plastik / Kimya Sanayi", icon: FlaskConical, group: "imalat", note: "Reçete, parti (lot) izlenebilirliği ve kalite kaydı" },
-  { id: "otomotiv", label: "Otomotiv Yan Sanayi", icon: Car, group: "imalat", note: "Ana sanayi EDI entegrasyonu ve teslimat takvimi" },
-  { id: "mobilya", label: "Mobilya / Ahşap İşleme", icon: Hammer, group: "imalat", note: "Kişiselleştirilmiş sipariş ve atölye planlama" },
-  { id: "insaat", label: "İnşaat / Yapı Malzemeleri", icon: HardHat, group: "imalat", note: "Proje bazlı hakediş, şantiye ve maliyet takibi" },
-  { id: "ambalaj", label: "Ambalaj / Geri Dönüşüm", icon: Recycle, group: "imalat", note: "Hacimli sipariş, fire ve sevkiyat optimizasyonu" },
-  { id: "gida", label: "Gıda İmalatı ve İşleme", icon: Wheat, group: "tarimgida", note: "Soğuk zincir, SKT, lot takibi ve HACCP standartları" },
-  { id: "tarim", label: "Tarım / Hayvancılık", icon: Tractor, group: "tarimgida", note: "Mevsimsel rekolte, verim ve tedarikçi zinciri" },
-  { id: "ticaret", label: "Ticaret / Toptan-Perakende", icon: ShoppingCart, group: "ticaretlojistik", note: "Çoklu kanal (omnichannel) satış ve B2B tahsilat" },
-  { id: "lojistik", label: "Lojistik / Nakliye", icon: Truck, group: "ticaretlojistik", note: "Filo, navlun, rota ve anlık kargo izleme" },
-  { id: "turizm", label: "Turizm / Konaklama ve Yeme-İçme", icon: UtensilsCrossed, group: "hizmet", note: "Kanal yönetimi, rezervasyon ve misafir ilişkileri" },
-  { id: "bilisim", label: "Bilişim / Yazılım Hizmetleri", icon: Laptop, group: "hizmet", note: "Agile proje yönetimi, SLA ve efor takibi" },
-  { id: "saglik", label: "Sağlık Hizmetleri", icon: Stethoscope, group: "hizmet", note: "Hasta kabul, randevu ve KVKK uyumlu medikal veri" },
-  { id: "egitim", label: "Eğitim Hizmetleri", icon: GraduationCap, group: "hizmet", note: "Öğrenci otomasyonu, içerik ve veli iletişimi" },
-  { id: "finans", label: "Finans / Sigorta Aracılık", icon: Landmark, group: "hizmet", note: "Portföy, poliçe yenileme ve komisyon takibi" },
+  { id: "tekstil", label: "Tekstil / Konfeksiyon", icon: Shirt, group: "imalat", note: "Sezonluk koleksiyon & stok" },
+  { id: "metal", label: "Metal / Makine İmalatı", icon: Cog, group: "imalat", note: "Sipariş bazlı üretim" },
+  { id: "plastik", label: "Plastik / Kimya Sanayi", icon: FlaskConical, group: "imalat", note: "Reçete & parti takibi" },
+  { id: "otomotiv", label: "Otomotiv Yan Sanayi", icon: Car, group: "imalat", note: "Ana sanayi EDI takvimi" },
+  { id: "mobilya", label: "Mobilya / Ahşap İşleme", icon: Hammer, group: "imalat", note: "Atölye planlama" },
+  { id: "insaat", label: "İnşaat / Yapı Malzemeleri", icon: HardHat, group: "imalat", note: "Proje & şantiye takibi" },
+  { id: "ambalaj", label: "Ambalaj / Geri Dönüşüm", icon: Recycle, group: "imalat", note: "Fire & sevkiyat takibi" },
+  { id: "gida", label: "Gıda İmalatı ve İşleme", icon: Wheat, group: "tarimgida", note: "Soğuk zincir & SKT" },
+  { id: "tarim", label: "Tarım / Hayvancılık", icon: Tractor, group: "tarimgida", note: "Mevsimsel rekolte" },
+  { id: "ticaret", label: "Ticaret / Toptan-Perakende", icon: ShoppingCart, group: "ticaretlojistik", note: "Çoklu kanal satış" },
+  { id: "lojistik", label: "Lojistik / Nakliye", icon: Truck, group: "ticaretlojistik", note: "Filo & rota takibi" },
+  { id: "turizm", label: "Turizm / Konaklama", icon: UtensilsCrossed, group: "hizmet", note: "Rezervasyon yönetimi" },
+  { id: "bilisim", label: "Bilişim / Yazılım", icon: Laptop, group: "hizmet", note: "Proje & ekip verimliliği" },
+  { id: "saglik", label: "Sağlık Hizmetleri", icon: Stethoscope, group: "hizmet", note: "Randevu & hasta kaydı" },
+  { id: "egitim", label: "Eğitim Hizmetleri", icon: GraduationCap, group: "hizmet", note: "Öğrenci & kursiyer" },
+  { id: "finans", label: "Finans / Sigorta", icon: Landmark, group: "hizmet", note: "Poliçe & dosya takibi" },
 ];
 
 const SIZES = [
-  { id: "mikro", label: "Mikro İşletme", sub: "1–9 Çalışan", desc: "Esnek yapı, hızlı karar alma; düşük bütçeli ve hızlı devreye alınan bulut çözümlere odaklı." },
-  { id: "kucuk", label: "Küçük İşletme", sub: "10–49 Çalışan", desc: "Departmanlaşma süreci; departmanlar arası veri entegrasyonu ve standart süreç ihtiyacı." },
-  { id: "orta", label: "Orta Ölçekli İşletme", sub: "50–249 Çalışan", desc: "Kurumsallaşmış yapı; entegre ERP/CRM, veri güvenliği ve gelişmiş iş zekası ihtiyacı." },
+  { id: "mikro", label: "Mikro İşletme", sub: "1–9 Çalışan", desc: "Hızlı devreye alınan, düşük bütçeli veya ücretsiz YZ & bulut otomasyon araçlarına odaklı." },
+  { id: "kucuk", label: "Küçük İşletme", sub: "10–49 Çalışan", desc: "Departmanlar arası veri akışını otomatikleştiren tak-çalıştır YZ yazılımları." },
+  { id: "orta", label: "Orta Ölçekli İşletme", sub: "50–249 Çalışan", desc: "Mevcut ERP/CRM altyapılarına entegre olabilen gelişmiş YZ ve analitik platformları." },
 ];
 
 const FUNCTIONS = [
-  { id: "ik", label: "İnsan Kaynakları", icon: Users, desc: "İşe alım, bordro, izin, performans ve organizasyon yönetimi." },
-  { id: "pazarlama", label: "Pazarlama & Satış", icon: Megaphone, desc: "Dijital pazarlama, lead toplama, reklam ve pazar analizi." },
-  { id: "stok", label: "Stok & Üretim", icon: Boxes, desc: "Depo, satın alma, üretim planlama ve tedarik zinciri izleme." },
-  { id: "musteri", label: "Müşteri İlişkileri", icon: Headphones, desc: "CRM, satış sonrası destek, talep ve sadakat yönetimi." },
+  { id: "ik", label: "İnsan Kaynakları", icon: Users, desc: "Aday tarama, YZ destekli mülakat, puantaj ve özlük otomasyonu." },
+  { id: "pazarlama", label: "Pazarlama & Satış", icon: Megaphone, desc: "Görsel/metin YZ üretimi, otomatik reklam ve müşteri segmentasyonu." },
+  { id: "stok", label: "Stok & Üretim", icon: Boxes, desc: "Tahminleme algoritmaları, otomatik yeniden sipariş ve akıllı depo." },
+  { id: "musteri", label: "Müşteri İlişkileri", icon: Headphones, desc: "YZ Chatbotlar, sesli asistanlar, talep otomasyonu ve CRM entegrasyonu." },
 ];
 
 const NEED_STATEMENTS = {
-  ik: "Öncelikli Odak: Başvuru, puantaj ve performans kayıtlarını dağınık yapılar yerine KVKK uyumlu, merkezi bir bulut İK sisteminde toplamak.",
-  pazarlama: "Öncelikli Odak: Müşteri kazanım süreçlerini ve içerik üretimini planlı, veri bazlı ve ölçülebilir bir pazarlama hunisine bağlamak.",
-  stok: "Öncelikli Odak: Stok hareketlerini, hammadde ihtiyacını ve üretim aşamalarını Excel yerine anlık izlenebilir dijital sisteme geçirmek.",
-  musteri: "Öncelikli Odak: Müşteri geçmişini, teklifleri ve şikayetleri hafızaya dayalı yapıdan kurumsal CRM veri tabanına dönüştürmek.",
+  ik: "Öncelikli YZ Odağı: Başvuru ve CV değerlendirmede metin analiz YZ araçları kullanmak, rutin puantaj ve izin onaylarını otomatikleştirmek.",
+  pazarlama: "Öncelikli YZ Odağı: İçerik ve tasarım süreçlerinde üretken YZ (Generative AI) araçlarını devreye alarak pazarlama hunisini otomatikleştirmek.",
+  stok: "Öncelikli YZ Odağı: Stok ihtiyaçlarını ve satış tahminlerini yapay zeka modellerine bağlayarak reorder (sipariş) süreçlerini otomatik kılmak.",
+  musteri: "Öncelikli YZ Odağı: Müşteri taleplerini 7/24 karşılayan doğal dil işleme (NLP) destekli YZ asistanları ve akıllı CRM kurguları oluşturmak.",
 };
 
 const FRAMEWORK_ALIGNMENT = {
-  ik: { dmat: "İnsan-Merkezli Dijitalleşme", ddx: "Kurumsal Yönetim", siri: "Organizasyon & Kültür" },
-  pazarlama: { dmat: "Dijital İş Stratejisi", ddx: "Müşteri ve Pazar Yönetimi", siri: "Süreç Dönüşümü" },
-  stok: { dmat: "Otomasyon & Veri Analitiği", ddx: "Üretim ve Tedarik Yönetimi", siri: "Teknoloji & Operasyon" },
-  musteri: { dmat: "Müşteri Deneyimi & Veri", ddx: "Müşteri ve Pazar Yönetimi", siri: "Süreç Entegrasyonu" },
+  ik: { dmat: "İnsan-Merkezli YZ Uyum", ddx: "Yönetim Otomasyonu", siri: "Organizasyonel Dijitalleşme" },
+  pazarlama: { dmat: "Üretken YZ Stratejisi", ddx: "Müşteri Odaklı Otomasyon", siri: "Süreç Verimliliği" },
+  stok: { dmat: "Veri Analitiği & Tahminleme", ddx: "Üretim ve Tedarik YZ", siri: "Akıllı Operasyonlar" },
+  musteri: { dmat: "Akıllı Müşteri Deneyimi", ddx: "CRM ve YZ Desteği", siri: "Süreç Entegrasyonu" },
 };
 
 const QUESTIONS = {
   ik: [
-    { text: "İşe alım ve aday başvuru süreçlerini nasıl yürütüyorsunuz?", options: [
-      "Elden başvuru veya telefonla, herhangi bir kayıt tutulmuyor.",
-      "Kağıt formlar veya basit Excel tabloları ile takip ediliyor.",
-      "Kariyer siteleri ve e-posta üzerinden düzenli alım yapılıyor.",
-      "Otomatik aday takip (ATS) ve YZ destekli eleme sistemi kullanılıyor."
+    { text: "İşe alımda yapay zeka veya otomasyon araçları kullanıyor musunuz?", options: [
+      "Hayır, tamamen manuel yürütüyoruz",
+      "Kısmen; e-posta ve Excel tabloları aktif",
+      "Aday takip yazılımları (ATS) kullanıyoruz",
+      "YZ destekli otomatik aday eleme araçları aktif"
     ]},
-    { text: "Personel puantaj, izin ve özlük işlemlerini nasıl yönetiyorsunuz?", options: [
-      "Fiziki imza defteri veya sözlü bildirimle.",
-      "Excel tablosu ve manuel kontrol süreçleriyle.",
-      "Muhasebe/ERP programının temel puantaj modülüyle.",
-      "Bulut tabanlı, mobil erişimli entegre İK yazılımıyla."
+    { text: "Puantaj, izin ve özlük süreçleriniz otomasyona bağlı mı?", options: [
+      "Sözlü veya kağıt imza defteri ile manuel",
+      "Excel üzerinde manuel kayıt takibi",
+      "Muhasebe/ERP temel puantaj modülü",
+      "Bulut tabanlı, mobil onaylı İK yazılımı"
     ]},
-    { text: "Çalışan performansını ve hedef takibini nasıl yapıyorsunuz?", options: [
-      "Herhangi bir performans takibi yapılmıyor.",
-      "Yılda bir kez sözlü veya kağıt üzeri değerlendirmeyle.",
-      "Excel KPI şablonları ile periyodik dönemlerde.",
-      "Dijital OKR/KPI takip platformu ve anlık geri bildirimle."
+    { text: "Personel performans değerlendirme ve hedef takibi nasıl yapılıyor?", options: [
+      "Performans takibi yapılmıyor",
+      "Yılda bir sözlü veya kağıt üzerinden",
+      "Excel KPI şablonları ile periyodik",
+      "Dijital OKR/KPI platformu ve YZ analitiği"
     ]}
   ],
   pazarlama: [
-    { text: "Ürün ve hizmet tanıtımlarınızı dijital kanallarda nasıl yönetiyorsunuz?", options: [
-      "Sadece kulaktan kulağa veya geleneksel referanslarla.",
-      "Düzensiz ve plansız sosyal medya paylaşımlarıyla.",
-      "Düzenli içerik takvimi ve grafik tasarım araçları kullanarak.",
-      "Çoklu kanalda bütçelendirilmiş, hedefli dijital reklam kampanyalarıyla."
+    { text: "İçerik/görsel üretiminde Yapay Zeka (ChatGPT, Canva AI vb.) kullanıyor musunuz?", options: [
+      "Hayır, yapay zeka kullanılmıyor",
+      "Çalışanlar bireysel olarak nadiren deniyor",
+      "Düzenli içerik takvimi ve YZ tasarım araçları aktif",
+      "Tüm içerik ve reklam kurguları YZ ile yönetiliyor"
     ]},
-    { text: "Müşteri ve potansiyel müşteri iletişim veritabanını nasıl tutuyorsunuz?", options: [
-      "Herhangi bir müşteri veritabanı tutulmuyor.",
-      "Kişisel telefon rehberi veya dağınık not kağıtlarında.",
-      "Paylaşımlı Excel / Google Sheets listelerinde.",
-      "E-posta pazarlama ve segmentasyon altyapısına bağlı veri tabanında."
+    { text: "Müşteri iletişim listelerine yönelik otomatik pazarlama kurgularınız var mı?", options: [
+      "Toplu iletişim yapılmıyor",
+      "Manuel notlar ve telefon rehberi üzerinden",
+      "Toplu e-posta / WhatsApp araçları manuel",
+      "Müşteri davranışına göre otomatik tetiklenen YZ e-posta/SMS"
     ]},
-    { text: "Pazarlama ve reklam harcamalarınızın dönüşümünü (ROI) ölçüyor musunuz?", options: [
-      "Herhangi bir ölçüm yapılmıyor.",
-      "Sadece genel ciro artışına bakılarak hissi yorumlanıyor.",
-      "Sosyal medya beğeni ve erişim istatistikleri takip ediliyor.",
-      "Google/Meta Analytics üzerinden dönüşüm ve müşteri kazanım maliyeti (CAC) anlık izleniyor."
+    { text: "Pazarlama harcamalarınızın dönüşümü (ROI) otomasyonla izleniyor mu?", options: [
+      "Ölçüm yapılmıyor",
+      "Genel satış rakamlarına göre hissi",
+      "Sosyal medya platformlarının temel analitiği",
+      "Google/Meta Analytics ve YZ panelleri ile anlık"
     ]}
   ],
   stok: [
-    { text: "Hammadde, yarı mamul ve mamul stok takibini nasıl gerçekleştiriyorsunuz?", options: [
-      "Görsel fiziki kontrol ve tecrübeye dayalı tahminle.",
-      "Kağıt üzeri stok kartları veya Excel sayım dosyalarıyla.",
-      "Barkod/QR okuyucu destekli ticari stok yazılımıyla.",
-      "ERP entegreli, anlık depo ve konum takip sistemiyle."
+    { text: "Stok ihtiyacını tahminlemede yapay zeka/yazılım kullanıyor musunuz?", options: [
+      "Gözle kontrol ve tecrübeye dayalı",
+      "Manuel Excel kayıtları ile izleniyor",
+      "Stok yazılımındaki sabit uyarılara bakılıyor",
+      "Gelecek ihtiyacı tahmin eden YZ/ERP algoritmaları aktif"
     ]},
-    { text: "Üretim ve sipariş planlama süreçlerini nasıl yönetiyorsunuz?", options: [
-      "Sipariş geldikçe anlık ve plansız müdahalelerle.",
-      "Haftalık kağıt üzeri veya pano üzeri üretim programıyla.",
-      "Excel tabanlı detaylı üretim ve kapasite planlama dosyalarıyla.",
-      "Dijital Üretim Takip (MES/APS) ve ERP entegre yazılımlarla."
+    { text: "Üretim ve sipariş planlamasında dijital otomasyon var mı?", options: [
+      "Sipariş geldikçe anlık/plansız",
+      "Haftalık kağıt/pano üzeri planlama",
+      "Excel bazlı kapasite takip dosyaları",
+      "MES/APS veya ERP entegreli otomatik planlama"
     ]},
-    { text: "Tedarikçi siparişleri ve satın alma süreçlerini nasıl izliyorsunuz?", options: [
-      "Sözlü iletişim veya WhatsApp mesajlarıyla.",
-      "Not defterleri ve manuel sipariş fişleriyle.",
-      "Excel sipariş takip ve kontrol çizelgeleriyle.",
-      "Otomatik kritik stok uyarısı veren ERP satın alma modülüyle."
+    { text: "Tedarikçi sipariş süreçleri otomatikleştirilmiş mi?", options: [
+      "Sözlü / WhatsApp mesajları ile",
+      "Not defteri veya manuel fişlerle",
+      "Excel sipariş takip dosyaları ile",
+      "Kritik stoğa düşen ürünü ERP otomatik sipariş veriyor"
     ]}
   ],
   musteri: [
-    { text: "Müşteri talep, destek ve şikayet kayıtlarnı nasıl topluyorsunuz?", options: [
-      "Herhangi bir kayıt mekanizması bulunmuyor.",
-      "Sözlü talepler hatırlandığı kadarıyla takip ediliyor.",
-      "E-posta veya WhatsApp yazışmaları üzerinden dağınık halde.",
-      "Merkezi CRM / Destek Masası (Ticketing) sistemi üzerinden kayıtlı."
+    { text: "Müşteri sorularına yanıt veren YZ Chatbot veya Asistanınız var mı?", options: [
+      "Tüm sorulara insan çalışanlar manuel yanıt veriyor",
+      "Sadece WhatsApp Business otomatik karşılama var",
+      "Web sitesinde temel sabit menülü chatbot mevcut",
+      "Doğal dil işleyen (NLP) YZ Chatbot 7/24 aktif"
     ]},
-    { text: "Müşteri geçmişine (eski teklifler, faturalar, görüşmeler) ne kadar sürede ulaşıyorsunuz?", options: [
-      "Müşteri geçmişine ulaşmak mümkün olmuyor.",
-      "Fiziki klasörler ve arşiv faturaları taranarak uzun sürede.",
-      "Excel arşiv dosyaları ve bilgisayar klasörlerinden aratarak.",
-      "CRM ekranından müşteri kartına tıklayarak saniyeler içinde."
+    { text: "Müşteri geçmişine ve eski tekliflere ne kadar sürede ulaşıyorsunuz?", options: [
+      "Müşteri geçmişi kayıt altına alınmıyor",
+      "Fiziki klasör/arşiv taranarak uzun sürede",
+      "Excel dosyalarında arama yapılarak",
+      "CRM ekranından müşteri profiline tıklayarak anında"
     ]},
-    { text: "Mevcut müşterilere tekrar satış ve teklif takibini nasıl yapıyorsunuz?", options: [
-      "Tekrar satış için sistemsel bir çalışma yapılmıyor.",
-      "Hatırlandıkça telefonla aranarak hatır soruluyor.",
-      "Toplu e-posta veya WhatsApp duyuruları gönderilerek.",
-      "CRM otomasyonu ile yaklaşan bakım/yenileme tarihlerinde otomatik teklif çıkararak."
+    { text: "Mevcut müşterilere tekrar satış için otomasyon kurgularınız var mı?", options: [
+      "Sistemsel bir takip yapılmıyor",
+      "Hatırlandıkça manuel telefon aramaları",
+      "Periyodik olarak manuel toplu duyurular",
+      "CRM otomasyonu yaklaşan tarihlerde otomatik teklif çıkarıyor"
     ]}
   ]
 };
@@ -150,72 +150,72 @@ const QUESTIONS = {
 const TOOLS = {
   ik: {
     baslangic: [
-      { name: "Google Forms & Sheets İK Paketi", why: "Kodlama gerektirmeden başvuru formları oluşturur ve verileri otomatik tablolandırır." },
-      { name: "Kariyer.net Kurumsal Ücretsiz İlan", why: "Elden başvuru toplama yerine dijital havuz oluşturmayı sağlar." },
+      { name: "ChatGPT / Claude İK Şablonları", why: "İş ilanı, mülakat soruları ve görev tanımlarını YZ ile üretir." },
+      { name: "Google Forms + Sheets İK Otomasyonu", why: "Kodsuz formlarla başvuru toplayıp otomatik tablolandırır." },
     ],
     gelisen: [
-      { name: "Manatal No-Code ATS", why: "Aday CV'lerini otomatik ayrıştırır, puanlar ve kurul değerlendirmesine sunar." },
-      { name: "Kolay İK Bulut Platformu", why: "İzin, puantaj, masraf ve özlük dosyalarını KVKK uyumlu tek merkezde toplar." },
+      { name: "Manatal AI Recruiting", why: "CV'leri yapay zeka ile ayrıştırır, puanlar ve en uygun adayları sıralar." },
+      { name: "Kolay İK Bulut Platformu", why: "İzin, puantaj ve özlük süreçlerini otomatikleştiren KVKK uyumlu yerli yazılım." },
     ],
     ileri: [
-      { name: "Bordro.io Entegre İK", why: "Bordro, dijital imza, vardiya ve mevzuat süreçlerini tek bulutta birleştirir." },
-      { name: "SAP SuccessFactors", why: "Uluslararası ölçekte yetenek yönetimi, performans ve analitik sunar." },
+      { name: "Bordro.io Entegre İK & Vardiya", why: "Bordro, dijital imza ve vardiya süreçlerini otomasyonla birleştirir." },
+      { name: "SAP SuccessFactors AI Suite", why: "Kurumsal ölçekte YZ destekli yetenek yönetimi ve performans analitiği." },
     ],
   },
   pazarlama: {
     baslangic: [
-      { name: "Canva Pro KOBİ Tasarım", why: "Tasarımcı ihtiyacı olmadan kurumsal broşür ve sosyal medya içeriği üretir." },
-      { name: "Meta Business Suite", why: "Instagram ve Facebook paylaşımlarını tek panelden takvime bağlar." },
+      { name: "Canva Magic Studio (YZ Tasarım)", why: "Yapay zeka ile saniyeler içinde sosyal medya görselleri üretir." },
+      { name: "ChatGPT / Gemini Pro Metin Asistanı", why: "Reklam metinleri ve e-posta taslaklarını otomatik hazırlar." },
     ],
     gelisen: [
-      { name: "Brevo (Sendinblue) E-Pazarlama", why: "Müşteri segmentasyonuna göre otomatik e-posta ve SMS kampanyaları atar." },
-      { name: "Google & Meta Ads Manager", why: "Hedef kitleye yönelik arama ve sosyal medya reklamlarını ölçülebilir kılar." },
+      { name: "Brevo (Sendinblue) AI Kampanya", why: "En uygun gönderim zamanını YZ ile belirleyen otomatik e-posta platformu." },
+      { name: "Meta & Google AI Ads Manager", why: "Akıllı Kampanyalar ile reklam bütçesini YZ algoritmalarına optimize ettirir." },
     ],
     ileri: [
-      { name: "Insider Omnichannel AI", why: "Çoklu kanalda kişiselleştirilmiş müşteri deneyimi ve pazarlama otomasyonu sağlar." },
-      { name: "HubSpot Marketing Hub", why: "Inbound pazarlama, lead skorlama ve satış dönüşüm analitiğini entegre eder." },
+      { name: "Insider AI Omnichannel", why: "Çoklu kanalda kişiselleştirilmiş YZ pazarlama deneyimi sunan platform." },
+      { name: "HubSpot Marketing Hub AI", why: "Inbound pazarlama ve müşteri skorlamayı YZ ile entegre eder." },
     ],
   },
   stok: {
     baslangic: [
-      { name: "Barkod Destekli Excel Şablonu", why: "Manuel sayım hatalarını azaltarak temel stok giriş-çıkış kontrolü sağlar." },
-      { name: "inFlow Inventory Mobile", why: "Akıllı telefon kamerası ile barkod okutarak mobil stok takibi yaptırır." },
+      { name: "Excel AI Formülleri & Stok Şablonu", why: "Manuel sayım hatalarını azaltarak temel stok ve sipariş takibi yaptırır." },
+      { name: "inFlow Inventory Akıllı Mobil", why: "Mobil kamera ile barkod okutarak anlık stok güncellemesi sağlar." },
     ],
     gelisen: [
-      { name: "Odoo ERP Community", why: "Stok, satın alma, imalat ve faturalamayı modüler yapıda bağlar." },
-      { name: "Mikro Run / Jump ERP", why: "Yerli e-fatura/e-arşiv ve mevzuata tam uyumlu stok ve sipariş yönetimi." },
+      { name: "Odoo ERP Akıllı Stok & Satın Alma", why: "Stok tükenme sürelerini hesaplayıp otomatik satın alma önerisi çıkarır." },
+      { name: "Mikro Run / Jump Otomasyon", why: "Yerli e-fatura ve mevzuata tam uyumlu stok ve sipariş otomasyonu." },
     ],
     ileri: [
-      { name: "Logo Tiger 3 Enterprise", why: "Gelişmiş üretim planlama, MRP-II, tedarik ve finans entegrasyonu." },
-      { name: "SAP Business One", why: "Global standartlarda depo, üretim, kalite kontrol ve tedarik zinciri." },
+      { name: "Logo Tiger 3 Enterprise MRP", why: "Gelişmiş üretim planlama ve tedarik zinciri otomasyonu." },
+      { name: "SAP Business One AI Supply Chain", why: "Tahminleme algoritmalarıyla çalışan depo ve üretim yazılımı." },
     ],
   },
   musteri: {
     baslangic: [
-      { name: "WhatsApp Business Kurumsal", why: "Otomatik karşılama, katalog ve hızlı yanıtlarla müşteri iletişimini düzenler." },
-      { name: "Notion Müşteri Veritabanı", why: "Dağınık müşteri notlarını şık ve aranabilir bir panoya taşır." },
+      { name: "WhatsApp Business Otomatik Yanıtlar", why: "Müşterilere hazır hızlı yanıtlar ve katalog seçenekleri sunar." },
+      { name: "Notion AI Müşteri Veritabanı", why: "Müşteri görüşme notlarını YZ ile özetleyen aranabilir pano." },
     ],
     gelisen: [
-      { name: "HubSpot Free / Starter CRM", why: "Satış fırsatlarını (pipeline), teklifleri ve e-posta geçmişini tek ekranda toplar." },
-      { name: "Zoho CRM KOBİ Paketi", why: "Satış ekibi görev takibi, müşteri kartı ve e-posta entegrasyonu sunar." },
+      { name: "HubSpot Free / Starter CRM", why: "Satış fırsatlarını ve teklif takibini otomatikleştiren CRM." },
+      { name: "Zoho SalesIQ Akıllı Chatbot", why: "Web sitenize gelen ziyaretçileri karşılayan mesajlaşma botu." },
     ],
     ileri: [
-      { name: "Salesforce Sales Cloud", why: "Dünya standardı satış gücü otomasyonu, tahminleme ve müşteri analitiği." },
-      { name: "Zoho One Kurumsal Süit", why: "40+ entegre uygulama ile satış, pazarlama, destek ve muhasebeyi birleştirir." },
+      { name: "Salesforce Einstein AI CRM", why: "Satış kapatma ihtimallerini YZ ile tahmin eden CRM altyapısı." },
+      { name: "Zoho One Akıllı İş Süiti", why: "40+ entegre uygulama ile tüm müşteri süreçlerini otomatikleştiren platform." },
     ],
   },
 };
 
 const LEVELS = {
-  baslangic: { label: "Başlangıç Seviyesi", color: "#EF4444" },
-  gelisen: { label: "Gelişen Seviye", color: "#F59E0B" },
-  ileri: { label: "İleri Seviye", color: "#10B981" },
+  baslangic: { label: "Temel Seviye (Manuel Süreçler)", color: "#EF4444" },
+  gelisen: { label: "Gelişen Seviye (Kısmi Otomasyon & YZ)", color: "#F59E0B" },
+  ileri: { label: "İleri Seviye (Entegre YZ & Tam Otomasyon)", color: "#10B981" },
 };
 
 const TIER_PRESENTATION = {
-  baslangic: { heading: "1. Aşama: Temel Çözümler" },
-  gelisen: { heading: "2. Aşama: Otomasyon & Süreç İyileştirme" },
-  ileri: { heading: "3. Aşama: Kurumsal Entegrasyon & ERP" },
+  baslangic: { heading: "1. Aşama: Hızlı Devreye Alınacak YZ & Ücretsiz Araçlar" },
+  gelisen: { heading: "2. Aşama: Departman Ölçekli YZ & Otomasyon Yazılımları" },
+  ileri: { heading: "3. Aşama: Entegre YZ Platformları & Kurumsal Süitler" },
 };
 const TIER_ORDER = ["baslangic", "gelisen", "ileri"];
 
@@ -227,34 +227,34 @@ function levelFromScore(avg) {
 
 function ScoreGauge({ score, level }) {
   const percentage = Math.min(Math.max(((score - 1) / 3) * 100, 0), 100);
-  const strokeDasharray = 251;
+  const strokeDasharray = 220;
   const strokeDashoffset = strokeDasharray - (strokeDasharray * percentage) / 100;
 
   return (
     <div style={{ display: "flex", flexDirection: "column", alignItems: "center", position: "relative" }}>
-      <svg width="180" height="100" viewBox="0 0 180 100">
-        <path d="M 10 90 A 80 80 0 0 1 170 90" fill="none" stroke="#334155" strokeWidth="14" strokeLinecap="round" />
+      <svg width="150" height="85" viewBox="0 0 150 85">
+        <path d="M 15 75 A 60 60 0 0 1 135 75" fill="none" stroke="#E2E8F0" strokeWidth="10" strokeLinecap="round" />
         <path
-          d="M 10 90 A 80 80 0 0 1 170 90"
+          d="M 15 75 A 60 60 0 0 1 135 75"
           fill="none"
           stroke={LEVELS[level].color}
-          strokeWidth="14"
+          strokeWidth="10"
           strokeLinecap="round"
           strokeDasharray={strokeDasharray}
           strokeDashoffset={strokeDashoffset}
           style={{ transition: "stroke-dashoffset 0.8s ease-in-out" }}
         />
       </svg>
-      <div style={{ position: "absolute", bottom: "4px", textAlign: "center" }}>
-        <span style={{ fontSize: "28px", fontWeight: "800", color: "#FFFFFF" }}>{score.toFixed(1)}</span>
-        <span style={{ fontSize: "12px", color: "#94A3B8" }}> / 4.0</span>
+      <div style={{ position: "absolute", bottom: "2px", textAlign: "center" }}>
+        <span style={{ fontSize: "22px", fontWeight: "800", color: "#1E293B" }}>{score.toFixed(1)}</span>
+        <span style={{ fontSize: "11px", color: "#64748B" }}> / 4.0</span>
       </div>
     </div>
   );
 }
 
 /* ---------------------------------------------------------
-   MAIN APPLICATION (ABSOLUTE OVERRIDE VIEWPORT)
+   MAIN APPLICATION (LIGHT & MINIMALIST NO-SCROLL LAYOUT)
 --------------------------------------------------------- */
 const STEPS = ["intro", "sector", "size", "ik", "pazarlama", "stok", "musteri", "results"];
 
@@ -328,192 +328,159 @@ export default function App() {
       position: "fixed",
       top: 0,
       left: 0,
-      right: 0,
-      bottom: 0,
       width: "100vw",
       height: "100vh",
-      overflowY: "auto",
-      backgroundColor: "#0F172A",
-      color: "#F8FAFC",
+      backgroundColor: "#F8FAFC",
+      color: "#0F172A",
       fontFamily: "system-ui, -apple-system, sans-serif",
-      zIndex: 999999,
+      display: "flex",
+      flexDirection: "column",
+      overflow: "hidden",
       boxSizing: "border-box"
     }}>
       
-      <style dangerouslySetInnerHTML={{ __html: `
-        @media print {
-          .no-print { display: none !important; }
-          div { background: white !important; color: black !important; position: static !important; }
-          .print-card { background: white !important; color: black !important; border: 1px solid #CBD5E1 !important; }
-        }
-      ` }} />
-
       {/* HEADER */}
-      <header style={{ backgroundColor: "#1E293B", borderBottom: "1px solid #334155", position: "sticky", top: 0, zIndex: 50 }}>
-        <div style={{ maxWidth: "1100px", margin: "0 auto", padding: "0 24px", height: "70px", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-          <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
-            <div style={{ width: "38px", height: "38px", borderRadius: "10px", backgroundColor: "#2563EB", color: "#FFF", fontWeight: "900", fontSize: "20px", display: "flex", alignItems: "center", justifyContent: "center" }}>
-              Ç
-            </div>
-            <div>
-              <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-                <span style={{ fontWeight: "800", fontSize: "16px", color: "#FFF" }}>ÇORLU TSO</span>
-                <span style={{ backgroundColor: "rgba(37, 99, 235, 0.25)", color: "#60A5FA", border: "1px solid rgba(96, 165, 250, 0.4)", padding: "2px 8px", borderRadius: "4px", fontSize: "10px", fontWeight: "700" }}>
-                  DİJİTAL DÖNÜŞÜM MERKEZİ
-                </span>
-              </div>
-              <p style={{ fontSize: "12px", color: "#94A3B8", margin: 0 }}>KOBİ Dijital Hazırlık & Yapay Zeka Rehberi</p>
-            </div>
+      <header style={{ backgroundColor: "#FFFFFF", borderBottom: "1px solid #E2E8F0", height: "64px", padding: "0 24px", display: "flex", alignItems: "center", justifyContent: "space-between", flexShrink: 0 }}>
+        <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
+          <div style={{ width: "36px", height: "36px", borderRadius: "8px", backgroundColor: "#2563EB", color: "#FFF", fontWeight: "900", fontSize: "18px", display: "flex", alignItems: "center", justifyContent: "center" }}>
+            Ç
           </div>
-
-          {stepIdx > 0 && stepIdx < STEPS.length - 1 && (
-            <div style={{ display: "flex", alignItems: "center", gap: "10px", backgroundColor: "#0F172A", padding: "6px 14px", borderRadius: "8px", border: "1px solid #334155" }}>
-              <span style={{ fontSize: "12px", fontWeight: "600", color: "#94A3B8" }}>İlerleme:</span>
-              <div style={{ width: "100px", backgroundColor: "#334155", height: "6px", borderRadius: "3px", overflow: "hidden" }}>
-                <div style={{ backgroundColor: "#2563EB", height: "100%", width: `${(stepIdx / (STEPS.length - 1)) * 100}%` }} />
-              </div>
-              <span style={{ fontSize: "12px", fontWeight: "700", color: "#60A5FA" }}>%{Math.round((stepIdx / (STEPS.length - 1)) * 100)}</span>
+          <div>
+            <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+              <span style={{ fontWeight: "800", fontSize: "15px", color: "#0F172A" }}>ÇORLU TSO</span>
+              <span style={{ backgroundColor: "#EFF6FF", color: "#2563EB", border: "1px solid #BFDBFE", padding: "2px 6px", borderRadius: "4px", fontSize: "10px", fontWeight: "700" }}>
+                DİJİTAL DÖNÜŞÜM MERKEZİ
+              </span>
             </div>
-          )}
-
-          {step === "results" && (
-            <button
-              onClick={() => window.print()}
-              className="no-print"
-              style={{ backgroundColor: "#2563EB", color: "#FFF", border: "none", padding: "10px 18px", borderRadius: "8px", fontWeight: "700", fontSize: "13px", cursor: "pointer", display: "flex", alignItems: "center", gap: "8px" }}
-            >
-              <FileDown size={16} /> Raporu İndir
-            </button>
-          )}
-        </div>
-      </header>
-
-      {/* HERO / INTRO */}
-      {step === "intro" && (
-        <div style={{ background: "linear-gradient(180deg, #1E293B 0%, #0F172A 100%)", borderBottom: "1px solid #334155", padding: "56px 24px", textAlign: "center" }}>
-          <div style={{ maxWidth: "800px", margin: "0 auto" }}>
-            <div style={{ display: "inline-flex", alignItems: "center", gap: "6px", backgroundColor: "rgba(37, 99, 235, 0.15)", border: "1px solid rgba(96, 165, 250, 0.3)", padding: "6px 14px", borderRadius: "20px", color: "#60A5FA", fontSize: "12px", fontWeight: "700", marginBottom: "20px" }}>
-              <Sparkles size={14} /> EU DMAT · TÜBİTAK DDX · MEXT SIRI METODOLOJİSİ
-            </div>
-            <h1 style={{ fontSize: "38px", fontWeight: "900", letterSpacing: "-0.5px", lineHeight: "1.25", marginBottom: "18px", color: "#FFF" }}>
-              İşletmenizin Dijital Olgunluğunu Ölçün,<br />
-              <span style={{ color: "#60A5FA" }}>Size Özel Dijital Yol Haritasını Çıkarın</span>
-            </h1>
-            <p style={{ fontSize: "15px", color: "#94A3B8", lineHeight: "1.6", marginBottom: "32px" }}>
-              10 dakikalık hızlı keşifle İK, Pazarlama, Üretim/Stok ve Müşteri İlişkileri süreçlerinizdeki 
-              dijitalleşme seviyenizi ölçün; bütçenize uygun somut araç ve yazılım önerilerini hemen edin.
-            </p>
-            <button
-              onClick={goNext}
-              style={{ backgroundColor: "#2563EB", color: "#FFF", border: "none", padding: "16px 36px", borderRadius: "12px", fontSize: "16px", fontWeight: "800", cursor: "pointer", display: "inline-flex", alignItems: "center", gap: "10px", boxShadow: "0 10px 25px -5px rgba(37, 99, 235, 0.4)" }}
-            >
-              Keşfe Başla <ArrowRight size={20} />
-            </button>
+            <p style={{ fontSize: "11px", color: "#64748B", margin: 0 }}>KOBİ Yapay Zeka & Otomasyon Araç Rehberi</p>
           </div>
         </div>
-      )}
 
-      {/* MAIN BODY */}
-      <main style={{ maxWidth: "900px", margin: "0 auto", padding: "36px 24px" }}>
-
-        {/* INTRO CONTENT */}
-        {step === "intro" && (
-          <div style={{ display: "flex", flexDirection: "column", gap: "28px" }}>
-            <div style={{ textAlign: "center" }}>
-              <h2 style={{ fontSize: "12px", fontWeight: "800", color: "#64748B", letterSpacing: "1px", textTransform: "uppercase", marginBottom: "16px" }}>
-                DEĞERLENDİRİLEN 4 TEMEL OPERASYONEL ALAN
-              </h2>
-              <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))", gap: "16px" }}>
-                {FUNCTIONS.map((f) => (
-                  <div key={f.id} style={{ backgroundColor: "#1E293B", padding: "20px", borderRadius: "14px", border: "1px solid #334155", textAlign: "left" }}>
-                    <div style={{ width: "40px", height: "40px", borderRadius: "10px", backgroundColor: "rgba(37, 99, 235, 0.2)", color: "#60A5FA", display: "flex", alignItems: "center", justifyContent: "center", marginBottom: "12px" }}>
-                      <f.icon size={20} />
-                    </div>
-                    <h3 style={{ fontSize: "15px", fontWeight: "800", marginBottom: "4px", color: "#FFF" }}>{f.label}</h3>
-                    <p style={{ fontSize: "12px", color: "#94A3B8", margin: 0, lineHeight: "1.4" }}>{f.desc}</p>
-                  </div>
-                ))}
-              </div>
+        {stepIdx > 0 && stepIdx < STEPS.length - 1 && (
+          <div style={{ display: "flex", alignItems: "center", gap: "10px", backgroundColor: "#F1F5F9", padding: "6px 12px", borderRadius: "8px" }}>
+            <span style={{ fontSize: "11px", fontWeight: "600", color: "#64748B" }}>İlerleme:</span>
+            <div style={{ width: "90px", backgroundColor: "#CBD5E1", height: "6px", borderRadius: "3px", overflow: "hidden" }}>
+              <div style={{ backgroundColor: "#2563EB", height: "100%", width: `${(stepIdx / (STEPS.length - 1)) * 100}%` }} />
             </div>
-
-            <div style={{ backgroundColor: "#1E293B", padding: "24px", borderRadius: "14px", border: "1px solid #334155", display: "flex", gap: "16px", alignItems: "flex-start" }}>
-              <div style={{ width: "38px", height: "38px", borderRadius: "10px", backgroundColor: "rgba(16, 185, 129, 0.2)", color: "#34D399", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
-                <ShieldCheck size={20} />
-              </div>
-              <div>
-                <h3 style={{ fontSize: "15px", fontWeight: "800", color: "#FFF", marginBottom: "4px" }}>Resmi Çerçevelerle Hizalanmış Metodoloji</h3>
-                <p style={{ fontSize: "12px", color: "#94A3B8", lineHeight: "1.6", margin: 0 }}>
-                  Soru ve puanlama yapımız; AB Dijital Avrupa Programı <strong>DMAT</strong>, TÜBİTAK TÜSSİDE <strong>DDX (D3A)</strong> ve MEXT <strong>SIRI</strong> standartlarına dayanmaktadır. 
-                  Bu araç KOBİ'lerin resmi danışmanlık öncesinde durum tespiti yapmasını sağlayan <strong>ön tarama rehberidir</strong>.
-                </p>
-              </div>
-            </div>
+            <span style={{ fontSize: "11px", fontWeight: "800", color: "#2563EB" }}>%{Math.round((stepIdx / (STEPS.length - 1)) * 100)}</span>
           </div>
         )}
 
-        {/* STEP 1: SECTOR */}
-        {step === "sector" && (
-          <StepContainer title="1 · Sektörünüz" subtitle="İşletmenizin ana faaliyet alanını seçin." onBack={goBack} onNext={goNext} canProceed={canProceed}>
-            <div style={{ marginBottom: "20px" }}>
-              <div style={{ position: "relative", marginBottom: "12px" }}>
-                <Search size={18} style={{ position: "absolute", left: "14px", top: "12px", color: "#64748B" }} />
-                <input
-                  type="text"
-                  value={sectorQuery}
-                  onChange={(e) => setSectorQuery(e.target.value)}
-                  placeholder="Sektör ara..."
-                  style={{ width: "100%", padding: "10px 14px 10px 42px", backgroundColor: "#0F172A", border: "1px solid #334155", borderRadius: "8px", color: "#FFF", fontSize: "13px", outline: "none", boxSizing: "border-box" }}
-                />
-              </div>
+        {step === "results" && (
+          <button
+            onClick={() => window.print()}
+            style={{ backgroundColor: "#2563EB", color: "#FFF", border: "none", padding: "8px 16px", borderRadius: "6px", fontWeight: "700", fontSize: "12px", cursor: "pointer", display: "flex", alignItems: "center", gap: "6px" }}
+          >
+            <FileDown size={14} /> Raporu İndir
+          </button>
+        )}
+      </header>
 
-              <div style={{ display: "flex", gap: "8px", overflowX: "auto", paddingBottom: "4px" }}>
-                <button
-                  onClick={() => setSectorGroup("all")}
-                  style={{ padding: "6px 12px", borderRadius: "6px", fontSize: "12px", fontWeight: "700", border: "none", cursor: "pointer", backgroundColor: sectorGroup === "all" ? "#2563EB" : "#334155", color: "#FFF" }}
-                >
-                  Tümü
-                </button>
-                {SECTOR_GROUPS.map((g) => (
-                  <button
-                    key={g.id}
-                    onClick={() => setSectorGroup(g.id)}
-                    style={{ padding: "6px 12px", borderRadius: "6px", fontSize: "12px", fontWeight: "700", border: "none", cursor: "pointer", backgroundColor: sectorGroup === g.id ? "#2563EB" : "#334155", color: "#FFF", whiteSpace: "nowrap" }}
-                  >
-                    {g.label}
-                  </button>
-                ))}
-              </div>
+      {/* MAIN BODY CONTAINER */}
+      <main style={{ flex: 1, display: "flex", alignItems: "center", justifyContent: "center", padding: "16px 24px", boxSizing: "border-box", overflow: "hidden" }}>
+        
+        {/* INTRO SCREEN */}
+        {step === "intro" && (
+          <div style={{ maxWidth: "800px", textAlign: "center", display: "flex", flexDirection: "column", gap: "20px" }}>
+            <div style={{ display: "inline-flex", alignItems: "center", gap: "6px", backgroundColor: "#EFF6FF", border: "1px solid #BFDBFE", padding: "6px 14px", borderRadius: "20px", color: "#2563EB", fontSize: "12px", fontWeight: "700", margin: "0 auto" }}>
+              <Bot size={16} /> YAPAY ZEKA VE OTOMASYON ADAPTASYON REHBERİ
+            </div>
+            
+            <h1 style={{ fontSize: "32px", fontWeight: "900", letterSpacing: "-0.5px", lineHeight: "1.25", color: "#0F172A", margin: 0 }}>
+              Süreçleriniz Yapay Zekaya Ne Kadar Hazır?<br />
+              <span style={{ color: "#2563EB" }}>İşletme Ölçeğinize Uyumlu YZ Araç Önerileri ve Adaptasyon Rehberi</span>
+            </h1>
+
+            <p style={{ fontSize: "14px", color: "#475569", lineHeight: "1.5", margin: 0 }}>
+              5 dakikalık hızlı analizle İK, Pazarlama, Üretim/Stok ve Müşteri İlişkileri süreçlerinizde yapay zeka potansiyelinizi görün; 
+              işletme ölçeğinize en uygun YZ ve otomasyon araç önerilerini anında edinin.
+            </p>
+
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "12px", margin: "8px 0" }}>
+              {FUNCTIONS.map((f) => (
+                <div key={f.id} style={{ backgroundColor: "#FFFFFF", border: "1px solid #E2E8F0", padding: "14px", borderRadius: "10px", textAlign: "left" }}>
+                  <f.icon size={18} color="#2563EB" style={{ marginBottom: "6px" }} />
+                  <div style={{ fontWeight: "700", fontSize: "13px", color: "#0F172A" }}>{f.label}</div>
+                  <div style={{ fontSize: "11px", color: "#64748B", marginTop: "2px", lineHeight: "1.3" }}>{f.desc}</div>
+                </div>
+              ))}
             </div>
 
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(260px, 1fr))", gap: "10px", maxHeight: "380px", overflowY: "auto", paddingRight: "4px" }}>
-              {filteredSectors.map((s) => {
-                const isSelected = sector === s.id;
-                return (
+            <button
+              onClick={goNext}
+              style={{ backgroundColor: "#2563EB", color: "#FFF", border: "none", padding: "14px 32px", borderRadius: "10px", fontSize: "15px", fontWeight: "800", cursor: "pointer", display: "inline-flex", alignItems: "center", gap: "8px", margin: "0 auto", boxShadow: "0 4px 12px rgba(37, 99, 235, 0.2)" }}
+            >
+              YZ Araç Rehberini Başlat <ArrowRight size={18} />
+            </button>
+          </div>
+        )}
+
+        {/* STEP 1: SECTOR (NO SCROLL GRID) */}
+        {step === "sector" && (
+          <StepContainer title="1 · Sektörünüz" subtitle="İşletmenizin ana faaliyet alanını seçin." onBack={goBack} onNext={goNext} canProceed={canProceed}>
+            <div style={{ display: "flex", flexDirection: "column", gap: "10px", height: "100%" }}>
+              <div style={{ display: "flex", gap: "10px" }}>
+                <div style={{ position: "relative", flex: 1 }}>
+                  <Search size={16} style={{ position: "absolute", left: "12px", top: "10px", color: "#94A3B8" }} />
+                  <input
+                    type="text"
+                    value={sectorQuery}
+                    onChange={(e) => setSectorQuery(e.target.value)}
+                    placeholder="Sektör ara..."
+                    style={{ width: "100%", padding: "8px 12px 8px 36px", backgroundColor: "#F8FAFC", border: "1px solid #CBD5E1", borderRadius: "6px", color: "#0F172A", fontSize: "12px", outline: "none", boxSizing: "border-box" }}
+                  />
+                </div>
+                <div style={{ display: "flex", gap: "4px" }}>
                   <button
-                    key={s.id}
-                    onClick={() => setSector(s.id)}
-                    style={{
-                      padding: "14px",
-                      borderRadius: "10px",
-                      textAlign: "left",
-                      backgroundColor: isSelected ? "rgba(37, 99, 235, 0.2)" : "#0F172A",
-                      border: isSelected ? "2px solid #2563EB" : "1px solid #334155",
-                      cursor: "pointer",
-                      display: "flex",
-                      alignItems: "flex-start",
-                      gap: "10px",
-                    }}
+                    onClick={() => setSectorGroup("all")}
+                    style={{ padding: "6px 10px", borderRadius: "6px", fontSize: "11px", fontWeight: "700", border: "none", cursor: "pointer", backgroundColor: sectorGroup === "all" ? "#2563EB" : "#E2E8F0", color: sectorGroup === "all" ? "#FFF" : "#475569" }}
                   >
-                    <div style={{ width: "32px", height: "32px", borderRadius: "6px", backgroundColor: isSelected ? "#2563EB" : "#1E293B", color: isSelected ? "#FFF" : "#94A3B8", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
-                      <s.icon size={16} />
-                    </div>
-                    <div>
-                      <div style={{ fontWeight: "700", fontSize: "13px", color: "#FFF" }}>{s.label}</div>
-                      <div style={{ fontSize: "11px", color: "#94A3B8", lineHeight: "1.3", marginTop: "2px" }}>{s.note}</div>
-                    </div>
+                    Tümü
                   </button>
-                );
-              })}
+                  {SECTOR_GROUPS.map((g) => (
+                    <button
+                      key={g.id}
+                      onClick={() => setSectorGroup(g.id)}
+                      style={{ padding: "6px 10px", borderRadius: "6px", fontSize: "11px", fontWeight: "700", border: "none", cursor: "pointer", backgroundColor: sectorGroup === g.id ? "#2563EB" : "#E2E8F0", color: sectorGroup === g.id ? "#FFF" : "#475569" }}
+                    >
+                      {g.label}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              {/* Grid 4x4 fitted to screen */}
+              <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gridTemplateRows: "repeat(4, 1fr)", gap: "8px", flex: 1, overflow: "hidden" }}>
+                {filteredSectors.slice(0, 16).map((s) => {
+                  const isSelected = sector === s.id;
+                  return (
+                    <button
+                      key={s.id}
+                      onClick={() => setSector(s.id)}
+                      style={{
+                        padding: "8px 10px",
+                        borderRadius: "8px",
+                        textAlign: "left",
+                        backgroundColor: isSelected ? "#EFF6FF" : "#FFFFFF",
+                        border: isSelected ? "2px solid #2563EB" : "1px solid #E2E8F0",
+                        cursor: "pointer",
+                        display: "flex",
+                        alignItems: "center",
+                        gap: "8px",
+                        boxSizing: "border-box"
+                      }}
+                    >
+                      <div style={{ width: "28px", height: "28px", borderRadius: "6px", backgroundColor: isSelected ? "#2563EB" : "#F1F5F9", color: isSelected ? "#FFF" : "#64748B", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+                        <s.icon size={14} />
+                      </div>
+                      <div style={{ overflow: "hidden" }}>
+                        <div style={{ fontWeight: "700", fontSize: "11px", color: "#0F172A", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{s.label}</div>
+                        <div style={{ fontSize: "9px", color: "#64748B", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{s.note}</div>
+                      </div>
+                    </button>
+                  );
+                })}
+              </div>
             </div>
           </StepContainer>
         )}
@@ -521,7 +488,7 @@ export default function App() {
         {/* STEP 2: SIZE */}
         {step === "size" && (
           <StepContainer title="2 · İşletme Ölçeği" subtitle="Çalışan sayınıza uygun ölçeği seçin." onBack={goBack} onNext={goNext} canProceed={canProceed}>
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))", gap: "14px" }}>
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "12px", height: "100%", alignItems: "center" }}>
               {SIZES.map((s) => {
                 const isSelected = size === s.id;
                 return (
@@ -532,16 +499,23 @@ export default function App() {
                       padding: "20px",
                       borderRadius: "12px",
                       textAlign: "left",
-                      backgroundColor: isSelected ? "rgba(37, 99, 235, 0.2)" : "#0F172A",
-                      border: isSelected ? "2px solid #2563EB" : "1px solid #334155",
+                      backgroundColor: isSelected ? "#EFF6FF" : "#FFFFFF",
+                      border: isSelected ? "2px solid #2563EB" : "1px solid #E2E8F0",
                       cursor: "pointer",
+                      display: "flex",
+                      flexDirection: "column",
+                      justifyContent: "space-between",
+                      height: "180px",
+                      boxSizing: "border-box"
                     }}
                   >
-                    <span style={{ fontSize: "11px", fontWeight: "800", backgroundColor: isSelected ? "#2563EB" : "#334155", color: "#FFF", padding: "3px 8px", borderRadius: "4px", display: "inline-block", marginBottom: "10px" }}>
-                      {s.sub}
-                    </span>
-                    <h4 style={{ fontSize: "16px", fontWeight: "800", color: "#FFF", margin: "0 0 6px 0" }}>{s.label}</h4>
-                    <p style={{ fontSize: "12px", color: "#94A3B8", lineHeight: "1.4", margin: 0 }}>{s.desc}</p>
+                    <div>
+                      <span style={{ fontSize: "10px", fontWeight: "800", backgroundColor: isSelected ? "#2563EB" : "#E2E8F0", color: isSelected ? "#FFF" : "#475569", padding: "3px 8px", borderRadius: "4px", display: "inline-block", marginBottom: "8px" }}>
+                        {s.sub}
+                      </span>
+                      <h4 style={{ fontSize: "15px", fontWeight: "800", color: "#0F172A", margin: "0 0 6px 0" }}>{s.label}</h4>
+                      <p style={{ fontSize: "11px", color: "#64748B", lineHeight: "1.4", margin: 0 }}>{s.desc}</p>
+                    </div>
                   </button>
                 );
               })}
@@ -549,7 +523,7 @@ export default function App() {
           </StepContainer>
         )}
 
-        {/* STEPS 3-6: QUESTIONS */}
+        {/* STEPS 3-6: QUESTIONS (3 COMPACT CARDS) */}
         {fnStepIdx >= 0 && (
           <StepContainer
             title={`${3 + fnStepIdx} · ${FUNCTIONS[fnStepIdx].label}`}
@@ -559,22 +533,17 @@ export default function App() {
             canProceed={canProceed}
             last={fnStepIdx === FUNCTIONS.length - 1}
           >
-            <div style={{ backgroundColor: "#0F172A", border: "1px solid #334155", padding: "10px 14px", borderRadius: "8px", fontSize: "12px", color: "#94A3B8", marginBottom: "20px", display: "flex", alignItems: "center", gap: "8px" }}>
-              <Info size={16} color="#60A5FA" />
-              <span>Resmi boyut karşılığı — DMAT: {FRAMEWORK_ALIGNMENT[step].dmat} · DDX: {FRAMEWORK_ALIGNMENT[step].ddx} · SIRI: {FRAMEWORK_ALIGNMENT[step].siri}</span>
-            </div>
-
-            <div style={{ display: "flex", flexDirection: "column", gap: "24px" }}>
+            <div style={{ display: "flex", flexDirection: "column", gap: "10px", height: "100%" }}>
               {QUESTIONS[step].map((q, qIdx) => (
-                <div key={qIdx} style={{ backgroundColor: "#0F172A", padding: "18px", borderRadius: "12px", border: "1px solid #334155" }}>
-                  <h4 style={{ fontSize: "14px", fontWeight: "700", color: "#FFF", marginBottom: "12px", display: "flex", alignItems: "center", gap: "8px" }}>
-                    <span style={{ width: "22px", height: "22px", borderRadius: "50%", backgroundColor: "rgba(37, 99, 235, 0.2)", color: "#60A5FA", fontSize: "11px", fontWeight: "800", display: "inline-flex", alignItems: "center", justifyContent: "center" }}>
+                <div key={qIdx} style={{ backgroundColor: "#FFFFFF", padding: "10px 14px", borderRadius: "8px", border: "1px solid #E2E8F0" }}>
+                  <div style={{ fontSize: "12px", fontWeight: "700", color: "#0F172A", marginBottom: "6px", display: "flex", alignItems: "center", gap: "6px" }}>
+                    <span style={{ width: "18px", height: "18px", borderRadius: "50%", backgroundColor: "#EFF6FF", color: "#2563EB", fontSize: "10px", fontWeight: "800", display: "inline-flex", alignItems: "center", justifyContent: "center" }}>
                       {qIdx + 1}
                     </span>
                     {q.text}
-                  </h4>
+                  </div>
 
-                  <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))", gap: "8px" }}>
+                  <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "6px" }}>
                     {q.options.map((opt, oIdx) => {
                       const isSelected = answers[step][qIdx] === oIdx + 1;
                       return (
@@ -582,21 +551,19 @@ export default function App() {
                           key={oIdx}
                           onClick={() => setAnswer(step, qIdx, oIdx + 1)}
                           style={{
-                            padding: "12px",
-                            borderRadius: "8px",
+                            padding: "6px 8px",
+                            borderRadius: "6px",
                             textAlign: "left",
-                            fontSize: "12px",
-                            backgroundColor: isSelected ? "#2563EB" : "#1E293B",
-                            color: isSelected ? "#FFF" : "#CBD5E1",
-                            border: isSelected ? "1px solid #60A5FA" : "1px solid #334155",
+                            fontSize: "10px",
+                            backgroundColor: isSelected ? "#2563EB" : "#F8FAFC",
+                            color: isSelected ? "#FFF" : "#334155",
+                            border: isSelected ? "1px solid #2563EB" : "1px solid #E2E8F0",
                             cursor: "pointer",
-                            display: "flex",
-                            alignItems: "flex-start",
-                            gap: "8px"
+                            lineHeight: "1.3"
                           }}
                         >
-                          <span style={{ fontWeight: "800", opacity: 0.7 }}>{oIdx + 1}.</span>
-                          <span style={{ lineHeight: "1.4" }}>{opt}</span>
+                          <span style={{ fontWeight: "800", opacity: 0.8 }}>{oIdx + 1}. </span>
+                          {opt}
                         </button>
                       );
                     })}
@@ -607,94 +574,74 @@ export default function App() {
           </StepContainer>
         )}
 
-        {/* STEP 7: RESULTS */}
+        {/* STEP 7: RESULTS (NO SCROLL COMPACT DASHBOARD) */}
         {step === "results" && (
-          <div style={{ display: "flex", flexDirection: "column", gap: "28px" }}>
+          <div style={{ width: "100%", maxWidth: "900px", height: "100%", display: "flex", flexDirection: "column", gap: "12px" }}>
             
-            {/* OVERALL SUMMARY */}
-            <div className="print-card" style={{ backgroundColor: "#1E293B", padding: "32px", borderRadius: "20px", border: "1px solid #334155", display: "flex", flexWrap: "wrap", alignItems: "center", justifyContent: "space-between", gap: "20px" }}>
+            {/* TOP OVERVIEW CARD */}
+            <div style={{ backgroundColor: "#FFFFFF", padding: "12px 20px", borderRadius: "12px", border: "1px solid #E2E8F0", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
               <div>
-                <div style={{ display: "inline-flex", alignItems: "center", gap: "6px", backgroundColor: "rgba(37, 99, 235, 0.2)", color: "#60A5FA", padding: "4px 10px", borderRadius: "10px", fontSize: "11px", fontWeight: "800", marginBottom: "10px" }}>
-                  <Award size={14} /> DİJİTAL HAZIRLIK KARNENİZ
+                <div style={{ display: "inline-flex", alignItems: "center", gap: "4px", backgroundColor: "#EFF6FF", color: "#2563EB", padding: "2px 8px", borderRadius: "6px", fontSize: "10px", fontWeight: "800", marginBottom: "4px" }}>
+                  <Award size={12} /> YZ & OTOMASYON KARNESİ
                 </div>
-                <h2 style={{ fontSize: "28px", fontWeight: "900", color: "#FFF", margin: 0 }}>
-                  Genel Seviye: <span style={{ color: LEVELS[overallLevel].color }}>{LEVELS[overallLevel].label}</span>
+                <h2 style={{ fontSize: "20px", fontWeight: "900", color: "#0F172A", margin: 0 }}>
+                  Adaptasyon Seviyesi: <span style={{ color: LEVELS[overallLevel].color }}>{LEVELS[overallLevel].label}</span>
                 </h2>
-                <p style={{ fontSize: "13px", color: "#94A3B8", marginTop: "6px", margin: 0 }}>
+                <div style={{ fontSize: "11px", color: "#64748B", marginTop: "2px" }}>
                   {selectedSectorObj?.label} · {selectedSizeObj?.label}
-                </p>
+                </div>
               </div>
 
-              <div style={{ backgroundColor: "#0F172A", padding: "16px 24px", borderRadius: "14px", border: "1px solid #334155", textAlign: "center", minWidth: "160px" }}>
-                <ScoreGauge score={overallAvg} level={overallLevel} />
-                <div style={{ fontSize: "10px", fontWeight: "800", color: "#94A3B8", marginTop: "6px" }}>GENEL SKOR ORTALAMASI</div>
-              </div>
+              <ScoreGauge score={overallAvg} level={overallLevel} />
             </div>
 
-            {/* DETAILED RESULTS */}
-            {results.map((r) => {
-              const levelObj = LEVELS[r.level];
-              return (
-                <div key={r.id} className="print-card" style={{ backgroundColor: "#1E293B", borderRadius: "16px", border: "1px solid #334155", padding: "24px" }}>
-                  <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: "12px", paddingBottom: "16px", borderBottom: "1px solid #334155" }}>
-                    <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
-                      <div style={{ width: "38px", height: "38px", borderRadius: "10px", backgroundColor: "#2563EB", color: "#FFF", display: "flex", alignItems: "center", justifyContent: "center" }}>
-                        <r.icon size={20} />
-                      </div>
-                      <div>
-                        <h3 style={{ fontSize: "16px", fontWeight: "800", color: "#FFF", margin: 0 }}>{r.label}</h3>
-                        <span style={{ fontSize: "12px", color: levelObj.color, fontWeight: "700" }}>
-                          Seviye: {levelObj.label} ({r.avg.toFixed(1)} / 4.0)
+            {/* 4 FUNCTION RESULT CARDS (2x2 GRID) */}
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gridTemplateRows: "repeat(2, 1fr)", gap: "10px", flex: 1 }}>
+              {results.map((r) => {
+                const toolsList = TOOLS[r.id][r.level];
+                return (
+                  <div key={r.id} style={{ backgroundColor: "#FFFFFF", borderRadius: "10px", border: "1px solid #E2E8F0", padding: "12px", display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
+                    <div>
+                      <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "6px" }}>
+                        <div style={{ display: "flex", alignItems: "center", gap: "6px" }}>
+                          <r.icon size={16} color="#2563EB" />
+                          <span style={{ fontWeight: "800", fontSize: "13px", color: "#0F172A" }}>{r.label}</span>
+                        </div>
+                        <span style={{ fontSize: "10px", fontWeight: "800", color: LEVELS[r.level].color, backgroundColor: "#F8FAFC", padding: "2px 6px", borderRadius: "4px", border: "1px solid #E2E8F0" }}>
+                          {r.avg.toFixed(1)} / 4.0
                         </span>
+                      </div>
+
+                      <p style={{ fontSize: "10px", color: "#475569", margin: "0 0 8px 0", lineHeight: "1.3" }}>
+                        {NEED_STATEMENTS[r.id]}
+                      </p>
+                    </div>
+
+                    <div>
+                      <div style={{ fontSize: "9px", fontWeight: "800", color: "#64748B", letterSpacing: "0.5px", marginBottom: "4px" }}>
+                        ÖNERİLEN YAPAY ZEKA ARAÇLARI:
+                      </div>
+                      <div style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: "6px" }}>
+                        {toolsList.map((t, idx) => (
+                          <div key={idx} style={{ backgroundColor: "#F8FAFC", border: "1px solid #E2E8F0", padding: "6px", borderRadius: "6px" }}>
+                            <div style={{ fontSize: "10px", fontWeight: "700", color: "#2563EB", marginBottom: "2px" }}>{t.name}</div>
+                            <div style={{ fontSize: "8px", color: "#64748B", lineHeight: "1.2" }}>{t.why}</div>
+                          </div>
+                        ))}
                       </div>
                     </div>
                   </div>
-
-                  <div style={{ backgroundColor: "#0F172A", padding: "14px", borderRadius: "10px", border: "1px solid #334155", margin: "16px 0", fontSize: "12px", color: "#E2E8F0", display: "flex", gap: "8px", alignItems: "center" }}>
-                    <Target size={16} color="#60A5FA" />
-                    <span>{NEED_STATEMENTS[r.id]}</span>
-                  </div>
-
-                  <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
-                    {TIER_ORDER.map((tierKey) => {
-                      const tierInfo = TIER_PRESENTATION[tierKey];
-                      const isCurrentLevelTier = r.level === tierKey;
-                      const toolsList = TOOLS[r.id][tierKey];
-
-                      return (
-                        <div key={tierKey} style={{ backgroundColor: "#0F172A", padding: "14px", borderRadius: "10px", border: isCurrentLevelTier ? "2px solid #F59E0B" : "1px solid #334155" }}>
-                          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "10px" }}>
-                            <div style={{ fontSize: "12px", fontWeight: "800", color: "#FFF" }}>{tierInfo.heading}</div>
-                            {isCurrentLevelTier && (
-                              <span style={{ backgroundColor: "#F59E0B", color: "#000", fontSize: "10px", fontWeight: "900", padding: "2px 6px", borderRadius: "4px" }}>
-                                SİZİN SEVİYENİZ
-                              </span>
-                            )}
-                          </div>
-
-                          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))", gap: "10px" }}>
-                            {toolsList.map((tool, tIdx) => (
-                              <div key={tIdx} style={{ backgroundColor: "#1E293B", padding: "12px", borderRadius: "8px", border: "1px solid #334155" }}>
-                                <div style={{ fontSize: "12px", fontWeight: "700", color: "#60A5FA", marginBottom: "3px" }}>{tool.name}</div>
-                                <p style={{ fontSize: "11px", color: "#94A3B8", margin: 0, lineHeight: "1.3" }}>{tool.why}</p>
-                              </div>
-                            ))}
-                          </div>
-                        </div>
-                      );
-                    })}
-                  </div>
-                </div>
-              );
-            })}
+                );
+              })}
+            </div>
 
             {/* ACTION BUTTONS */}
-            <div className="no-print" style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: "12px" }}>
-              <button onClick={restart} style={{ backgroundColor: "transparent", color: "#94A3B8", border: "1px solid #334155", padding: "10px 20px", borderRadius: "8px", fontSize: "12px", fontWeight: "700", cursor: "pointer", display: "flex", alignItems: "center", gap: "6px" }}>
-                <RotateCcw size={16} /> Yeniden Başlat
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+              <button onClick={restart} style={{ backgroundColor: "transparent", color: "#64748B", border: "1px solid #CBD5E1", padding: "6px 12px", borderRadius: "6px", fontSize: "11px", fontWeight: "700", cursor: "pointer", display: "flex", alignItems: "center", gap: "4px" }}>
+                <RotateCcw size={14} /> Yeniden Başlat
               </button>
-              <button onClick={() => window.print()} style={{ backgroundColor: "#2563EB", color: "#FFF", border: "none", padding: "12px 24px", borderRadius: "8px", fontSize: "13px", fontWeight: "800", cursor: "pointer", display: "flex", alignItems: "center", gap: "8px" }}>
-                <FileDown size={16} /> PDF Olarak İndir / Yazdır
+              <button onClick={() => window.print()} style={{ backgroundColor: "#2563EB", color: "#FFF", border: "none", padding: "8px 18px", borderRadius: "6px", fontSize: "12px", fontWeight: "800", cursor: "pointer", display: "flex", alignItems: "center", gap: "6px" }}>
+                <FileDown size={14} /> YZ Önerilerini İndir / Yazdır
               </button>
             </div>
 
@@ -706,41 +653,41 @@ export default function App() {
   );
 }
 
-/* REUSABLE SHELL */
+/* REUSABLE CONTAINER (FITTED TO SCREEN NO-SCROLL) */
 function StepContainer({ title, subtitle, children, onBack, onNext, canProceed, last }) {
   return (
-    <div style={{ backgroundColor: "#1E293B", borderRadius: "18px", border: "1px solid #334155", padding: "28px" }}>
-      <div style={{ borderBottom: "1px solid #334155", paddingBottom: "16px", marginBottom: "20px" }}>
-        <h2 style={{ fontSize: "20px", fontWeight: "800", color: "#FFF", margin: 0 }}>{title}</h2>
-        <p style={{ fontSize: "12px", color: "#94A3B8", marginTop: "4px", margin: 0 }}>{subtitle}</p>
+    <div style={{ backgroundColor: "#FFFFFF", borderRadius: "12px", border: "1px solid #E2E8F0", padding: "16px 20px", width: "100%", maxWidth: "860px", height: "460px", display: "flex", flexDirection: "column", justifyContent: "space-between", boxSizing: "border-box" }}>
+      <div style={{ borderBottom: "1px solid #F1F5F9", paddingBottom: "8px", marginBottom: "8px" }}>
+        <h2 style={{ fontSize: "16px", fontWeight: "800", color: "#0F172A", margin: 0 }}>{title}</h2>
+        <p style={{ fontSize: "11px", color: "#64748B", margin: "2px 0 0 0" }}>{subtitle}</p>
       </div>
 
-      <div>{children}</div>
+      <div style={{ flex: 1, overflow: "hidden" }}>{children}</div>
 
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: "24px", paddingTop: "16px", borderTop: "1px solid #334155" }} className="no-print">
-        <button onClick={onBack} style={{ backgroundColor: "transparent", color: "#94A3B8", border: "1px solid #334155", padding: "8px 16px", borderRadius: "8px", fontSize: "12px", fontWeight: "700", cursor: "pointer", display: "flex", alignItems: "center", gap: "6px" }}>
-          <ArrowLeft size={16} /> Geri
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", paddingTop: "8px", borderTop: "1px solid #F1F5F9" }}>
+        <button onClick={onBack} style={{ backgroundColor: "transparent", color: "#64748B", border: "1px solid #CBD5E1", padding: "6px 14px", borderRadius: "6px", fontSize: "11px", fontWeight: "700", cursor: "pointer", display: "flex", alignItems: "center", gap: "4px" }}>
+          <ArrowLeft size={14} /> Geri
         </button>
 
         <button
           onClick={onNext}
           disabled={!canProceed}
           style={{
-            backgroundColor: canProceed ? "#2563EB" : "#334155",
-            color: canProceed ? "#FFF" : "#64748B",
+            backgroundColor: canProceed ? "#2563EB" : "#94A3B8",
+            color: "#FFF",
             border: "none",
-            padding: "10px 24px",
-            borderRadius: "8px",
+            padding: "8px 20px",
+            borderRadius: "6px",
             fontSize: "12px",
             fontWeight: "800",
             cursor: canProceed ? "pointer" : "not-allowed",
             display: "flex",
             alignItems: "center",
-            gap: "8px"
+            gap: "6px"
           }}
         >
-          <span>{last ? "Karneyi Gör" : "Devam Et"}</span>
-          <ArrowRight size={16} />
+          <span>{last ? "Önerileri Gör" : "Devam Et"}</span>
+          <ArrowRight size={14} />
         </button>
       </div>
     </div>
