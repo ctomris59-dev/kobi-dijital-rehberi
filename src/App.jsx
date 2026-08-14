@@ -313,7 +313,6 @@ export default function App() {
 
   // DOĞRUDAN .PDF DOSYASI İNDİRME İŞLEVİ (ÇORLU TSO LOGOLU)
   const downloadReportPDF = async () => {
-    // 1. html2pdf kütüphanesini dinamik yükle (varsa tekrar yüklemez)
     if (!window.html2pdf) {
       await new Promise((resolve, reject) => {
         const script = document.createElement("script");
@@ -324,7 +323,6 @@ export default function App() {
       });
     }
 
-    // 2. PDF içeriğini şık bir kurumsal A4 şablonunda oluştur
     const pdfContainer = document.createElement("div");
     pdfContainer.style.width = "750px";
     pdfContainer.style.padding = "30px";
@@ -413,6 +411,13 @@ export default function App() {
       width: "100vw",
       height: "100vh",
       backgroundColor: "#F8FAFC",
+      // ŞIK VE DİNAMİK ARKA PLAN DEGRADE + DOKU
+      backgroundImage: `
+        radial-gradient(circle at 8% 8%, rgba(37,99,235,0.06) 0%, transparent 35%),
+        radial-gradient(circle at 92% 12%, rgba(37,99,235,0.04) 0%, transparent 30%),
+        radial-gradient(circle at 50% 95%, rgba(37,99,235,0.05) 0%, transparent 40%),
+        linear-gradient(180deg, #FFFFFF 0%, #F1F5F9 100%)
+      `,
       color: "#0F172A",
       fontFamily: "system-ui, -apple-system, sans-serif",
       display: "flex",
@@ -420,11 +425,26 @@ export default function App() {
       overflow: "hidden",
       boxSizing: "border-box"
     }}>
+      {/* İNCE MİKRO NOKTA DOKUSU (DOT GRID PATTERN) */}
+      <div style={{
+        position: "absolute",
+        inset: 0,
+        backgroundImage: "radial-gradient(rgba(15,23,42,0.04) 1px, transparent 1px)",
+        backgroundSize: "20px 20px",
+        pointerEvents: "none",
+        zIndex: 0
+      }} />
       
       {/* HEADER */}
-      <header style={{ backgroundColor: "#FFFFFF", borderBottom: "1px solid #E2E8F0", height: "64px", padding: "0 32px", display: "flex", alignItems: "center", justifyContent: "space-between", flexShrink: 0 }}>
+      <header style={{ backgroundColor: "#FFFFFF", borderBottom: "1px solid #E2E8F0", height: "64px", padding: "0 32px", display: "flex", alignItems: "center", justifyContent: "space-between", flexShrink: 0, position: "relative", zIndex: 1 }}>
         <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
-          <div style={{ width: "38px", height: "38px", borderRadius: "8px", backgroundColor: "#2563EB", color: "#FFF", fontWeight: "900", fontSize: "18px", display: "flex", alignItems: "center", justifyContent: "center" }}>
+          <img
+            src="/logo.jpg"
+            alt="Çorlu TSO Logo"
+            style={{ width: "42px", height: "42px", objectFit: "contain", flexShrink: 0 }}
+            onError={(e) => { e.currentTarget.style.display = "none"; e.currentTarget.nextSibling.style.display = "flex"; }}
+          />
+          <div style={{ width: "38px", height: "38px", borderRadius: "8px", backgroundColor: "#2563EB", color: "#FFF", fontWeight: "900", fontSize: "18px", display: "none", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
             Ç
           </div>
           <div>
@@ -459,7 +479,7 @@ export default function App() {
       </header>
 
       {/* MAIN CONTENT AREA */}
-      <main style={{ flex: 1, display: "flex", alignItems: "center", justifyContent: "center", padding: "16px 32px", boxSizing: "border-box", overflow: "hidden" }}>
+      <main style={{ flex: 1, display: "flex", alignItems: "center", justifyContent: "center", padding: "16px 32px", boxSizing: "border-box", overflow: "hidden", position: "relative", zIndex: 1 }}>
         
         {/* INTRO SCREEN */}
         {step === "intro" && (
