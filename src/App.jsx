@@ -398,9 +398,9 @@ export default function App() {
       <header style={{ backgroundColor: "#FFFFFF", borderBottom: "1px solid #E2E8F0", height: "64px", padding: "0 32px", display: "flex", alignItems: "center", justifyContent: "space-between", flexShrink: 0, position: "relative", zIndex: 1 }}>
         <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
           <img
-            src="/logo.png"
-            alt="Çorlu TSO logosu"
-            style={{ width: "38px", height: "38px", borderRadius: "8px", objectFit: "contain", flexShrink: 0 }}
+            src="/logo.jpg"
+            alt="Çorlu Ticaret ve Sanayi Odası logosu"
+            style={{ width: "44px", height: "44px", objectFit: "contain", flexShrink: 0 }}
             onError={(e) => { e.currentTarget.style.display = "none"; e.currentTarget.nextSibling.style.display = "flex"; }}
           />
           <div style={{ width: "38px", height: "38px", borderRadius: "8px", backgroundColor: "#2563EB", color: "#FFF", fontWeight: "900", fontSize: "18px", display: "none", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
