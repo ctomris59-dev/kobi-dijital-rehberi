@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useEffect } from "react";
 import {
   Shirt, Wheat, Cog, ShoppingCart, Users, Megaphone, Boxes, Headphones,
   FlaskConical, Car, Hammer, HardHat, Truck, Tractor, UtensilsCrossed,
@@ -10,7 +10,6 @@ import {
 /* ---------------------------------------------------------
    VERİ KATMANI — KOBİ YZ & Otomasyon Araç Veritabanı
 --------------------------------------------------------- */
-
 const SECTOR_GROUPS = [
   { id: "imalat", label: "İmalat Sanayi" },
   { id: "tarimgida", label: "Tarım & Gıda" },
@@ -213,14 +212,31 @@ function levelFromScore(avg) {
   return "ileri";
 }
 
-function ScoreGauge({ score, level }) {
+/* ---------------------------------------------------------
+   MOBİL ALGILAMA — 768px altı "mobil" kabul edilir. Tüm
+   sabit-genişlikli gridler ve font boyutları bu değişkene göre
+   koşullu olarak küçültülür / tek sütuna indirilir.
+--------------------------------------------------------- */
+function useIsMobile(breakpoint = 768) {
+  const [isMobile, setIsMobile] = useState(
+    typeof window !== "undefined" ? window.innerWidth <= breakpoint : false
+  );
+  useEffect(() => {
+    const onResize = () => setIsMobile(window.innerWidth <= breakpoint);
+    window.addEventListener("resize", onResize);
+    return () => window.removeEventListener("resize", onResize);
+  }, [breakpoint]);
+  return isMobile;
+}
+
+function ScoreGauge({ score, level, size = 150 }) {
   const percentage = Math.min(Math.max(((score - 1) / 3) * 100, 0), 100);
   const strokeDasharray = 220;
   const strokeDashoffset = strokeDasharray - (strokeDasharray * percentage) / 100;
-
+  const h = size * (80 / 150);
   return (
     <div style={{ display: "flex", flexDirection: "column", alignItems: "center", position: "relative" }}>
-      <svg width="150" height="80" viewBox="0 0 150 80">
+      <svg width={size} height={h} viewBox="0 0 150 80">
         <path d="M 15 70 A 60 60 0 0 1 135 70" fill="none" stroke="#E2E8F0" strokeWidth="10" strokeLinecap="round" />
         <path
           d="M 15 70 A 60 60 0 0 1 135 70"
@@ -247,6 +263,7 @@ function ScoreGauge({ score, level }) {
 const STEPS = ["intro", "sector", "size", "ik", "pazarlama", "stok", "musteri", "results"];
 
 export default function App() {
+  const isMobile = useIsMobile();
   const [stepIdx, setStepIdx] = useState(0);
   const [sector, setSector] = useState(null);
   const [sectorGroup, setSectorGroup] = useState("all");
@@ -322,14 +339,12 @@ export default function App() {
         document.head.appendChild(script);
       });
     }
-
     const pdfContainer = document.createElement("div");
     pdfContainer.style.width = "750px";
     pdfContainer.style.padding = "30px";
     pdfContainer.style.backgroundColor = "#FFFFFF";
     pdfContainer.style.color = "#0F172A";
     pdfContainer.style.fontFamily = "Arial, sans-serif";
-
     pdfContainer.innerHTML = `
       <div style="border-bottom: 2px solid #2563EB; padding-bottom: 16px; margin-bottom: 20px; display: flex; align-items: center; justify-content: space-between;">
         <div style="display: flex; align-items: center; gap: 14px;">
@@ -345,7 +360,6 @@ export default function App() {
           <div><strong>Referans:</strong> ÇTSO-YZ-${(sector || "KOBI").toUpperCase().slice(0, 3)}</div>
         </div>
       </div>
-
       <div style="background-color: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 10px; padding: 18px; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center;">
         <div>
           <div style="font-size: 11px; font-weight: 800; color: #2563EB; letter-spacing: 0.5px; margin-bottom: 4px;">DİJİTAL UYUM VE OTOMASYON KARNESİ</div>
@@ -361,9 +375,7 @@ export default function App() {
           <div style="font-size: 10px; font-weight: 800; color: #64748B;">GENEL SKOR</div>
         </div>
       </div>
-
       <h3 style="font-size: 15px; font-weight: 800; color: #0F172A; border-bottom: 1px solid #E2E8F0; padding-bottom: 6px; margin-bottom: 14px;">DEPARTMAN BAZLI ANALİZ VE YZ ARAÇ ÖNERİLERİ</h3>
-
       <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
         ${results.map((r) => `
           <div style="border: 1px solid #E2E8F0; border-left: 4px solid ${LEVELS[r.level].color}; border-radius: 8px; padding: 12px; background-color: #FFFFFF; page-break-inside: avoid;">
@@ -386,32 +398,26 @@ export default function App() {
           </div>
         `).join('')}
       </div>
-
       <div style="margin-top: 24px; padding-top: 12px; border-top: 1px solid #E2E8F0; text-align: center; font-size: 9px; color: #94A3B8;">
         Çorlu Ticaret ve Sanayi Odası Dijital Dönüşüm Merkezi — İşletmenize özel bilgilendirme ve yönlendirme raporudur.
       </div>
     `;
 
     const opt = {
-      margin:       10,
-      filename:     `CTSO_YZ_Adaptasyon_Raporu_${(sector || "kobi")}.pdf`,
-      image:        { type: 'jpeg', quality: 0.98 },
-      html2canvas:  { scale: 2, useCORS: true, logging: false },
-      jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
+      margin: 10,
+      filename: `CTSO_YZ_Adaptasyon_Raporu_${(sector || "kobi")}.pdf`,
+      image: { type: 'jpeg', quality: 0.98 },
+      html2canvas: { scale: 2, useCORS: true, logging: false },
+      jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
     };
-
     window.html2pdf().set(opt).from(pdfContainer).save();
   };
 
   return (
     <div style={{
-      position: "fixed",
-      top: 0,
-      left: 0,
-      width: "100vw",
-      height: "100vh",
+      minHeight: "100vh",
+      width: "100%",
       backgroundColor: "#F8FAFC",
-      // ŞIK VE DİNAMİK ARKA PLAN DEGRADE + DOKU
       backgroundImage: `
         radial-gradient(circle at 8% 8%, rgba(37,99,235,0.06) 0%, transparent 35%),
         radial-gradient(circle at 92% 12%, rgba(37,99,235,0.04) 0%, transparent 30%),
@@ -422,46 +428,52 @@ export default function App() {
       fontFamily: "system-ui, -apple-system, sans-serif",
       display: "flex",
       flexDirection: "column",
-      overflow: "hidden",
       boxSizing: "border-box"
     }}>
       {/* İNCE MİKRO NOKTA DOKUSU (DOT GRID PATTERN) */}
       <div style={{
-        position: "absolute",
+        position: "fixed",
         inset: 0,
         backgroundImage: "radial-gradient(rgba(15,23,42,0.04) 1px, transparent 1px)",
         backgroundSize: "20px 20px",
         pointerEvents: "none",
         zIndex: 0
       }} />
-      
+
       {/* HEADER */}
-      <header style={{ backgroundColor: "#FFFFFF", borderBottom: "1px solid #E2E8F0", height: "64px", padding: "0 32px", display: "flex", alignItems: "center", justifyContent: "space-between", flexShrink: 0, position: "relative", zIndex: 1 }}>
-        <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
+      <header style={{
+        backgroundColor: "#FFFFFF", borderBottom: "1px solid #E2E8F0",
+        minHeight: "64px", padding: isMobile ? "10px 16px" : "0 32px",
+        display: "flex", alignItems: "center", justifyContent: "space-between",
+        flexWrap: "wrap", gap: "8px", flexShrink: 0, position: "relative", zIndex: 1
+      }}>
+        <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
           <img
             src="/logo.jpg"
             alt="Çorlu TSO Logo"
-            style={{ width: "42px", height: "42px", objectFit: "contain", flexShrink: 0 }}
+            style={{ width: isMobile ? "34px" : "42px", height: isMobile ? "34px" : "42px", objectFit: "contain", flexShrink: 0 }}
             onError={(e) => { e.currentTarget.style.display = "none"; e.currentTarget.nextSibling.style.display = "flex"; }}
           />
           <div style={{ width: "38px", height: "38px", borderRadius: "8px", backgroundColor: "#2563EB", color: "#FFF", fontWeight: "900", fontSize: "18px", display: "none", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
             Ç
           </div>
           <div>
-            <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-              <span style={{ fontWeight: "800", fontSize: "16px", color: "#0F172A" }}>ÇORLU TSO</span>
-              <span style={{ backgroundColor: "#EFF6FF", color: "#2563EB", border: "1px solid #BFDBFE", padding: "2px 6px", borderRadius: "4px", fontSize: "10px", fontWeight: "700" }}>
-                DİJİTAL DÖNÜŞÜM MERKEZİ
-              </span>
+            <div style={{ display: "flex", alignItems: "center", gap: "8px", flexWrap: "wrap" }}>
+              <span style={{ fontWeight: "800", fontSize: isMobile ? "14px" : "16px", color: "#0F172A" }}>ÇORLU TSO</span>
+              {!isMobile && (
+                <span style={{ backgroundColor: "#EFF6FF", color: "#2563EB", border: "1px solid #BFDBFE", padding: "2px 6px", borderRadius: "4px", fontSize: "10px", fontWeight: "700" }}>
+                  DİJİTAL DÖNÜŞÜM MERKEZİ
+                </span>
+              )}
             </div>
-            <p style={{ fontSize: "11px", color: "#64748B", margin: 0 }}>KOBİ Yapay Zeka & Otomasyon Araç Rehberi</p>
+            {!isMobile && <p style={{ fontSize: "11px", color: "#64748B", margin: 0 }}>KOBİ Yapay Zeka & Otomasyon Araç Rehberi</p>}
           </div>
         </div>
 
         {stepIdx > 0 && stepIdx < STEPS.length - 1 && (
-          <div style={{ display: "flex", alignItems: "center", gap: "12px", backgroundColor: "#F1F5F9", padding: "6px 14px", borderRadius: "8px" }}>
-            <span style={{ fontSize: "12px", fontWeight: "600", color: "#64748B" }}>İlerleme:</span>
-            <div style={{ width: "120px", backgroundColor: "#CBD5E1", height: "6px", borderRadius: "3px", overflow: "hidden" }}>
+          <div style={{ display: "flex", alignItems: "center", gap: isMobile ? "6px" : "12px", backgroundColor: "#F1F5F9", padding: "6px 12px", borderRadius: "8px" }}>
+            {!isMobile && <span style={{ fontSize: "12px", fontWeight: "600", color: "#64748B" }}>İlerleme:</span>}
+            <div style={{ width: isMobile ? "70px" : "120px", backgroundColor: "#CBD5E1", height: "6px", borderRadius: "3px", overflow: "hidden" }}>
               <div style={{ backgroundColor: "#2563EB", height: "100%", width: `${(stepIdx / (STEPS.length - 1)) * 100}%` }} />
             </div>
             <span style={{ fontSize: "12px", fontWeight: "800", color: "#2563EB" }}>%{Math.round((stepIdx / (STEPS.length - 1)) * 100)}</span>
@@ -471,46 +483,46 @@ export default function App() {
         {step === "results" && (
           <button
             onClick={downloadReportPDF}
-            style={{ backgroundColor: "#2563EB", color: "#FFF", border: "none", padding: "8px 18px", borderRadius: "6px", fontWeight: "700", fontSize: "12px", cursor: "pointer", display: "flex", alignItems: "center", gap: "6px" }}
+            style={{ backgroundColor: "#2563EB", color: "#FFF", border: "none", padding: "8px 16px", borderRadius: "6px", fontWeight: "700", fontSize: "12px", cursor: "pointer", display: "flex", alignItems: "center", gap: "6px" }}
           >
-            <FileDown size={14} /> PDF Raporu İndir
+            <FileDown size={14} /> {isMobile ? "PDF" : "PDF Raporu İndir"}
           </button>
         )}
       </header>
 
       {/* MAIN CONTENT AREA */}
-      <main style={{ flex: 1, display: "flex", alignItems: "center", justifyContent: "center", padding: "16px 32px", boxSizing: "border-box", overflow: "hidden", position: "relative", zIndex: 1 }}>
-        
+      <main style={{
+        flex: 1, display: "flex", alignItems: isMobile ? "flex-start" : "center", justifyContent: "center",
+        padding: isMobile ? "16px 12px 32px 12px" : "16px 32px",
+        boxSizing: "border-box", position: "relative", zIndex: 1
+      }}>
+
         {/* INTRO SCREEN */}
         {step === "intro" && (
-          <div style={{ maxWidth: "960px", width: "100%", textAlign: "center", display: "flex", flexDirection: "column", gap: "20px" }}>
-            <div style={{ display: "inline-flex", alignItems: "center", gap: "6px", backgroundColor: "#EFF6FF", border: "1px solid #BFDBFE", padding: "6px 16px", borderRadius: "20px", color: "#2563EB", fontSize: "13px", fontWeight: "700", margin: "0 auto" }}>
+          <div style={{ maxWidth: "960px", width: "100%", textAlign: "center", display: "flex", flexDirection: "column", gap: isMobile ? "16px" : "20px" }}>
+            <div style={{ display: "inline-flex", alignItems: "center", gap: "6px", backgroundColor: "#EFF6FF", border: "1px solid #BFDBFE", padding: "6px 16px", borderRadius: "20px", color: "#2563EB", fontSize: "12px", fontWeight: "700", margin: "0 auto" }}>
               <Bot size={16} /> YAPAY ZEKA VE OTOMASYON ADAPTASYON REHBERİ
             </div>
-            
-            <h1 style={{ fontSize: "32px", fontWeight: "900", letterSpacing: "-0.5px", lineHeight: "1.25", color: "#0F172A", margin: 0 }}>
+            <h1 style={{ fontSize: isMobile ? "22px" : "32px", fontWeight: "900", letterSpacing: "-0.5px", lineHeight: "1.3", color: "#0F172A", margin: 0 }}>
               Süreçleriniz Yapay Zekaya Ne Kadar Hazır?<br />
               <span style={{ color: "#2563EB" }}>İşletme Ölçeğinize Uyumlu YZ Araç Önerileri ve Adaptasyon Rehberi</span>
             </h1>
-
-            <p style={{ fontSize: "15px", color: "#475569", lineHeight: "1.6", margin: 0, maxWidth: "800px", alignSelf: "center" }}>
-              5 dakikalık hızlı analizle İK, Pazarlama, Üretim/Stok ve Müşteri İlişkileri süreçlerinizde yapay zeka potansiyelinizi görün; 
+            <p style={{ fontSize: isMobile ? "13px" : "15px", color: "#475569", lineHeight: "1.6", margin: 0, maxWidth: "800px", alignSelf: "center" }}>
+              5 dakikalık hızlı analizle İK, Pazarlama, Üretim/Stok ve Müşteri İlişkileri süreçlerinizde yapay zeka potansiyelinizi görün;
               işletme ölçeğinize en uygun YZ ve otomasyon araç önerilerini anında edinin.
             </p>
-
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "16px", margin: "8px 0" }}>
+            <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr 1fr" : "repeat(4, 1fr)", gap: isMobile ? "10px" : "16px", margin: "8px 0" }}>
               {FUNCTIONS.map((f) => (
-                <div key={f.id} style={{ backgroundColor: "#FFFFFF", border: "1px solid #E2E8F0", padding: "16px", borderRadius: "12px", textAlign: "left", boxShadow: "0 1px 3px rgba(0,0,0,0.05)" }}>
-                  <f.icon size={22} color="#2563EB" style={{ marginBottom: "8px" }} />
-                  <div style={{ fontWeight: "800", fontSize: "14px", color: "#0F172A" }}>{f.label}</div>
-                  <div style={{ fontSize: "12px", color: "#64748B", marginTop: "4px", lineHeight: "1.4" }}>{f.desc}</div>
+                <div key={f.id} style={{ backgroundColor: "#FFFFFF", border: "1px solid #E2E8F0", padding: isMobile ? "12px" : "16px", borderRadius: "12px", textAlign: "left", boxShadow: "0 1px 3px rgba(0,0,0,0.05)" }}>
+                  <f.icon size={20} color="#2563EB" style={{ marginBottom: "8px" }} />
+                  <div style={{ fontWeight: "800", fontSize: "13px", color: "#0F172A" }}>{f.label}</div>
+                  {!isMobile && <div style={{ fontSize: "12px", color: "#64748B", marginTop: "4px", lineHeight: "1.4" }}>{f.desc}</div>}
                 </div>
               ))}
             </div>
-
             <button
               onClick={goNext}
-              style={{ backgroundColor: "#2563EB", color: "#FFF", border: "none", padding: "14px 36px", borderRadius: "10px", fontSize: "16px", fontWeight: "800", cursor: "pointer", display: "inline-flex", alignItems: "center", gap: "8px", margin: "0 auto", boxShadow: "0 4px 14px rgba(37, 99, 235, 0.25)" }}
+              style={{ backgroundColor: "#2563EB", color: "#FFF", border: "none", padding: isMobile ? "13px 28px" : "14px 36px", borderRadius: "10px", fontSize: isMobile ? "15px" : "16px", fontWeight: "800", cursor: "pointer", display: "inline-flex", alignItems: "center", gap: "8px", margin: "0 auto", boxShadow: "0 4px 14px rgba(37, 99, 235, 0.25)" }}
             >
               YZ Araç Rehberini Başlat <ArrowRight size={20} />
             </button>
@@ -519,10 +531,10 @@ export default function App() {
 
         {/* STEP 1: SECTOR */}
         {step === "sector" && (
-          <StepContainer title="1 · Sektörünüz" subtitle="İşletmenizin ana faaliyet alanını seçin." onBack={goBack} onNext={goNext} canProceed={canProceed}>
+          <StepContainer title="1 · Sektörünüz" subtitle="İşletmenizin ana faaliyet alanını seçin." onBack={goBack} onNext={goNext} canProceed={canProceed} isMobile={isMobile}>
             <div style={{ display: "flex", flexDirection: "column", gap: "12px", height: "100%" }}>
-              <div style={{ display: "flex", gap: "12px", alignItems: "center" }}>
-                <div style={{ position: "relative", flex: 1 }}>
+              <div style={{ display: "flex", gap: "10px", alignItems: "center", flexWrap: "wrap" }}>
+                <div style={{ position: "relative", flex: 1, minWidth: isMobile ? "100%" : "200px" }}>
                   <Search size={18} style={{ position: "absolute", left: "14px", top: "12px", color: "#94A3B8" }} />
                   <input
                     type="text"
@@ -532,10 +544,10 @@ export default function App() {
                     style={{ width: "100%", padding: "10px 14px 10px 42px", backgroundColor: "#F8FAFC", border: "1px solid #CBD5E1", borderRadius: "8px", color: "#0F172A", fontSize: "13px", outline: "none", boxSizing: "border-box" }}
                   />
                 </div>
-                <div style={{ display: "flex", gap: "6px" }}>
+                <div style={{ display: "flex", gap: "6px", flexWrap: "wrap", overflowX: isMobile ? "auto" : "visible" }}>
                   <button
                     onClick={() => setSectorGroup("all")}
-                    style={{ padding: "8px 14px", borderRadius: "8px", fontSize: "12px", fontWeight: "700", border: "none", cursor: "pointer", backgroundColor: sectorGroup === "all" ? "#2563EB" : "#E2E8F0", color: sectorGroup === "all" ? "#FFF" : "#475569" }}
+                    style={{ padding: "8px 14px", borderRadius: "8px", fontSize: "12px", fontWeight: "700", border: "none", cursor: "pointer", backgroundColor: sectorGroup === "all" ? "#2563EB" : "#E2E8F0", color: sectorGroup === "all" ? "#FFF" : "#475569", whiteSpace: "nowrap" }}
                   >
                     Tümü
                   </button>
@@ -543,16 +555,19 @@ export default function App() {
                     <button
                       key={g.id}
                       onClick={() => setSectorGroup(g.id)}
-                      style={{ padding: "8px 14px", borderRadius: "8px", fontSize: "12px", fontWeight: "700", border: "none", cursor: "pointer", backgroundColor: sectorGroup === g.id ? "#2563EB" : "#E2E8F0", color: sectorGroup === g.id ? "#FFF" : "#475569" }}
+                      style={{ padding: "8px 14px", borderRadius: "8px", fontSize: "12px", fontWeight: "700", border: "none", cursor: "pointer", backgroundColor: sectorGroup === g.id ? "#2563EB" : "#E2E8F0", color: sectorGroup === g.id ? "#FFF" : "#475569", whiteSpace: "nowrap" }}
                     >
                       {g.label}
                     </button>
                   ))}
                 </div>
               </div>
-
-              <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gridTemplateRows: "repeat(4, 1fr)", gap: "10px", flex: 1, overflow: "hidden" }}>
-                {filteredSectors.slice(0, 16).map((s) => {
+              <div style={{
+                display: "grid",
+                gridTemplateColumns: isMobile ? "1fr" : "repeat(4, 1fr)",
+                gap: "10px", flex: 1, overflowY: "auto"
+              }}>
+                {filteredSectors.map((s) => {
                   const isSelected = sector === s.id;
                   return (
                     <button
@@ -588,8 +603,8 @@ export default function App() {
 
         {/* STEP 2: SIZE */}
         {step === "size" && (
-          <StepContainer title="2 · İşletme Ölçeği" subtitle="Çalışan sayınıza uygun ölçeği seçin." onBack={goBack} onNext={goNext} canProceed={canProceed}>
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "16px", height: "100%", alignItems: "center" }}>
+          <StepContainer title="2 · İşletme Ölçeği" subtitle="Çalışan sayınıza uygun ölçeği seçin." onBack={goBack} onNext={goNext} canProceed={canProceed} isMobile={isMobile}>
+            <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "repeat(3, 1fr)", gap: "14px", height: "100%", alignItems: isMobile ? "stretch" : "center", overflowY: "auto" }}>
               {SIZES.map((s) => {
                 const isSelected = size === s.id;
                 return (
@@ -597,7 +612,7 @@ export default function App() {
                     key={s.id}
                     onClick={() => setSize(s.id)}
                     style={{
-                      padding: "20px",
+                      padding: "18px",
                       borderRadius: "14px",
                       textAlign: "left",
                       backgroundColor: isSelected ? "#EFF6FF" : "#FFFFFF",
@@ -605,18 +620,16 @@ export default function App() {
                       cursor: "pointer",
                       display: "flex",
                       flexDirection: "column",
-                      justifyContent: "space-between",
-                      height: "200px",
+                      justifyContent: "flex-start",
+                      minHeight: isMobile ? "auto" : "200px",
                       boxSizing: "border-box"
                     }}
                   >
-                    <div>
-                      <span style={{ fontSize: "11px", fontWeight: "800", backgroundColor: isSelected ? "#2563EB" : "#E2E8F0", color: isSelected ? "#FFF" : "#475569", padding: "4px 10px", borderRadius: "6px", display: "inline-block", marginBottom: "10px" }}>
-                        {s.sub}
-                      </span>
-                      <h4 style={{ fontSize: "18px", fontWeight: "800", color: "#0F172A", margin: "0 0 6px 0" }}>{s.label}</h4>
-                      <p style={{ fontSize: "13px", color: "#64748B", lineHeight: "1.5", margin: 0 }}>{s.desc}</p>
-                    </div>
+                    <span style={{ fontSize: "11px", fontWeight: "800", backgroundColor: isSelected ? "#2563EB" : "#E2E8F0", color: isSelected ? "#FFF" : "#475569", padding: "4px 10px", borderRadius: "6px", display: "inline-block", marginBottom: "10px", alignSelf: "flex-start" }}>
+                      {s.sub}
+                    </span>
+                    <h4 style={{ fontSize: "17px", fontWeight: "800", color: "#0F172A", margin: "0 0 6px 0" }}>{s.label}</h4>
+                    <p style={{ fontSize: "13px", color: "#64748B", lineHeight: "1.5", margin: 0 }}>{s.desc}</p>
                   </button>
                 );
               })}
@@ -633,18 +646,18 @@ export default function App() {
             onNext={goNext}
             canProceed={canProceed}
             last={fnStepIdx === FUNCTIONS.length - 1}
+            isMobile={isMobile}
           >
-            <div style={{ display: "flex", flexDirection: "column", gap: "10px", height: "100%", justifyContent: "center" }}>
+            <div style={{ display: "flex", flexDirection: "column", gap: "10px", height: "100%", justifyContent: "flex-start", overflowY: "auto" }}>
               {QUESTIONS[step].map((q, qIdx) => (
-                <div key={qIdx} style={{ backgroundColor: "#FFFFFF", padding: "12px 16px", borderRadius: "10px", border: "1px solid #E2E8F0" }}>
-                  <div style={{ fontSize: "15px", fontWeight: "800", color: "#0F172A", marginBottom: "8px", display: "flex", alignItems: "center", gap: "8px" }}>
+                <div key={qIdx} style={{ backgroundColor: "#FFFFFF", padding: "12px 14px", borderRadius: "10px", border: "1px solid #E2E8F0" }}>
+                  <div style={{ fontSize: isMobile ? "14px" : "15px", fontWeight: "800", color: "#0F172A", marginBottom: "8px", display: "flex", alignItems: "flex-start", gap: "8px" }}>
                     <span style={{ width: "22px", height: "22px", borderRadius: "50%", backgroundColor: "#EFF6FF", color: "#2563EB", fontSize: "12px", fontWeight: "900", display: "inline-flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
                       {qIdx + 1}
                     </span>
-                    {q.text}
+                    <span>{q.text}</span>
                   </div>
-
-                  <div style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: "8px" }}>
+                  <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "repeat(2, 1fr)", gap: "8px" }}>
                     {q.options.map((opt, oIdx) => {
                       const isSelected = answers[step][qIdx] === oIdx + 1;
                       return (
@@ -681,33 +694,31 @@ export default function App() {
 
         {/* STEP 7: RESULTS */}
         {step === "results" && (
-          <div style={{ width: "100%", height: "100%", display: "flex", flexDirection: "column", gap: "14px" }}>
-            
+          <div style={{ width: "100%", maxWidth: "1300px", display: "flex", flexDirection: "column", gap: "14px", paddingBottom: "24px" }}>
             {/* OVERVIEW BAR */}
-            <div style={{ backgroundColor: "#FFFFFF", padding: "14px 24px", borderRadius: "12px", border: "1px solid #E2E8F0", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+            <div style={{ backgroundColor: "#FFFFFF", padding: isMobile ? "14px 16px" : "14px 24px", borderRadius: "12px", border: "1px solid #E2E8F0", display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: "12px" }}>
               <div>
                 <div style={{ display: "inline-flex", alignItems: "center", gap: "6px", backgroundColor: "#EFF6FF", color: "#2563EB", padding: "3px 10px", borderRadius: "6px", fontSize: "11px", fontWeight: "800", marginBottom: "4px" }}>
                   <Award size={14} /> YZ & OTOMASYON KARNESİ
                 </div>
-                <h2 style={{ fontSize: "20px", fontWeight: "900", color: "#0F172A", margin: 0 }}>
+                <h2 style={{ fontSize: isMobile ? "17px" : "20px", fontWeight: "900", color: "#0F172A", margin: 0 }}>
                   Adaptasyon Seviyesi: <span style={{ color: LEVELS[overallLevel].color }}>{LEVELS[overallLevel].label}</span>
                 </h2>
                 <div style={{ fontSize: "12px", color: "#64748B", marginTop: "2px" }}>
                   {selectedSectorObj?.label} · {selectedSizeObj?.label}
                 </div>
               </div>
-
-              <ScoreGauge score={overallAvg} level={overallLevel} />
+              <ScoreGauge score={overallAvg} level={overallLevel} size={isMobile ? 120 : 150} />
             </div>
 
             {/* 4 FUNCTION RESULT CARDS */}
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gridTemplateRows: "repeat(2, 1fr)", gap: "12px", flex: 1 }}>
+            <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "repeat(2, 1fr)", gap: "12px" }}>
               {results.map((r) => {
                 const toolsList = TOOLS[r.id][r.level];
                 return (
-                  <div key={r.id} style={{ backgroundColor: "#FFFFFF", borderRadius: "12px", border: "1px solid #E2E8F0", padding: "14px", display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
+                  <div key={r.id} style={{ backgroundColor: "#FFFFFF", borderRadius: "12px", border: "1px solid #E2E8F0", borderLeft: `4px solid ${LEVELS[r.level].color}`, padding: "14px", display: "flex", flexDirection: "column", gap: "10px" }}>
                     <div>
-                      <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "6px" }}>
+                      <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "6px", flexWrap: "wrap", gap: "6px" }}>
                         <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
                           <r.icon size={18} color="#2563EB" />
                           <span style={{ fontWeight: "800", fontSize: "14px", color: "#0F172A" }}>{r.label}</span>
@@ -716,17 +727,15 @@ export default function App() {
                           {r.avg.toFixed(1)} / 4.0
                         </span>
                       </div>
-
-                      <p style={{ fontSize: "11px", color: "#475569", margin: "0 0 8px 0", lineHeight: "1.4" }}>
+                      <p style={{ fontSize: "11px", color: "#475569", margin: 0, lineHeight: "1.4" }}>
                         {NEED_STATEMENTS[r.id]}
                       </p>
                     </div>
-
                     <div>
-                      <div style={{ fontSize: "10px", fontWeight: "800", color: "#64748B", letterSpacing: "0.5px", marginBottom: "4px" }}>
+                      <div style={{ fontSize: "10px", fontWeight: "800", color: "#64748B", letterSpacing: "0.5px", marginBottom: "6px" }}>
                         ÖNERİLEN YAPAY ZEKA ARAÇLARI:
                       </div>
-                      <div style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: "8px" }}>
+                      <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "repeat(2, 1fr)", gap: "8px" }}>
                         {toolsList.map((t, idx) => (
                           <div key={idx} style={{ backgroundColor: "#F8FAFC", border: "1px solid #E2E8F0", padding: "8px", borderRadius: "8px" }}>
                             <div style={{ fontSize: "11px", fontWeight: "700", color: "#2563EB", marginBottom: "2px" }}>{t.name}</div>
@@ -741,7 +750,7 @@ export default function App() {
             </div>
 
             {/* ACTION BUTTONS */}
-            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: "10px" }}>
               <button onClick={restart} style={{ backgroundColor: "transparent", color: "#64748B", border: "1px solid #CBD5E1", padding: "8px 16px", borderRadius: "8px", fontSize: "12px", fontWeight: "700", cursor: "pointer", display: "flex", alignItems: "center", gap: "6px" }}>
                 <RotateCcw size={14} /> Yeniden Başlat
               </button>
@@ -749,31 +758,36 @@ export default function App() {
                 <FileDown size={16} /> PDF Raporu İndir
               </button>
             </div>
-
           </div>
         )}
-
       </main>
     </div>
   );
 }
 
 /* REUSABLE CONTAINER */
-function StepContainer({ title, subtitle, children, onBack, onNext, canProceed, last }) {
+function StepContainer({ title, subtitle, children, onBack, onNext, canProceed, last, isMobile }) {
   return (
-    <div style={{ backgroundColor: "#FFFFFF", borderRadius: "16px", border: "1px solid #E2E8F0", padding: "20px 28px", width: "94vw", maxWidth: "1250px", height: "calc(100vh - 100px)", display: "flex", flexDirection: "column", justifyContent: "space-between", boxSizing: "border-box", boxShadow: "0 4px 16px rgba(0, 0, 0, 0.04)" }}>
+    <div style={{
+      backgroundColor: "#FFFFFF", borderRadius: "16px", border: "1px solid #E2E8F0",
+      padding: isMobile ? "16px" : "20px 28px",
+      width: isMobile ? "100%" : "94vw", maxWidth: "1250px",
+      minHeight: isMobile ? "auto" : "calc(100vh - 100px)",
+      maxHeight: isMobile ? "none" : "calc(100vh - 100px)",
+      display: "flex", flexDirection: "column", justifyContent: "space-between",
+      boxSizing: "border-box", boxShadow: "0 4px 16px rgba(0, 0, 0, 0.04)"
+    }}>
       <div style={{ borderBottom: "1px solid #F1F5F9", paddingBottom: "8px", marginBottom: "8px" }}>
-        <h2 style={{ fontSize: "20px", fontWeight: "900", color: "#0F172A", margin: 0 }}>{title}</h2>
+        <h2 style={{ fontSize: isMobile ? "17px" : "20px", fontWeight: "900", color: "#0F172A", margin: 0 }}>{title}</h2>
         <p style={{ fontSize: "12px", color: "#64748B", margin: "2px 0 0 0" }}>{subtitle}</p>
       </div>
 
-      <div style={{ flex: 1, overflow: "hidden" }}>{children}</div>
+      <div style={{ flex: 1, overflowY: "auto", minHeight: isMobile ? "auto" : 0 }}>{children}</div>
 
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", paddingTop: "10px", borderTop: "1px solid #F1F5F9" }}>
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", paddingTop: "10px", borderTop: "1px solid #F1F5F9", marginTop: "8px" }}>
         <button onClick={onBack} style={{ backgroundColor: "transparent", color: "#64748B", border: "1px solid #CBD5E1", padding: "8px 18px", borderRadius: "8px", fontSize: "12px", fontWeight: "700", cursor: "pointer", display: "flex", alignItems: "center", gap: "6px" }}>
           <ArrowLeft size={16} /> Geri
         </button>
-
         <button
           onClick={onNext}
           disabled={!canProceed}
