@@ -8,7 +8,7 @@ import {
 } from "lucide-react";
 
 /* ---------------------------------------------------------
-   VERİ KATMANI — KOBİ YZ & Otomasyon Araç Veritabanı
+   VERİ KATMANI — KOBİ Yapay Zeka & Otomasyon Araç Veritabanı
 --------------------------------------------------------- */
 const SECTOR_GROUPS = [
   { id: "imalat", label: "İmalat Sanayi" },
@@ -37,23 +37,23 @@ const SECTORS = [
 ];
 
 const SIZES = [
-  { id: "mikro", label: "Mikro İşletme", sub: "1–9 Çalışan", desc: "Hızlı devreye alınan, düşük bütçeli veya ücretsiz YZ & bulut otomasyon araçlarına odaklı." },
-  { id: "kucuk", label: "Küçük İşletme", sub: "10–49 Çalışan", desc: "Departmanlar arası veri akışını otomatikleştiren tak-çalıştır YZ yazılımları." },
-  { id: "orta", label: "Orta Ölçekli İşletme", sub: "50–249 Çalışan", desc: "Mevcut ERP/CRM altyapılarına entegre olabilen gelişmiş YZ ve analitik platformları." },
+  { id: "mikro", label: "Mikro İşletme", sub: "1–9 Çalışan", desc: "Hızlı devreye alınan, düşük bütçeli veya ücretsiz Yapay Zeka & bulut otomasyon araçlarına odaklı." },
+  { id: "kucuk", label: "Küçük İşletme", sub: "10–49 Çalışan", desc: "Departmanlar arası veri akışını otomatikleştiren tak-çalıştır Yapay Zeka yazılımları." },
+  { id: "orta", label: "Orta Ölçekli İşletme", sub: "50–249 Çalışan", desc: "Mevcut ERP/CRM altyapılarına entegre olabilen gelişmiş Yapay Zeka ve analitik platformları." },
 ];
 
 const FUNCTIONS = [
-  { id: "ik", label: "İnsan Kaynakları", icon: Users, desc: "Aday tarama, YZ destekli mülakat, puantaj ve özlük otomasyonu." },
-  { id: "pazarlama", label: "Pazarlama & Satış", icon: Megaphone, desc: "Görsel/metin YZ üretimi, otomatik reklam ve müşteri segmentasyonu." },
+  { id: "ik", label: "İnsan Kaynakları", icon: Users, desc: "Aday tarama, Yapay Zeka destekli mülakat, puantaj ve özlük otomasyonu." },
+  { id: "pazarlama", label: "Pazarlama & Satış", icon: Megaphone, desc: "Görsel/metin Yapay Zeka üretimi, otomatik reklam ve müşteri segmentasyonu." },
   { id: "stok", label: "Stok & Üretim", icon: Boxes, desc: "Tahminleme algoritmaları, otomatik yeniden sipariş ve akıllı depo." },
-  { id: "musteri", label: "Müşteri İlişkileri", icon: Headphones, desc: "YZ Chatbotlar, sesli asistanlar, talep otomasyonu ve CRM entegrasyonu." },
+  { id: "musteri", label: "Müşteri İlişkileri", icon: Headphones, desc: "Yapay Zeka Chatbotlar, sesli asistanlar, talep otomasyonu ve CRM entegrasyonu." },
 ];
 
 const NEED_STATEMENTS = {
-  ik: "Öncelikli YZ Odağı: Başvuru ve CV değerlendirmede metin analiz YZ araçları kullanmak, rutin puantaj ve izin onaylarını otomatikleştirmek.",
-  pazarlama: "Öncelikli YZ Odağı: İçerik ve tasarım süreçlerinde üretken YZ (Generative AI) araçlarını devreye alarak pazarlama hunisini otomatikleştirmek.",
-  stok: "Öncelikli YZ Odağı: Stok ihtiyaçlarını ve satış tahminlerini yapay zeka modellerine bağlayarak reorder (sipariş) süreçlerini otomatik kılmak.",
-  musteri: "Öncelikli YZ Odağı: Müşteri taleplerini 7/24 karşılayan doğal dil işleme (NLP) destekli YZ asistanları ve akıllı CRM kurguları oluşturmak.",
+  ik: "Öncelikli Yapay Zeka Odağı: Başvuru ve CV değerlendirmede metin analiz Yapay Zeka araçları kullanmak, rutin puantaj ve izin onaylarını otomatikleştirmek.",
+  pazarlama: "Öncelikli Yapay Zeka Odağı: İçerik ve tasarım süreçlerinde üretken Yapay Zeka (Generative AI) araçlarını devreye alarak pazarlama hunisini otomatikleştirmek.",
+  stok: "Öncelikli Yapay Zeka Odağı: Stok ihtiyaçlarını ve satış tahminlerini yapay zeka modellerine bağlayarak reorder (sipariş) süreçlerini otomatik kılmak.",
+  musteri: "Öncelikli Yapay Zeka Odağı: Müşteri taleplerini 7/24 karşılayan doğal dil işleme (NLP) destekli Yapay Zeka asistanları ve akıllı CRM kurguları oluşturmak.",
 };
 
 const METHODOLOGY_LAST_UPDATED = "14 Ağustos 2026";
@@ -64,7 +64,7 @@ const QUESTIONS = {
       "Hayır, tamamen manuel yürütüyoruz",
       "Kısmen; e-posta ve Excel tabloları aktif",
       "Aday takip yazılımları (ATS) kullanıyoruz",
-      "YZ destekli otomatik aday eleme araçları aktif"
+      "Yapay Zeka destekli otomatik aday eleme araçları aktif"
     ]},
     { text: "Puantaj, izin ve özlük süreçleriniz otomasyona bağlı mı?", options: [
       "Sözlü veya kağıt imza defteri ile manuel",
@@ -76,27 +76,27 @@ const QUESTIONS = {
       "Performans takibi yapılmıyor",
       "Yılda bir sözlü veya kağıt üzerinden",
       "Excel KPI şablonları ile periyodik",
-      "Dijital OKR/KPI platformu ve YZ analitiği"
+      "Dijital OKR/KPI platformu ve Yapay Zeka analitiği"
     ]}
   ],
   pazarlama: [
     { text: "İçerik/görsel üretiminde Yapay Zeka (ChatGPT, Canva AI vb.) kullanıyor musunuz?", options: [
       "Hayır, yapay zeka kullanılmıyor",
       "Çalışanlar bireysel olarak nadiren deniyor",
-      "Düzenli içerik takvimi ve YZ tasarım araçları aktif",
-      "Tüm içerik ve reklam kurguları YZ ile yönetiliyor"
+      "Düzenli içerik takvimi ve Yapay Zeka tasarım araçları aktif",
+      "Tüm içerik ve reklam kurguları Yapay Zeka ile yönetiliyor"
     ]},
     { text: "Müşteri iletişim listelerine yönelik otomatik pazarlama kurgularınız var mı?", options: [
       "Toplu iletişim yapılmıyor",
       "Manuel notlar ve telefon rehberi üzerinden",
       "Toplu e-posta / WhatsApp araçları manuel",
-      "Müşteri davranışına göre otomatik tetiklenen YZ e-posta/SMS"
+      "Müşteri davranışına göre otomatik tetiklenen Yapay Zeka e-posta/SMS"
     ]},
     { text: "Pazarlama harcamalarınızın dönüşümü (ROI) otomasyonla izleniyor mu?", options: [
       "Ölçüm yapılmıyor",
       "Genel satış rakamlarına göre hissi",
       "Sosyal medya platformlarının temel analitiği",
-      "Google/Meta Analytics ve YZ panelleri ile anlık"
+      "Google/Meta Analytics ve Yapay Zeka panelleri ile anlık"
     ]}
   ],
   stok: [
@@ -104,7 +104,7 @@ const QUESTIONS = {
       "Gözle kontrol ve tecrübeye dayalı",
       "Manuel Excel kayıtları ile izleniyor",
       "Stok yazılımındaki sabit uyarılara bakılıyor",
-      "Gelecek ihtiyacı tahmin eden YZ/ERP algoritmaları aktif"
+      "Gelecek ihtiyacı tahmin eden Yapay Zeka/ERP algoritmaları aktif"
     ]},
     { text: "Üretim ve sipariş planlamasında dijital otomasyon var mı?", options: [
       "Sipariş geldikçe anlık/plansız",
@@ -120,11 +120,11 @@ const QUESTIONS = {
     ]}
   ],
   musteri: [
-    { text: "Müşteri sorularına yanıt veren YZ Chatbot veya Asistanınız var mı?", options: [
+    { text: "Müşteri sorularına yanıt veren Yapay Zeka Chatbot veya Asistanınız var mı?", options: [
       "Tüm sorulara insan çalışanlar manuel yanıt veriyor",
       "Sadece WhatsApp Business otomatik karşılama var",
       "Web sitesinde temel sabit menülü chatbot mevcut",
-      "Doğal dil işleyen (NLP) YZ Chatbot 7/24 aktif"
+      "Doğal dil işleyen (NLP) Yapay Zeka Chatbot 7/24 aktif"
     ]},
     { text: "Müşteri geçmişine ve eski tekliflere ne kadar sürede ulaşıyorsunuz?", options: [
       "Müşteri geçmişi kayıt altına alınmıyor",
@@ -144,7 +144,7 @@ const QUESTIONS = {
 const TOOLS = {
   ik: {
     baslangic: [
-      { name: "ChatGPT / Claude İK Şablonları", why: "İş ilanı, mülakat soruları ve görev tanımlarını YZ ile üretir." },
+      { name: "ChatGPT / Claude İK Şablonları", why: "İş ilanı, mülakat soruları ve görev tanımlarını Yapay Zeka ile üretir." },
       { name: "Google Forms + Sheets İK Otomasyonu", why: "Kodsuz formlarla başvuru toplayıp otomatik tablolandırır." },
     ],
     gelisen: [
@@ -153,21 +153,21 @@ const TOOLS = {
     ],
     ileri: [
       { name: "Bordro.io Entegre İK & Vardiya", why: "Bordro, dijital imza ve vardiya süreçlerini otomasyonla birleştirir." },
-      { name: "SAP SuccessFactors AI Suite", why: "Kurumsal ölçekte YZ destekli yetenek yönetimi ve performans analitiği." },
+      { name: "SAP SuccessFactors AI Suite", why: "Kurumsal ölçekte Yapay Zeka destekli yetenek yönetimi ve performans analitiği." },
     ],
   },
   pazarlama: {
     baslangic: [
-      { name: "Canva Magic Studio (YZ Tasarım)", why: "Yapay zeka ile saniyeler içinde sosyal medya görselleri üretir." },
+      { name: "Canva Magic Studio (Yapay Zeka Tasarım)", why: "Yapay zeka ile saniyeler içinde sosyal medya görselleri üretir." },
       { name: "ChatGPT / Gemini Pro Metin Asistanı", why: "Reklam metinleri ve e-posta taslaklarını otomatik hazırlar." },
     ],
     gelisen: [
-      { name: "Brevo (Sendinblue) AI Kampanya", why: "En uygun gönderim zamanını YZ ile belirleyen otomatik e-posta platformu." },
-      { name: "Meta & Google AI Ads Manager", why: "Akıllı Kampanyalar ile reklam bütçesini YZ algoritmalarına optimize ettirir." },
+      { name: "Brevo (Sendinblue) AI Kampanya", why: "En uygun gönderim zamanını Yapay Zeka ile belirleyen otomatik e-posta platformu." },
+      { name: "Meta & Google AI Ads Manager", why: "Akıllı Kampanyalar ile reklam bütçesini Yapay Zeka algoritmalarına optimize ettirir." },
     ],
     ileri: [
-      { name: "Insider AI Omnichannel", why: "Çoklu kanalda kişiselleştirilmiş YZ pazarlama deneyimi sunan platform." },
-      { name: "HubSpot Marketing Hub AI", why: "Inbound pazarlama ve müşteri skorlamayı YZ ile entegre eder." },
+      { name: "Insider AI Omnichannel", why: "Çoklu kanalda kişiselleştirilmiş Yapay Zeka pazarlama deneyimi sunan platform." },
+      { name: "HubSpot Marketing Hub AI", why: "Inbound pazarlama ve müşteri skorlamayı Yapay Zeka ile entegre eder." },
     ],
   },
   stok: {
@@ -187,14 +187,14 @@ const TOOLS = {
   musteri: {
     baslangic: [
       { name: "WhatsApp Business Otomatik Yanıtlar", why: "Müşterilere hazır hızlı yanıtlar ve katalog seçenekleri sunar." },
-      { name: "Notion AI Müşteri Veritabanı", why: "Müşteri görüşme notlarını YZ ile özetleyen aranabilir pano." },
+      { name: "Notion AI Müşteri Veritabanı", why: "Müşteri görüşme notlarını Yapay Zeka ile özetleyen aranabilir pano." },
     ],
     gelisen: [
       { name: "HubSpot Free / Starter CRM", why: "Satış fırsatlarını ve teklif takibini otomatikleştiren CRM." },
       { name: "Zoho SalesIQ Akıllı Chatbot", why: "Web sitenize gelen ziyaretçileri karşılayan mesajlaşma botu." },
     ],
     ileri: [
-      { name: "Salesforce Einstein AI CRM", why: "Satış kapatma ihtimallerini YZ ile tahmin eden CRM altyapısı." },
+      { name: "Salesforce Einstein AI CRM", why: "Salesforce Einstein AI CRM altyapısı ile satış kapatma ihtimallerini öngörür." },
       { name: "Zoho One Akıllı İş Süiti", why: "40+ entegre uygulama ile tüm müşteri süreçlerini otomatikleştiren platform." },
     ],
   },
@@ -202,8 +202,8 @@ const TOOLS = {
 
 const LEVELS = {
   baslangic: { label: "Temel Seviye (Manuel Süreçler)", color: "#EF4444" },
-  gelisen: { label: "Gelişen Seviye (Kısmi Otomasyon & YZ)", color: "#F59E0B" },
-  ileri: { label: "İleri Seviye (Entegre YZ & Tam Otomasyon)", color: "#10B981" },
+  gelisen: { label: "Gelişen Seviye (Kısmi Otomasyon & Yapay Zeka)", color: "#F59E0B" },
+  ileri: { label: "İleri Seviye (Entegre Yapay Zeka & Tam Otomasyon)", color: "#10B981" },
 };
 
 function levelFromScore(avg) {
@@ -212,11 +212,6 @@ function levelFromScore(avg) {
   return "ileri";
 }
 
-/* ---------------------------------------------------------
-   MOBİL ALGILAMA — 768px altı "mobil" kabul edilir. Tüm
-   sabit-genişlikli gridler ve font boyutları bu değişkene göre
-   koşullu olarak küçültülür / tek sütuna indirilir.
---------------------------------------------------------- */
 function useIsMobile(breakpoint = 768) {
   const [isMobile, setIsMobile] = useState(
     typeof window !== "undefined" ? window.innerWidth <= breakpoint : false
@@ -257,9 +252,6 @@ function ScoreGauge({ score, level, size = 150 }) {
   );
 }
 
-/* ---------------------------------------------------------
-   MAIN APPLICATION
---------------------------------------------------------- */
 const STEPS = ["intro", "sector", "size", "ik", "pazarlama", "stok", "musteri", "results"];
 
 export default function App() {
@@ -328,7 +320,6 @@ export default function App() {
   const selectedSectorObj = useMemo(() => SECTORS.find((s) => s.id === sector), [sector]);
   const selectedSizeObj = useMemo(() => SIZES.find((s) => s.id === size), [size]);
 
-  // DOĞRUDAN .PDF DOSYASI İNDİRME İŞLEVİ (ÇORLU TSO LOGOLU)
   const downloadReportPDF = async () => {
     if (!window.html2pdf) {
       await new Promise((resolve, reject) => {
@@ -352,7 +343,7 @@ export default function App() {
           <div style="width: 44px; height: 44px; border-radius: 8px; background-color: #2563EB; color: #FFF; font-weight: 900; font-size: 20px; display: none; align-items: center; justify-content: center;">Ç</div>
           <div>
             <div style="font-size: 18px; font-weight: 900; color: #0F172A;">ÇORLU TİCARET VE SANAYİ ODASI</div>
-            <div style="font-size: 12px; font-weight: 800; color: #2563EB; margin-top: 2px;">DİJİTAL DÖNÜŞÜM MERKEZİ — YZ ADAPTASYON RAPORU</div>
+            <div style="font-size: 12px; font-weight: 800; color: #2563EB; margin-top: 2px;">DİJİTAL DÖNÜŞÜM MERKEZİ — YAPAY ZEKA ADAPTASYON RAPORU</div>
           </div>
         </div>
         <div style="text-align: right; font-size: 11px; color: #64748B;">
@@ -375,7 +366,7 @@ export default function App() {
           <div style="font-size: 10px; font-weight: 800; color: #64748B;">GENEL SKOR</div>
         </div>
       </div>
-      <h3 style="font-size: 15px; font-weight: 800; color: #0F172A; border-bottom: 1px solid #E2E8F0; padding-bottom: 6px; margin-bottom: 14px;">DEPARTMAN BAZLI ANALİZ VE YZ ARAÇ ÖNERİLERİ</h3>
+      <h3 style="font-size: 15px; font-weight: 800; color: #0F172A; border-bottom: 1px solid #E2E8F0; padding-bottom: 6px; margin-bottom: 14px;">DEPARTMAN BAZLI ANALİZ VE YAPAY ZEKA ARAÇ ÖNERİLERİ</h3>
       <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
         ${results.map((r) => `
           <div style="border: 1px solid #E2E8F0; border-left: 4px solid ${LEVELS[r.level].color}; border-radius: 8px; padding: 12px; background-color: #FFFFFF; page-break-inside: avoid;">
@@ -405,7 +396,7 @@ export default function App() {
 
     const opt = {
       margin: 10,
-      filename: `CTSO_YZ_Adaptasyon_Raporu_${(sector || "kobi")}.pdf`,
+      filename: `CTSO_Yapay_Zeka_Adaptasyon_Raporu_${(sector || "kobi")}.pdf`,
       image: { type: 'jpeg', quality: 0.98 },
       html2canvas: { scale: 2, useCORS: true, logging: false },
       jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
@@ -417,32 +408,22 @@ export default function App() {
     <div style={{
       minHeight: "100vh",
       width: "100%",
-      backgroundColor: "#F8FAFC",
-      backgroundImage: `
-        radial-gradient(circle at 8% 8%, rgba(37,99,235,0.06) 0%, transparent 35%),
-        radial-gradient(circle at 92% 12%, rgba(37,99,235,0.04) 0%, transparent 30%),
-        radial-gradient(circle at 50% 95%, rgba(37,99,235,0.05) 0%, transparent 40%),
-        linear-gradient(180deg, #FFFFFF 0%, #F1F5F9 100%)
-      `,
+      backgroundColor: "#0F172A",
+      backgroundImage: `linear-gradient(rgba(15, 23, 42, 0.85), rgba(15, 23, 42, 0.85)), url('https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&q=80&w=2000')`,
+      backgroundSize: "cover",
+      backgroundPosition: "center",
+      backgroundAttachment: "fixed",
       color: "#0F172A",
       fontFamily: "system-ui, -apple-system, sans-serif",
       display: "flex",
       flexDirection: "column",
       boxSizing: "border-box"
     }}>
-      {/* İNCE MİKRO NOKTA DOKUSU (DOT GRID PATTERN) */}
-      <div style={{
-        position: "fixed",
-        inset: 0,
-        backgroundImage: "radial-gradient(rgba(15,23,42,0.04) 1px, transparent 1px)",
-        backgroundSize: "20px 20px",
-        pointerEvents: "none",
-        zIndex: 0
-      }} />
-
       {/* HEADER */}
       <header style={{
-        backgroundColor: "#FFFFFF", borderBottom: "1px solid #E2E8F0",
+        backgroundColor: "rgba(255, 255, 255, 0.95)", 
+        backdropFilter: "blur(10px)",
+        borderBottom: "1px solid #E2E8F0",
         minHeight: "64px", padding: isMobile ? "10px 16px" : "0 32px",
         display: "flex", alignItems: "center", justifyContent: "space-between",
         flexWrap: "wrap", gap: "8px", flexShrink: 0, position: "relative", zIndex: 1
@@ -499,17 +480,23 @@ export default function App() {
 
         {/* INTRO SCREEN */}
         {step === "intro" && (
-          <div style={{ maxWidth: "960px", width: "100%", textAlign: "center", display: "flex", flexDirection: "column", gap: isMobile ? "16px" : "20px" }}>
+          <div style={{ 
+            maxWidth: "960px", width: "100%", textAlign: "center", 
+            display: "flex", flexDirection: "column", gap: isMobile ? "16px" : "20px",
+            backgroundColor: "rgba(255, 255, 255, 0.92)",
+            padding: isMobile ? "24px" : "40px", borderRadius: "20px", backdropFilter: "blur(8px)",
+            boxShadow: "0 10px 25px rgba(0,0,0,0.2)"
+          }}>
             <div style={{ display: "inline-flex", alignItems: "center", gap: "6px", backgroundColor: "#EFF6FF", border: "1px solid #BFDBFE", padding: "6px 16px", borderRadius: "20px", color: "#2563EB", fontSize: "12px", fontWeight: "700", margin: "0 auto" }}>
               <Bot size={16} /> YAPAY ZEKA VE OTOMASYON ADAPTASYON REHBERİ
             </div>
             <h1 style={{ fontSize: isMobile ? "22px" : "32px", fontWeight: "900", letterSpacing: "-0.5px", lineHeight: "1.3", color: "#0F172A", margin: 0 }}>
               Süreçleriniz Yapay Zekaya Ne Kadar Hazır?<br />
-              <span style={{ color: "#2563EB" }}>İşletme Ölçeğinize Uyumlu YZ Araç Önerileri ve Adaptasyon Rehberi</span>
+              <span style={{ color: "#2563EB" }}>İşletme Ölçeğinize Uyumlu Yapay Zeka Araç Önerileri ve Adaptasyon Rehberi</span>
             </h1>
             <p style={{ fontSize: isMobile ? "13px" : "15px", color: "#475569", lineHeight: "1.6", margin: 0, maxWidth: "800px", alignSelf: "center" }}>
               5 dakikalık hızlı analizle İK, Pazarlama, Üretim/Stok ve Müşteri İlişkileri süreçlerinizde yapay zeka potansiyelinizi görün;
-              işletme ölçeğinize en uygun YZ ve otomasyon araç önerilerini anında edinin.
+              işletme ölçeğinize en uygun yapay zeka ve otomasyon araç önerilerini anında edinin.
             </p>
             <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr 1fr" : "repeat(4, 1fr)", gap: isMobile ? "10px" : "16px", margin: "8px 0" }}>
               {FUNCTIONS.map((f) => (
@@ -524,7 +511,7 @@ export default function App() {
               onClick={goNext}
               style={{ backgroundColor: "#2563EB", color: "#FFF", border: "none", padding: isMobile ? "13px 28px" : "14px 36px", borderRadius: "10px", fontSize: isMobile ? "15px" : "16px", fontWeight: "800", cursor: "pointer", display: "inline-flex", alignItems: "center", gap: "8px", margin: "0 auto", boxShadow: "0 4px 14px rgba(37, 99, 235, 0.25)" }}
             >
-              YZ Araç Rehberini Başlat <ArrowRight size={20} />
+              Yapay Zeka Araç Rehberini Başlat <ArrowRight size={20} />
             </button>
           </div>
         )}
@@ -699,7 +686,7 @@ export default function App() {
             <div style={{ backgroundColor: "#FFFFFF", padding: isMobile ? "14px 16px" : "14px 24px", borderRadius: "12px", border: "1px solid #E2E8F0", display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: "12px" }}>
               <div>
                 <div style={{ display: "inline-flex", alignItems: "center", gap: "6px", backgroundColor: "#EFF6FF", color: "#2563EB", padding: "3px 10px", borderRadius: "6px", fontSize: "11px", fontWeight: "800", marginBottom: "4px" }}>
-                  <Award size={14} /> YZ & OTOMASYON KARNESİ
+                  <Award size={14} /> YAPAY ZEKA & OTOMASYON KARNESİ
                 </div>
                 <h2 style={{ fontSize: isMobile ? "17px" : "20px", fontWeight: "900", color: "#0F172A", margin: 0 }}>
                   Adaptasyon Seviyesi: <span style={{ color: LEVELS[overallLevel].color }}>{LEVELS[overallLevel].label}</span>
