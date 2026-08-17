@@ -8,7 +8,7 @@ import {
 } from "lucide-react";
 
 /* ---------------------------------------------------------
-   VERİ KATMANI — KOBİ Yapay Zeka & Otomasyon Araç Veritabanı
+   VERİ KATMANI — Yapay Zeka & Otomasyon Araç Veritabanı
 --------------------------------------------------------- */
 const SECTOR_GROUPS = [
   { id: "imalat", label: "İmalat Sanayi" },
@@ -40,6 +40,7 @@ const SIZES = [
   { id: "mikro", label: "Mikro İşletme", sub: "1–9 Çalışan", desc: "Hızlı devreye alınan, düşük bütçeli veya ücretsiz Yapay Zeka & bulut otomasyon araçlarına odaklı." },
   { id: "kucuk", label: "Küçük İşletme", sub: "10–49 Çalışan", desc: "Departmanlar arası veri akışını otomatikleştiren tak-çalıştır Yapay Zeka yazılımları." },
   { id: "orta", label: "Orta Ölçekli İşletme", sub: "50–249 Çalışan", desc: "Mevcut ERP/CRM altyapılarına entegre olabilen gelişmiş Yapay Zeka ve analitik platformları." },
+  { id: "buyuk", label: "Büyük İşletme", sub: "250+ Çalışan", desc: "Kurumsal düzeyde özel Yapay Zeka modelleri, büyük veri analitiği ve tam entegre otomasyon mimarileri." },
 ];
 
 const FUNCTIONS = [
@@ -152,8 +153,8 @@ const TOOLS = {
       { name: "Kolay İK Bulut Platformu", why: "İzin, puantaj ve özlük süreçlerini otomatikleştiren KVKK uyumlu yerli yazılım." },
     ],
     ileri: [
-      { name: "Bordro.io Entegre İK & Vardiya", why: "Bordro, dijital imza ve vardiya süreçlerini otomasyonla birleştirir." },
-      { name: "SAP SuccessFactors AI Suite", why: "Kurumsal ölçekte Yapay Zeka destekli yetenek yönetimi ve performans analitiği." },
+      { name: "SAP SuccessFactors / Workday AI", why: "Kurumsal ölçekte Yapay Zeka destekli yetenek yönetimi ve performans analitiği." },
+      { name: "Kurumsal Bordro & Vardiya Otomasyonu", why: "Bordro, dijital imza ve vardiya süreçlerini otomasyonla birleştirir." },
     ],
   },
   pazarlama: {
@@ -166,8 +167,8 @@ const TOOLS = {
       { name: "Meta & Google AI Ads Manager", why: "Akıllı Kampanyalar ile reklam bütçesini Yapay Zeka algoritmalarına optimize ettirir." },
     ],
     ileri: [
-      { name: "Insider AI Omnichannel", why: "Çoklu kanalda kişiselleştirilmiş Yapay Zeka pazarlama deneyimi sunan platform." },
-      { name: "HubSpot Marketing Hub AI", why: "Inbound pazarlama ve müşteri skorlamayı Yapay Zeka ile entegre eder." },
+      { name: "Insider AI Omnichannel & Salesforce Marketing Cloud", why: "Çoklu kanalda kişiselleştirilmiş kurumsal Yapay Zeka pazarlama deneyimi sunan platform." },
+      { name: "HubSpot Marketing Hub Enterprise AI", why: "Inbound pazarlama ve müşteri skorlamayı Yapay Zeka ile kurumsal düzeyde entegre eder." },
     ],
   },
   stok: {
@@ -180,8 +181,8 @@ const TOOLS = {
       { name: "Mikro Run / Jump Otomasyon", why: "Yerli e-fatura ve mevzuata tam uyumlu stok ve sipariş otomasyonu." },
     ],
     ileri: [
-      { name: "Logo Tiger 3 Enterprise MRP", why: "Gelişmiş üretim planlama ve tedarik zinciri otomasyonu." },
-      { name: "SAP Business One AI Supply Chain", why: "Tahminleme algoritmalarıyla çalışan depo ve üretim yazılımı." },
+      { name: "SAP S/4HANA AI Supply Chain & Logo Tiger 3 Enterprise", why: "Gelişmiş kurumsal üretim planlama, MRP ve yapay zeka destekli tedarik zinciri otomasyonu." },
+      { name: "Dematic / Akıllı Otomasyon Depo Sistemleri", why: "Yapay zeka güdümlü otonom depo ve sevkiyat yönetimi." },
     ],
   },
   musteri: {
@@ -194,8 +195,8 @@ const TOOLS = {
       { name: "Zoho SalesIQ Akıllı Chatbot", why: "Web sitenize gelen ziyaretçileri karşılayan mesajlaşma botu." },
     ],
     ileri: [
-      { name: "Salesforce Einstein AI CRM", why: "Salesforce Einstein AI CRM altyapısı ile satış kapatma ihtimallerini öngörür." },
-      { name: "Zoho One Akıllı İş Süiti", why: "40+ entegre uygulama ile tüm müşteri süreçlerini otomatikleştiren platform." },
+      { name: "Salesforce Einstein AI CRM & Microsoft Dynamics 365", why: "Satış kapatma ihtimallerini Yapay Zeka ile tahmin eden kurumsal CRM altyapısı." },
+      { name: "Enterprise Omnichannel AI Contact Center", why: "Büyük ölçekli çağrı merkezleri için NLP destekli akıllı sesli ve yazılı asistanlar." },
     ],
   },
 };
@@ -396,7 +397,7 @@ export default function App() {
 
     const opt = {
       margin: 10,
-      filename: `CTSO_Yapay_Zeka_Adaptasyon_Raporu_${(sector || "kobi")}.pdf`,
+      filename: `CTSO_Yapay_Zeka_Adaptasyon_Raporu_${(sector || "isletme")}.pdf`,
       image: { type: 'jpeg', quality: 0.98 },
       html2canvas: { scale: 2, useCORS: true, logging: false },
       jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
@@ -447,7 +448,7 @@ export default function App() {
                 </span>
               )}
             </div>
-            {!isMobile && <p style={{ fontSize: "11px", color: "#64748B", margin: 0 }}>KOBİ Yapay Zeka & Otomasyon Araç Rehberi</p>}
+            {!isMobile && <p style={{ fontSize: "11px", color: "#64748B", margin: 0 }}>Yapay Zeka & Otomasyon Araç Rehberi</p>}
           </div>
         </div>
 
@@ -591,7 +592,7 @@ export default function App() {
         {/* STEP 2: SIZE */}
         {step === "size" && (
           <StepContainer title="2 · İşletme Ölçeği" subtitle="Çalışan sayınıza uygun ölçeği seçin." onBack={goBack} onNext={goNext} canProceed={canProceed} isMobile={isMobile}>
-            <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "repeat(3, 1fr)", gap: "14px", height: "100%", alignItems: isMobile ? "stretch" : "center", overflowY: "auto" }}>
+            <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "repeat(2, 2fr)", gap: "12px", height: "100%", alignItems: isMobile ? "stretch" : "center", overflowY: "auto" }}>
               {SIZES.map((s) => {
                 const isSelected = size === s.id;
                 return (
@@ -599,7 +600,7 @@ export default function App() {
                     key={s.id}
                     onClick={() => setSize(s.id)}
                     style={{
-                      padding: "18px",
+                      padding: "16px",
                       borderRadius: "14px",
                       textAlign: "left",
                       backgroundColor: isSelected ? "#EFF6FF" : "#FFFFFF",
@@ -608,15 +609,15 @@ export default function App() {
                       display: "flex",
                       flexDirection: "column",
                       justifyContent: "flex-start",
-                      minHeight: isMobile ? "auto" : "200px",
+                      minHeight: isMobile ? "auto" : "150px",
                       boxSizing: "border-box"
                     }}
                   >
-                    <span style={{ fontSize: "11px", fontWeight: "800", backgroundColor: isSelected ? "#2563EB" : "#E2E8F0", color: isSelected ? "#FFF" : "#475569", padding: "4px 10px", borderRadius: "6px", display: "inline-block", marginBottom: "10px", alignSelf: "flex-start" }}>
+                    <span style={{ fontSize: "11px", fontWeight: "800", backgroundColor: isSelected ? "#2563EB" : "#E2E8F0", color: isSelected ? "#FFF" : "#475569", padding: "4px 10px", borderRadius: "6px", display: "inline-block", marginBottom: "8px", alignSelf: "flex-start" }}>
                       {s.sub}
                     </span>
-                    <h4 style={{ fontSize: "17px", fontWeight: "800", color: "#0F172A", margin: "0 0 6px 0" }}>{s.label}</h4>
-                    <p style={{ fontSize: "13px", color: "#64748B", lineHeight: "1.5", margin: 0 }}>{s.desc}</p>
+                    <h4 style={{ fontSize: "16px", fontWeight: "800", color: "#0F172A", margin: "0 0 4px 0" }}>{s.label}</h4>
+                    <p style={{ fontSize: "12px", color: "#64748B", lineHeight: "1.4", margin: 0 }}>{s.desc}</p>
                   </button>
                 );
               })}
