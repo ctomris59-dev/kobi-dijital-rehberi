@@ -1,5 +1,6 @@
 import React, { useState, useMemo, useEffect } from "react";
 import { supabase } from "./lib/supabaseClient";
+import { generateKobiPdfReport } from "./lib/pdfReport";
 import {
   Shirt, Wheat, Cog, ShoppingCart, Users, Megaphone, Boxes, Headphones,
   FlaskConical, Car, Hammer, HardHat, Truck, Tractor, UtensilsCrossed,
@@ -256,6 +257,50 @@ function ScoreGauge({ score, level, size = 150 }) {
 
 const STEPS = ["intro", "sector", "size", "ik", "pazarlama", "stok", "musteri", "contact", "results"];
 
+function FunctionRadar({ results }) {
+  const size = 300;
+  const cx = size / 2;
+  const cy = size / 2;
+  const maxR = 100;
+  const n = results.length;
+
+  const pointAt = (i, r) => {
+    const angle = (-90 + (360 / n) * i) * (Math.PI / 180);
+    return [cx + r * Math.cos(angle), cy + r * Math.sin(angle)];
+  };
+
+  const rings = [1, 2, 3, 4];
+  const dataPoints = results.map((r, i) => pointAt(i, ((r.avg - 1) / 3) * maxR));
+  const dataPath = dataPoints.map((p) => p.join(",")).join(" ");
+
+  return (
+    <svg viewBox={`0 0 ${size} ${size}`} width="100%" style={{ maxWidth: 300, display: "block", margin: "0 auto" }}>
+      {rings.map((ring) => {
+        const pts = results.map((_, i) => pointAt(i, ((ring - 1) / 3) * maxR).join(",")).join(" ");
+        return (
+          <polygon key={ring} points={pts} fill="none" stroke="#E2E8F0" strokeWidth={ring === 4 ? 1.5 : 1} strokeDasharray={ring === 4 ? "0" : "3,3"} />
+        );
+      })}
+      {results.map((r, i) => {
+        const [x, y] = pointAt(i, maxR);
+        return <line key={r.id} x1={cx} y1={cy} x2={x} y2={y} stroke="#CBD5E1" strokeWidth="1" />;
+      })}
+      <polygon points={dataPath} fill="rgba(37, 99, 235, 0.15)" stroke="#2563EB" strokeWidth="2.5" />
+      {dataPoints.map((p, i) => (
+        <circle key={i} cx={p[0]} cy={p[1]} r="4" fill="#2563EB" stroke="#FFFFFF" strokeWidth="2" />
+      ))}
+      {results.map((r, i) => {
+        const [x, y] = pointAt(i, maxR + 24);
+        return (
+          <text key={r.id} x={x} y={y} textAnchor="middle" dominantBaseline="middle" fontSize="11" fill="#334155" fontWeight="700">
+            {r.label.toUpperCase()}
+          </text>
+        );
+      })}
+    </svg>
+  );
+}
+
 export default function App() {
   const isMobile = useIsMobile();
   const [stepIdx, setStepIdx] = useState(0);
@@ -396,88 +441,27 @@ export default function App() {
     setStepIdx((i) => Math.min(i + 1, STEPS.length - 1));
   };
 
-  const downloadReportPDF = async () => {
-    if (!window.html2pdf) {
-      await new Promise((resolve, reject) => {
-        const script = document.createElement("script");
-        script.src = "https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js";
-        script.onload = resolve;
-        script.onerror = reject;
-        document.head.appendChild(script);
-      });
-    }
-    const pdfContainer = document.createElement("div");
-    pdfContainer.style.width = "750px";
-    pdfContainer.style.padding = "30px";
-    pdfContainer.style.backgroundColor = "#FFFFFF";
-    pdfContainer.style.color = "#0F172A";
-    pdfContainer.style.fontFamily = "Arial, sans-serif";
-    pdfContainer.innerHTML = `
-      <div style="border-bottom: 2px solid #2563EB; padding-bottom: 16px; margin-bottom: 20px; display: flex; align-items: center; justify-content: space-between;">
-        <div style="display: flex; align-items: center; gap: 14px;">
-          <img src="/logo.jpg" alt="Çorlu TSO Logo" style="width: 55px; height: 55px; object-fit: contain;" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
-          <div style="width: 44px; height: 44px; border-radius: 8px; background-color: #2563EB; color: #FFF; font-weight: 900; font-size: 20px; display: none; align-items: center; justify-content: center;">Ç</div>
-          <div>
-            <div style="font-size: 18px; font-weight: 900; color: #0F172A;">ÇORLU TİCARET VE SANAYİ ODASI</div>
-            <div style="font-size: 12px; font-weight: 800; color: #2563EB; margin-top: 2px;">DİJİTAL DÖNÜŞÜM MERKEZİ — YAPAY ZEKA ADAPTASYON RAPORU</div>
-          </div>
-        </div>
-        <div style="text-align: right; font-size: 11px; color: #64748B;">
-          <div><strong>Tarih:</strong> ${METHODOLOGY_LAST_UPDATED}</div>
-          <div><strong>Referans:</strong> ÇTSO-YZ-${(sector || "KOBI").toUpperCase().slice(0, 3)}</div>
-        </div>
-      </div>
-      <div style="background-color: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 10px; padding: 18px; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center;">
-        <div>
-          <div style="font-size: 11px; font-weight: 800; color: #2563EB; letter-spacing: 0.5px; margin-bottom: 4px;">DİJİTAL UYUM VE OTOMASYON KARNESİ</div>
-          <div style="font-size: 20px; font-weight: 900; color: #0F172A;">
-            Seviye: <span style="color: ${LEVELS[overallLevel].color}">${LEVELS[overallLevel].label}</span>
-          </div>
-          <div style="font-size: 12px; color: #64748B; margin-top: 4px;">
-            Sektör: <strong>${selectedSectorObj?.label || "Belirtilmedi"}</strong> | Ölçek: <strong>${selectedSizeObj?.label || "Belirtilmedi"}</strong>
-          </div>
-        </div>
-        <div style="text-align: center; background: #FFFFFF; padding: 10px 18px; border-radius: 8px; border: 1px solid #CBD5E1;">
-          <div style="font-size: 24px; font-weight: 900; color: #0F172A;">${overallAvg.toFixed(1)} <span style="font-size: 12px; color: #64748B;">/ 4.0</span></div>
-          <div style="font-size: 10px; font-weight: 800; color: #64748B;">GENEL SKOR</div>
-        </div>
-      </div>
-      <h3 style="font-size: 15px; font-weight: 800; color: #0F172A; border-bottom: 1px solid #E2E8F0; padding-bottom: 6px; margin-bottom: 14px;">DEPARTMAN BAZLI ANALİZ VE YAPAY ZEKA ARAÇ ÖNERİLERİ</h3>
-      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
-        ${results.map((r) => `
-          <div style="border: 1px solid #E2E8F0; border-left: 4px solid ${LEVELS[r.level].color}; border-radius: 8px; padding: 12px; background-color: #FFFFFF; page-break-inside: avoid;">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
-              <span style="font-weight: 800; font-size: 13px; color: #0F172A;">${r.label}</span>
-              <span style="font-size: 10px; font-weight: 800; color: ${LEVELS[r.level].color}; background-color: #F8FAFC; padding: 2px 6px; border-radius: 4px; border: 1px solid #E2E8F0;">
-                ${r.avg.toFixed(1)} / 4.0
-              </span>
-            </div>
-            <p style="font-size: 10px; color: #334155; margin: 0 0 8px 0; background-color: #F8FAFC; padding: 6px; border-radius: 4px; line-height: 1.3;">
-              ${NEED_STATEMENTS[r.id]}
-            </p>
-            <div style="font-size: 9px; font-weight: 800; color: #64748B; margin-bottom: 4px;">ÖNERİLEN YAPAY ZEKA ARAÇLARI:</div>
-            ${TOOLS[r.id][r.level].map((t) => `
-              <div style="background-color: #EFF6FF; border: 1px solid #DBEAFE; padding: 6px 8px; border-radius: 6px; margin-bottom: 4px;">
-                <div style="font-size: 11px; font-weight: 800; color: #2563EB;">${t.name}</div>
-                <div style="font-size: 9px; color: #475569; margin-top: 2px;">${t.why}</div>
-              </div>
-            `).join('')}
-          </div>
-        `).join('')}
-      </div>
-      <div style="margin-top: 24px; padding-top: 12px; border-top: 1px solid #E2E8F0; text-align: center; font-size: 9px; color: #94A3B8;">
-        Çorlu Ticaret ve Sanayi Odası Dijital Dönüşüm Merkezi — İşletmenize özel bilgilendirme ve yönlendirme raporudur.
-      </div>
-    `;
+  const [pdfState, setPdfState] = useState("idle");
 
-    const opt = {
-      margin: 10,
-      filename: `CTSO_Yapay_Zeka_Adaptasyon_Raporu_${(sector || "isletme")}.pdf`,
-      image: { type: 'jpeg', quality: 0.98 },
-      html2canvas: { scale: 2, useCORS: true, logging: false },
-      jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
-    };
-    window.html2pdf().set(opt).from(pdfContainer).save();
+  const downloadReportPDF = async () => {
+    setPdfState("generating");
+    try {
+      await generateKobiPdfReport({
+        companyName: contact.companyName,
+        sectorLabel: selectedSectorObj?.label,
+        sizeLabel: selectedSizeObj?.label,
+        results,
+        overallAvg,
+        overallLevel,
+        levels: LEVELS,
+        needStatements: NEED_STATEMENTS,
+        tools: TOOLS,
+      });
+      setPdfState("idle");
+    } catch (e) {
+      console.error("PDF üretim hatası:", e);
+      setPdfState("error");
+    }
   };
 
   return (
@@ -540,9 +524,10 @@ export default function App() {
         {step === "results" && (
           <button
             onClick={downloadReportPDF}
-            style={{ backgroundColor: "#2563EB", color: "#FFF", border: "none", padding: "8px 16px", borderRadius: "6px", fontWeight: "700", fontSize: "12px", cursor: "pointer", display: "flex", alignItems: "center", gap: "6px" }}
+            disabled={pdfState === "generating"}
+            style={{ backgroundColor: "#2563EB", color: "#FFF", border: "none", padding: "8px 16px", borderRadius: "6px", fontWeight: "700", fontSize: "12px", cursor: pdfState === "generating" ? "wait" : "pointer", opacity: pdfState === "generating" ? 0.6 : 1, display: "flex", alignItems: "center", gap: "6px" }}
           >
-            <FileDown size={14} /> {isMobile ? "PDF" : "PDF Raporu İndir"}
+            <FileDown size={14} /> {pdfState === "generating" ? "Hazırlanıyor…" : isMobile ? "PDF" : "PDF Raporu İndir"}
           </button>
         )}
       </header>
@@ -900,6 +885,14 @@ export default function App() {
               <ScoreGauge score={overallAvg} level={overallLevel} size={isMobile ? 120 : 150} />
             </div>
 
+            {/* RADAR: FONKSİYON BAZLI GENEL GÖRÜNÜM */}
+            <div style={{ backgroundColor: "#FFFFFF", padding: isMobile ? "14px" : "20px", borderRadius: "12px", border: "1px solid #E2E8F0" }}>
+              <div style={{ fontSize: "11px", fontWeight: "800", color: "#64748B", letterSpacing: "0.5px", marginBottom: "8px" }}>
+                FONKSİYON BAZLI GENEL GÖRÜNÜM
+              </div>
+              <FunctionRadar results={results} />
+            </div>
+
             {/* 4 FUNCTION RESULT CARDS */}
             <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "repeat(2, 1fr)", gap: "12px" }}>
               {results.map((r) => {
@@ -943,8 +936,8 @@ export default function App() {
               <button onClick={restart} style={{ backgroundColor: "transparent", color: "#64748B", border: "1px solid #CBD5E1", padding: "8px 16px", borderRadius: "8px", fontSize: "12px", fontWeight: "700", cursor: "pointer", display: "flex", alignItems: "center", gap: "6px" }}>
                 <RotateCcw size={14} /> Yeniden Başlat
               </button>
-              <button onClick={downloadReportPDF} style={{ backgroundColor: "#2563EB", color: "#FFF", border: "none", padding: "10px 22px", borderRadius: "8px", fontSize: "13px", fontWeight: "800", cursor: "pointer", display: "flex", alignItems: "center", gap: "6px" }}>
-                <FileDown size={16} /> PDF Raporu İndir
+              <button onClick={downloadReportPDF} disabled={pdfState === "generating"} style={{ backgroundColor: "#2563EB", color: "#FFF", border: "none", padding: "10px 22px", borderRadius: "8px", fontSize: "13px", fontWeight: "800", cursor: pdfState === "generating" ? "wait" : "pointer", opacity: pdfState === "generating" ? 0.6 : 1, display: "flex", alignItems: "center", gap: "6px" }}>
+                <FileDown size={16} /> {pdfState === "generating" ? "Rapor Hazırlanıyor…" : "PDF Raporu İndir"}
               </button>
             </div>
           </div>
