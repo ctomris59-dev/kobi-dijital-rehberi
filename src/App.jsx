@@ -1,4 +1,5 @@
 import React, { useState, useMemo, useEffect } from "react";
+import { supabase } from "./lib/supabaseClient";
 import {
   Shirt, Wheat, Cog, ShoppingCart, Users, Megaphone, Boxes, Headphones,
   FlaskConical, Car, Hammer, HardHat, Truck, Tractor, UtensilsCrossed,
@@ -253,7 +254,7 @@ function ScoreGauge({ score, level, size = 150 }) {
   );
 }
 
-const STEPS = ["intro", "sector", "size", "ik", "pazarlama", "stok", "musteri", "results"];
+const STEPS = ["intro", "sector", "size", "ik", "pazarlama", "stok", "musteri", "contact", "results"];
 
 export default function App() {
   const isMobile = useIsMobile();
@@ -263,6 +264,13 @@ export default function App() {
   const [sectorQuery, setSectorQuery] = useState("");
   const [size, setSize] = useState(null);
   const [answers, setAnswers] = useState({ ik: [], pazarlama: [], stok: [], musteri: [] });
+  const [kvkkAccepted, setKvkkAccepted] = useState(false);
+  const [showKVKK, setShowKVKK] = useState(false);
+  const [contact, setContact] = useState({ companyName: "", contactName: "", email: "", phone: "" });
+  const [contactErrors, setContactErrors] = useState({});
+  const [submitting, setSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState("");
+  const [submitted, setSubmitted] = useState(false);
 
   const step = STEPS[stepIdx];
   const fnStepIdx = FUNCTIONS.findIndex((f) => f.id === step);
@@ -274,8 +282,9 @@ export default function App() {
     if (step === "sector") return !!sector;
     if (step === "size") return !!size;
     if (fnStepIdx >= 0) return (answers[step] || []).length === QUESTIONS[step].length;
+    if (step === "contact") return submitted;
     return true;
-  }, [step, sector, size, answers, fnStepIdx]);
+  }, [step, sector, size, answers, fnStepIdx, submitted]);
 
   const setAnswer = (fnId, qIdx, score) => {
     setAnswers((prev) => {
@@ -308,6 +317,11 @@ export default function App() {
     setSectorQuery("");
     setSize(null);
     setAnswers({ ik: [], pazarlama: [], stok: [], musteri: [] });
+    setKvkkAccepted(false);
+    setContact({ companyName: "", contactName: "", email: "", phone: "" });
+    setContactErrors({});
+    setSubmitError("");
+    setSubmitted(false);
   };
 
   const filteredSectors = useMemo(() => {
@@ -320,6 +334,67 @@ export default function App() {
 
   const selectedSectorObj = useMemo(() => SECTORS.find((s) => s.id === sector), [sector]);
   const selectedSizeObj = useMemo(() => SIZES.find((s) => s.id === size), [size]);
+
+  const handleContactChange = (field) => (e) => {
+    setContact((prev) => ({ ...prev, [field]: e.target.value }));
+    setContactErrors((prev) => (prev[field] ? { ...prev, [field]: null } : prev));
+  };
+
+  const validateContact = () => {
+    const errs = {};
+    if (!contact.companyName.trim()) errs.companyName = "Firma adı zorunludur";
+    if (!contact.contactName.trim()) errs.contactName = "Ad soyad zorunludur";
+    if (!contact.email.trim()) errs.email = "E-posta zorunludur";
+    else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(contact.email.trim())) errs.email = "Geçerli bir e-posta girin";
+    if (!contact.phone.trim()) errs.phone = "Telefon zorunludur";
+    else if (contact.phone.replace(/\D/g, "").length < 10) errs.phone = "Geçerli bir telefon girin";
+    setContactErrors(errs);
+    return Object.keys(errs).length === 0;
+  };
+
+  const handleContactSubmit = async (e) => {
+    e.preventDefault();
+    if (!validateContact()) return;
+
+    setSubmitting(true);
+    setSubmitError("");
+
+    const byId = (id) => results.find((r) => r.id === id);
+
+    const { error } = await supabase.from("kobi_rehberi_basvurular").insert({
+      company_name: contact.companyName.trim(),
+      contact_name: contact.contactName.trim(),
+      email: contact.email.trim(),
+      phone: contact.phone.trim(),
+      sector,
+      sector_label: selectedSectorObj?.label || null,
+      business_size: size,
+      business_size_label: selectedSizeObj?.label || null,
+      overall_avg: overallAvg,
+      overall_level: overallLevel,
+      ik_avg: byId("ik")?.avg ?? null,
+      ik_level: byId("ik")?.level ?? null,
+      pazarlama_avg: byId("pazarlama")?.avg ?? null,
+      pazarlama_level: byId("pazarlama")?.level ?? null,
+      stok_avg: byId("stok")?.avg ?? null,
+      stok_level: byId("stok")?.level ?? null,
+      musteri_avg: byId("musteri")?.avg ?? null,
+      musteri_level: byId("musteri")?.level ?? null,
+      answers,
+      kvkk_consent: true,
+    });
+
+    setSubmitting(false);
+
+    if (error) {
+      console.error("Supabase kayıt hatası:", error);
+      setSubmitError("Kaydınız gönderilirken bir sorun oluştu. Lütfen tekrar deneyin.");
+      return;
+    }
+
+    setSubmitted(true);
+    setStepIdx((i) => Math.min(i + 1, STEPS.length - 1));
+  };
 
   const downloadReportPDF = async () => {
     if (!window.html2pdf) {
@@ -508,9 +583,35 @@ export default function App() {
                 </div>
               ))}
             </div>
+            <label style={{ display: "flex", alignItems: "flex-start", gap: "10px", margin: "0 auto", maxWidth: "640px", textAlign: "left", cursor: "pointer" }}>
+              <input
+                type="checkbox"
+                checked={kvkkAccepted}
+                onChange={(e) => setKvkkAccepted(e.target.checked)}
+                style={{ marginTop: "3px", width: "16px", height: "16px", accentColor: "#2563EB", cursor: "pointer", flexShrink: 0 }}
+              />
+              <span style={{ fontSize: "12px", color: "#475569", lineHeight: "1.5" }}>
+                <button
+                  type="button"
+                  onClick={(e) => { e.preventDefault(); setShowKVKK(true); }}
+                  style={{ background: "none", border: "none", padding: 0, color: "#2563EB", fontWeight: "800", textDecoration: "underline", cursor: "pointer", fontSize: "12px" }}
+                >
+                  KVKK Aydınlatma Metni
+                </button>
+                'ni okudum, kişisel verilerimin belirtilen amaçlarla işlenmesini onaylıyorum.
+              </span>
+            </label>
+
             <button
-              onClick={goNext}
-              style={{ backgroundColor: "#2563EB", color: "#FFF", border: "none", padding: isMobile ? "13px 28px" : "14px 36px", borderRadius: "10px", fontSize: isMobile ? "15px" : "16px", fontWeight: "800", cursor: "pointer", display: "inline-flex", alignItems: "center", gap: "8px", margin: "0 auto", boxShadow: "0 4px 14px rgba(37, 99, 235, 0.25)" }}
+              onClick={() => kvkkAccepted && goNext()}
+              disabled={!kvkkAccepted}
+              style={{
+                backgroundColor: kvkkAccepted ? "#2563EB" : "#94A3B8",
+                color: "#FFF", border: "none", padding: isMobile ? "13px 28px" : "14px 36px",
+                borderRadius: "10px", fontSize: isMobile ? "15px" : "16px", fontWeight: "800",
+                cursor: kvkkAccepted ? "pointer" : "not-allowed", display: "inline-flex", alignItems: "center", gap: "8px",
+                margin: "0 auto", boxShadow: kvkkAccepted ? "0 4px 14px rgba(37, 99, 235, 0.25)" : "none"
+              }}
             >
               Yapay Zeka Araç Rehberini Başlat <ArrowRight size={20} />
             </button>
@@ -680,7 +781,107 @@ export default function App() {
           </StepContainer>
         )}
 
-        {/* STEP 7: RESULTS */}
+        {/* STEP 7: CONTACT (Sonuç/PDF öncesi zorunlu) */}
+        {step === "contact" && (
+          <div style={{
+            backgroundColor: "#FFFFFF", borderRadius: "16px", border: "1px solid #E2E8F0",
+            padding: isMobile ? "20px" : "32px", width: isMobile ? "100%" : "600px",
+            maxWidth: "94vw", boxSizing: "border-box", boxShadow: "0 4px 16px rgba(0, 0, 0, 0.04)"
+          }}>
+            <div style={{ borderBottom: "1px solid #F1F5F9", paddingBottom: "10px", marginBottom: "16px" }}>
+              <div style={{ display: "inline-flex", alignItems: "center", gap: "6px", backgroundColor: "#EFF6FF", color: "#2563EB", padding: "3px 10px", borderRadius: "6px", fontSize: "11px", fontWeight: "800", marginBottom: "8px" }}>
+                <ShieldCheck size={14} /> SON ADIM
+              </div>
+              <h2 style={{ fontSize: isMobile ? "17px" : "20px", fontWeight: "900", color: "#0F172A", margin: 0 }}>
+                Sonucunuzu görmek için bilgilerinizi girin
+              </h2>
+              <p style={{ fontSize: "12px", color: "#64748B", margin: "6px 0 0 0", lineHeight: "1.5" }}>
+                Yapay Zeka Adaptasyon Karneniz ve PDF raporunuz, aşağıdaki bilgiler kaydedildikten sonra
+                görüntülenecektir. Bu bilgiler yalnızca Çorlu TSO tarafından ilerleyen süreçte gelişiminizi
+                takip etmek amacıyla kullanılacaktır.
+              </p>
+            </div>
+
+            <form onSubmit={handleContactSubmit} style={{ display: "flex", flexDirection: "column", gap: "14px" }}>
+              <div>
+                <label style={{ fontSize: "11px", fontWeight: "800", color: "#64748B", display: "block", marginBottom: "6px" }}>Firma Adı *</label>
+                <input
+                  type="text"
+                  value={contact.companyName}
+                  onChange={handleContactChange("companyName")}
+                  placeholder="Örn. ABC Tekstil San. ve Tic. A.Ş."
+                  style={{ width: "100%", padding: "11px 14px", borderRadius: "8px", border: `1px solid ${contactErrors.companyName ? "#DC2626" : "#CBD5E1"}`, fontSize: "13px", boxSizing: "border-box", outline: "none" }}
+                />
+                {contactErrors.companyName && <p style={{ color: "#DC2626", fontSize: "11px", margin: "4px 0 0 0" }}>{contactErrors.companyName}</p>}
+              </div>
+
+              <div>
+                <label style={{ fontSize: "11px", fontWeight: "800", color: "#64748B", display: "block", marginBottom: "6px" }}>Ad Soyad *</label>
+                <input
+                  type="text"
+                  value={contact.contactName}
+                  onChange={handleContactChange("contactName")}
+                  placeholder="Yetkili adı soyadı"
+                  style={{ width: "100%", padding: "11px 14px", borderRadius: "8px", border: `1px solid ${contactErrors.contactName ? "#DC2626" : "#CBD5E1"}`, fontSize: "13px", boxSizing: "border-box", outline: "none" }}
+                />
+                {contactErrors.contactName && <p style={{ color: "#DC2626", fontSize: "11px", margin: "4px 0 0 0" }}>{contactErrors.contactName}</p>}
+              </div>
+
+              <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: "14px" }}>
+                <div>
+                  <label style={{ fontSize: "11px", fontWeight: "800", color: "#64748B", display: "block", marginBottom: "6px" }}>E-posta *</label>
+                  <input
+                    type="email"
+                    value={contact.email}
+                    onChange={handleContactChange("email")}
+                    placeholder="ornek@firma.com"
+                    style={{ width: "100%", padding: "11px 14px", borderRadius: "8px", border: `1px solid ${contactErrors.email ? "#DC2626" : "#CBD5E1"}`, fontSize: "13px", boxSizing: "border-box", outline: "none" }}
+                  />
+                  {contactErrors.email && <p style={{ color: "#DC2626", fontSize: "11px", margin: "4px 0 0 0" }}>{contactErrors.email}</p>}
+                </div>
+                <div>
+                  <label style={{ fontSize: "11px", fontWeight: "800", color: "#64748B", display: "block", marginBottom: "6px" }}>Telefon *</label>
+                  <input
+                    type="tel"
+                    value={contact.phone}
+                    onChange={handleContactChange("phone")}
+                    placeholder="05XX XXX XX XX"
+                    style={{ width: "100%", padding: "11px 14px", borderRadius: "8px", border: `1px solid ${contactErrors.phone ? "#DC2626" : "#CBD5E1"}`, fontSize: "13px", boxSizing: "border-box", outline: "none" }}
+                  />
+                  {contactErrors.phone && <p style={{ color: "#DC2626", fontSize: "11px", margin: "4px 0 0 0" }}>{contactErrors.phone}</p>}
+                </div>
+              </div>
+
+              {submitError && (
+                <p style={{ color: "#DC2626", fontSize: "12px", backgroundColor: "#FEF2F2", border: "1px solid #FECACA", padding: "10px", borderRadius: "8px", margin: 0 }}>{submitError}</p>
+              )}
+
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", paddingTop: "6px" }}>
+                <button
+                  type="button"
+                  onClick={goBack}
+                  style={{ backgroundColor: "transparent", color: "#64748B", border: "1px solid #CBD5E1", padding: "10px 18px", borderRadius: "8px", fontSize: "12px", fontWeight: "700", cursor: "pointer", display: "flex", alignItems: "center", gap: "6px" }}
+                >
+                  <ArrowLeft size={16} /> Geri
+                </button>
+                <button
+                  type="submit"
+                  disabled={submitting}
+                  style={{
+                    backgroundColor: submitting ? "#94A3B8" : "#2563EB", color: "#FFF", border: "none",
+                    padding: "10px 24px", borderRadius: "8px", fontSize: "13px", fontWeight: "800",
+                    cursor: submitting ? "wait" : "pointer", display: "flex", alignItems: "center", gap: "8px"
+                  }}
+                >
+                  <span>{submitting ? "Kaydediliyor..." : "Sonucumu Görüntüle"}</span>
+                  {!submitting && <ArrowRight size={16} />}
+                </button>
+              </div>
+            </form>
+          </div>
+        )}
+
+        {/* STEP 8: RESULTS */}
         {step === "results" && (
           <div style={{ width: "100%", maxWidth: "1300px", display: "flex", flexDirection: "column", gap: "14px", paddingBottom: "24px" }}>
             {/* OVERVIEW BAR */}
@@ -749,6 +950,83 @@ export default function App() {
           </div>
         )}
       </main>
+      {showKVKK && <KVKKModal onClose={() => setShowKVKK(false)} />}
+    </div>
+  );
+}
+
+/* KVKK AYDINLATMA METNİ MODALI */
+function KVKKModal({ onClose }) {
+  return (
+    <div
+      onClick={onClose}
+      style={{ position: "fixed", inset: 0, backgroundColor: "rgba(15, 23, 42, 0.6)", backdropFilter: "blur(4px)", display: "flex", alignItems: "center", justifyContent: "center", padding: "24px", zIndex: 50 }}
+    >
+      <div
+        onClick={(e) => e.stopPropagation()}
+        style={{ backgroundColor: "#FFFFFF", borderRadius: "16px", maxWidth: "600px", width: "100%", maxHeight: "85vh", overflowY: "auto", padding: "28px 32px", boxShadow: "0 20px 40px rgba(0,0,0,0.2)" }}
+      >
+        <div style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between", borderBottom: "1px solid #E2E8F0", paddingBottom: "14px", marginBottom: "18px" }}>
+          <div>
+            <div style={{ fontSize: "10px", fontWeight: "800", color: "#64748B", letterSpacing: "0.5px", marginBottom: "4px" }}>DOKÜMAN</div>
+            <h3 style={{ fontSize: "18px", fontWeight: "900", color: "#0F172A", margin: 0 }}>KVKK Aydınlatma Metni</h3>
+          </div>
+          <button onClick={onClose} style={{ background: "none", border: "none", color: "#64748B", fontSize: "12px", fontWeight: "700", cursor: "pointer" }}>[KAPAT]</button>
+        </div>
+
+        <div style={{ display: "flex", flexDirection: "column", gap: "16px", fontSize: "12px", lineHeight: "1.6", color: "#334155" }}>
+          <div>
+            <p style={{ fontSize: "10px", color: "#2563EB", fontWeight: "800", margin: "0 0 2px 0" }}>// VERİ SORUMLUSU</p>
+            <p style={{ margin: 0, color: "#475569" }}>
+              Bu değerlendirme, 6698 sayılı Kişisel Verilerin Korunması Kanunu ("KVKK") kapsamında
+              Çorlu Ticaret ve Sanayi Odası ("Oda") tarafından veri sorumlusu sıfatıyla yürütülmektedir.
+            </p>
+          </div>
+          <div>
+            <p style={{ fontSize: "10px", color: "#2563EB", fontWeight: "800", margin: "0 0 2px 0" }}>// İŞLENEN VERİLER</p>
+            <p style={{ margin: 0, color: "#475569" }}>
+              Değerlendirmeyi tamamlayıp sonuç raporunu görüntülemeniz için firma unvanı, yetkili
+              adı-soyadı, e-posta adresi, telefon numarası ile anket yanıtlarınız ve hesaplanan
+              adaptasyon skorlarınız işlenir.
+            </p>
+          </div>
+          <div>
+            <p style={{ fontSize: "10px", color: "#2563EB", fontWeight: "800", margin: "0 0 2px 0" }}>// İŞLEME AMACI</p>
+            <p style={{ margin: 0, color: "#475569" }}>
+              Verileriniz; yapay zeka/otomasyon adaptasyon düzeyinizin ölçülmesi, size özel sonuç
+              raporunun sunulması ve Oda tarafından ilerleyen dönemde (öngörülen süre yaklaşık 6 ay)
+              tarafınızla iletişime geçilerek gelişim sürecinizin takip edilmesi amacıyla işlenir.
+            </p>
+          </div>
+          <div>
+            <p style={{ fontSize: "10px", color: "#2563EB", fontWeight: "800", margin: "0 0 2px 0" }}>// HUKUKİ SEBEP</p>
+            <p style={{ margin: 0, color: "#475569" }}>
+              KVKK md. 5/1 uyarınca açık rızanıza dayanılarak; Oda'nın üyelerine yönelik dijital
+              dönüşüm ve yapay zeka adaptasyon kapasitesini geliştirme faaliyetlerinin yürütülmesi
+              meşru amacıyla işlenir.
+            </p>
+          </div>
+          <div>
+            <p style={{ fontSize: "10px", color: "#2563EB", fontWeight: "800", margin: "0 0 2px 0" }}>// SAKLAMA VE GÜVENLİK</p>
+            <p style={{ margin: 0, color: "#475569" }}>
+              Veriler, yalnızca Oda yetkilileri tarafından erişilebilen güvenli bir veritabanında
+              saklanır ve amaç için gerekli süre boyunca tutulur; üçüncü taraflarla paylaşılmaz veya
+              ticari amaçla kullanılmaz.
+            </p>
+          </div>
+          <div>
+            <p style={{ fontSize: "10px", color: "#2563EB", fontWeight: "800", margin: "0 0 2px 0" }}>// HAKLARINIZ</p>
+            <p style={{ margin: 0, color: "#475569" }}>
+              KVKK md. 11 uyarınca verilerinize erişme, düzeltilmesini/silinmesini talep etme ve
+              rızanızı geri alma dahil haklarınızı kullanmak için Oda'ya yazılı olarak başvurabilirsiniz.
+            </p>
+          </div>
+          <p style={{ fontSize: "10px", color: "#94A3B8", fontStyle: "italic", margin: 0 }}>
+            Bu metin genel bir taslaktır; yayına almadan önce Oda'nın hukuk/uyum birimince
+            gözden geçirilmesi önerilir.
+          </p>
+        </div>
+      </div>
     </div>
   );
 }
