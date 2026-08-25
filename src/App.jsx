@@ -468,8 +468,9 @@ export default function App() {
     <div className="suite-app suite-ai" style={{
       minHeight: "100vh",
       width: "100%",
-      backgroundColor: "#0F172A",
-      backgroundImage: `linear-gradient(rgba(15, 23, 42, 0.85), rgba(15, 23, 42, 0.85)), url('https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&q=80&w=2000')`,
+      backgroundColor: "#071126",
+      backgroundImage: "radial-gradient(circle at 18% 16%, rgba(53,105,217,.30), transparent 28%), radial-gradient(circle at 82% 76%, rgba(119,87,216,.22), transparent 30%), linear-gradient(rgba(255,255,255,.025) 1px, transparent 1px), linear-gradient(90deg,rgba(255,255,255,.025) 1px, transparent 1px), linear-gradient(145deg,#071126 0%,#0B1730 48%,#101633 100%)",
+      backgroundSize: "auto, auto, 44px 44px, 44px 44px, auto",
       backgroundSize: "cover",
       backgroundPosition: "center",
       backgroundAttachment: "fixed",
@@ -484,7 +485,7 @@ export default function App() {
         backgroundColor: "rgba(255, 255, 255, 0.95)", 
         backdropFilter: "blur(10px)",
         borderBottom: "1px solid #E2E8F0",
-        minHeight: "64px", padding: isMobile ? "10px 16px" : "0 32px",
+        minHeight: "72px", padding: isMobile ? "10px 16px" : "0 32px",
         display: "flex", alignItems: "center", justifyContent: "space-between",
         flexWrap: "wrap", gap: "8px", flexShrink: 0, position: "relative", zIndex: 1
       }}>
@@ -502,8 +503,8 @@ export default function App() {
             <div style={{ display: "flex", alignItems: "center", gap: "8px", flexWrap: "wrap" }}>
               <span style={{ fontWeight: "800", fontSize: isMobile ? "14px" : "16px", color: "#0F172A" }}>ÇORLU TSO</span>
               {!isMobile && (
-                <span style={{ backgroundColor: "#EFF6FF", color: "#2563EB", border: "1px solid #BFDBFE", padding: "2px 6px", borderRadius: "4px", fontSize: "10px", fontWeight: "700" }}>
-                  DİJİTAL DÖNÜŞÜM MERKEZİ
+                <span style={{ backgroundColor: "#EEF2FF", color: "#315BC7", border: "1px solid #C7D2FE", padding: "4px 9px", borderRadius: "999px", fontSize: "11px", fontWeight: "800", letterSpacing: ".04em" }}>
+                  ÜYE DÖNÜŞÜM PORTALI
                 </span>
               )}
             </div>
@@ -542,44 +543,46 @@ export default function App() {
         {/* INTRO SCREEN */}
         {step === "intro" && (
           <div style={{ 
-            maxWidth: "960px", width: "100%", textAlign: "center", 
+            maxWidth: "1180px", width: "100%", textAlign: "left", 
             display: "flex", flexDirection: "column", gap: isMobile ? "16px" : "20px",
-            backgroundColor: "rgba(255, 255, 255, 0.92)",
-            padding: isMobile ? "24px" : "40px", borderRadius: "20px", backdropFilter: "blur(8px)",
-            boxShadow: "0 10px 25px rgba(0,0,0,0.2)"
+            background: "linear-gradient(145deg,rgba(12,28,61,.96),rgba(19,27,64,.94))",
+            padding: isMobile ? "24px" : "44px", borderRadius: "30px", backdropFilter: "blur(18px)",
+            border: "1px solid rgba(255,255,255,.12)",
+            boxShadow: "0 28px 80px rgba(0,0,0,.34), inset 0 1px 0 rgba(255,255,255,.06)",
+            overflow: "hidden", position: "relative"
           }}>
-            <div style={{ display: "inline-flex", alignItems: "center", gap: "6px", backgroundColor: "#EFF6FF", border: "1px solid #BFDBFE", padding: "6px 16px", borderRadius: "20px", color: "#2563EB", fontSize: "12px", fontWeight: "700", margin: "0 auto" }}>
+            <div style={{ display: "inline-flex", alignItems: "center", gap: "8px", backgroundColor: "rgba(90,132,255,.12)", border: "1px solid rgba(124,156,255,.35)", padding: "7px 15px", borderRadius: "999px", color: "#AFC4FF", fontSize: "12px", fontWeight: "800", alignSelf: "flex-start" }}>
               <Bot size={16} /> YAPAY ZEKA VE OTOMASYON ADAPTASYON REHBERİ
             </div>
-            <h1 style={{ fontSize: isMobile ? "22px" : "32px", fontWeight: "900", letterSpacing: "-0.5px", lineHeight: "1.3", color: "#0F172A", margin: 0 }}>
-              Süreçleriniz Yapay Zekaya Ne Kadar Hazır?<br />
-              <span style={{ color: "#2563EB" }}>İşletme Ölçeğinize Uyumlu Yapay Zeka Araç Önerileri ve Adaptasyon Rehberi</span>
+            <h1 style={{ fontSize: isMobile ? "30px" : "clamp(40px,4.6vw,64px)", maxWidth: "980px", fontWeight: "900", letterSpacing: "-2px", lineHeight: "1.02", color: "#F8FAFF", margin: 0, fontFamily: "Manrope, sans-serif" }}>
+              Yapay zekâyı meraktan çıkarın.<br />
+              <span style={{ background: "linear-gradient(90deg,#78A1FF,#A98BFF)", WebkitBackgroundClip: "text", color: "transparent" }}>İşletmeniz için uygulanabilir hale getirin.</span>
             </h1>
-            <p style={{ fontSize: isMobile ? "13px" : "15px", color: "#475569", lineHeight: "1.6", margin: 0, maxWidth: "800px", alignSelf: "center" }}>
+            <p style={{ fontSize: isMobile ? "14px" : "16px", color: "rgba(225,232,255,.72)", lineHeight: "1.7", margin: 0, maxWidth: "820px" }}>
               5 dakikalık hızlı analizle İK, Pazarlama, Üretim/Stok ve Müşteri İlişkileri süreçlerinizde yapay zeka potansiyelinizi görün;
               işletme ölçeğinize en uygun yapay zeka ve otomasyon araç önerilerini anında edinin.
             </p>
             <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr 1fr" : "repeat(4, 1fr)", gap: isMobile ? "10px" : "16px", margin: "8px 0" }}>
               {FUNCTIONS.map((f) => (
-                <div key={f.id} style={{ backgroundColor: "#FFFFFF", border: "1px solid #E2E8F0", padding: isMobile ? "12px" : "16px", borderRadius: "12px", textAlign: "left", boxShadow: "0 1px 3px rgba(0,0,0,0.05)" }}>
-                  <f.icon size={20} color="#2563EB" style={{ marginBottom: "8px" }} />
-                  <div style={{ fontWeight: "800", fontSize: "13px", color: "#0F172A" }}>{f.label}</div>
-                  {!isMobile && <div style={{ fontSize: "12px", color: "#64748B", marginTop: "4px", lineHeight: "1.4" }}>{f.desc}</div>}
+                <div key={f.id} style={{ background: "linear-gradient(180deg,rgba(255,255,255,.09),rgba(255,255,255,.045))", border: "1px solid rgba(255,255,255,.12)", padding: isMobile ? "14px" : "18px", borderRadius: "18px", textAlign: "left", boxShadow: "inset 0 1px 0 rgba(255,255,255,.06)" }}>
+                  <div style={{ width:"40px",height:"40px",display:"flex",alignItems:"center",justifyContent:"center",borderRadius:"12px",background:"rgba(77,119,235,.18)",marginBottom:"12px" }}><f.icon size={21} color="#8DADFF" /></div>
+                  <div style={{ fontWeight: "800", fontSize: "15px", color: "#F6F8FF" }}>{f.label}</div>
+                  {!isMobile && <div style={{ fontSize: "13px", color: "rgba(220,229,255,.58)", marginTop: "6px", lineHeight: "1.5" }}>{f.desc}</div>}
                 </div>
               ))}
             </div>
-            <label style={{ display: "flex", alignItems: "flex-start", gap: "10px", margin: "0 auto", maxWidth: "640px", textAlign: "left", cursor: "pointer" }}>
+            <label style={{ display: "flex", alignItems: "flex-start", gap: "11px", maxWidth: "760px", textAlign: "left", cursor: "pointer", padding:"13px 15px", borderRadius:"16px", background:"rgba(255,255,255,.055)", border:"1px solid rgba(255,255,255,.1)" }}>
               <input
                 type="checkbox"
                 checked={kvkkAccepted}
                 onChange={(e) => setKvkkAccepted(e.target.checked)}
                 style={{ marginTop: "3px", width: "16px", height: "16px", accentColor: "#2563EB", cursor: "pointer", flexShrink: 0 }}
               />
-              <span style={{ fontSize: "12px", color: "#475569", lineHeight: "1.5" }}>
+              <span style={{ fontSize: "13px", color: "rgba(225,232,255,.7)", lineHeight: "1.55" }}>
                 <button
                   type="button"
                   onClick={(e) => { e.preventDefault(); setShowKVKK(true); }}
-                  style={{ background: "none", border: "none", padding: 0, color: "#2563EB", fontWeight: "800", textDecoration: "underline", cursor: "pointer", fontSize: "12px" }}
+                  style={{ background: "none", border: "none", padding: 0, minHeight:0, color: "#9DB7FF", fontWeight: "800", textDecoration: "underline", cursor: "pointer", fontSize: "13px" }}
                 >
                   KVKK Aydınlatma Metni
                 </button>
@@ -591,11 +594,11 @@ export default function App() {
               onClick={() => kvkkAccepted && goNext()}
               disabled={!kvkkAccepted}
               style={{
-                backgroundColor: kvkkAccepted ? "#2563EB" : "#94A3B8",
-                color: "#FFF", border: "none", padding: isMobile ? "13px 28px" : "14px 36px",
-                borderRadius: "10px", fontSize: isMobile ? "15px" : "16px", fontWeight: "800",
+                background: kvkkAccepted ? "linear-gradient(90deg,#3569D9,#7656D8)" : "rgba(255,255,255,.16)",
+                color: "#FFF", border: kvkkAccepted ? "1px solid rgba(255,255,255,.12)" : "1px solid rgba(255,255,255,.08)", padding: isMobile ? "14px 28px" : "15px 38px",
+                borderRadius: "14px", fontSize: isMobile ? "15px" : "16px", fontWeight: "800",
                 cursor: kvkkAccepted ? "pointer" : "not-allowed", display: "inline-flex", alignItems: "center", gap: "8px",
-                margin: "0 auto", boxShadow: kvkkAccepted ? "0 4px 14px rgba(37, 99, 235, 0.25)" : "none"
+                alignSelf:"flex-start", boxShadow: kvkkAccepted ? "0 14px 32px rgba(53,105,217,.28)" : "none"
               }}
             >
               Yapay Zeka Araç Rehberini Başlat <ArrowRight size={20} />
