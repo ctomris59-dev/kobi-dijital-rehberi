@@ -465,7 +465,7 @@ export default function App() {
   };
 
   return (
-    <div style={{
+    <div className="suite-app suite-ai" style={{
       minHeight: "100vh",
       width: "100%",
       backgroundColor: "#0F172A",

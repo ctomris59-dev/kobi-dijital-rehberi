@@ -9,3 +9,22 @@ html, body, #root {
 body {
   margin: 0;
 }
+
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Manrope:wght@600;700;800&display=swap');
+
+/* Çorlu TSO Transformation Suite — AI & Automation */
+.suite-ai { --suite-accent:#3569D9; --suite-secondary:#7757D8; --suite-ink:#0C1B36; --suite-soft:#E9EFFF; }
+.suite-app { font-family:'DM Sans',system-ui,sans-serif !important; letter-spacing:-.005em; }
+.suite-app h1,.suite-app h2,.suite-app h3,.suite-app h4 { font-family:'Manrope','DM Sans',sans-serif !important; text-wrap:balance; }
+.suite-app button,.suite-app input,.suite-app select { font-family:inherit !important; }
+.suite-app button { min-height:42px; }
+.suite-app [class*="text-xs"] { font-size:13px !important; line-height:1.5 !important; }
+.suite-app [class*="text-sm"] { font-size:14.5px !important; line-height:1.5 !important; }
+.suite-app [class*="text-[8px]"],.suite-app [class*="text-[9px]"],.suite-app [class*="text-[10px]"] { font-size:11.5px !important; line-height:1.45 !important; }
+.suite-app [class*="text-[11px]"],.suite-app [class*="text-[12px]"],.suite-app [class*="text-[13px]"] { font-size:13.5px !important; line-height:1.5 !important; }
+.suite-app :focus-visible { outline:3px solid rgba(53,105,217,.55); outline-offset:3px; }
+.suite-ai header { box-shadow:0 12px 38px rgba(12,27,54,.1); }
+.suite-ai button { transition:transform .18s ease,box-shadow .18s ease,background-color .18s ease; }
+.suite-ai button:hover:not(:disabled) { transform:translateY(-1px); }
+.suite-ai input,.suite-ai select { min-height:44px; }
+.suite-ai ::selection { background:#DDE6FF; color:#142B63; }
